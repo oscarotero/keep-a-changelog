@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - None
 
-## [1.0.0] - 2017-6-20
+## [1.0.0] - 2017-06-20
 
 ### Added
 
@@ -59,7 +59,7 @@ diffs"
 
 - Section about "changelog" vs "CHANGELOG".
 
-## [0.3.0] - 2015-12-3
+## [0.3.0] - 2015-12-03
 
 ### Added
 
@@ -67,14 +67,14 @@ diffs"
 - pt-BR translation from @tallesl.
 - es-ES translation from @ZeliosAriex.
 
-## [0.2.0] - 2015-10-6
+## [0.2.0] - 2015-10-06
 
 ### Changed
 
 - Remove exclusionary mentions of "open source" since this project can
 benefit both "open" and "closed" source projects equally.
 
-## [0.1.0] - 2015-10-6
+## [0.1.0] - 2015-10-06
 
 ### Added
 
@@ -85,7 +85,7 @@ benefit both "open" and "closed" source projects equally.
 - Improve argument against commit logs.
 - Start following [SemVer](http://semver.org) properly.
 
-## [0.0.8] - 2015-2-17
+## [0.0.8] - 2015-02-17
 
 ### Changed
 
@@ -98,7 +98,7 @@ writes dates in a strange way.
 - Fix typos in recent README changes.
 - Update outdated unreleased diff link.
 
-## [0.0.7] - 2015-2-16
+## [0.0.7] - 2015-02-16
 
 ### Added
 
@@ -118,7 +118,7 @@ writes dates in a strange way.
 
 - README section on "yanked" releases.
 
-## [0.0.5] - 2014-8-9
+## [0.0.5] - 2014-08-09
 
 ### Added
 
@@ -126,7 +126,7 @@ writes dates in a strange way.
 - Unreleased section to gather unreleased changes and encourage note
 keeping prior to releases.
 
-## [0.0.4] - 2014-8-9
+## [0.0.4] - 2014-08-09
 
 ### Added
 
@@ -146,19 +146,19 @@ create too much noise in the file. People will have to assume that the
 missing sections were intentionally left out because they contained no
 notable changes.
 
-## [0.0.3] - 2014-8-9
+## [0.0.3] - 2014-08-09
 
 ### Added
 
 - "Why should I care?" section mentioning The Changelog podcast.
 
-## [0.0.2] - 2014-7-10
+## [0.0.2] - 2014-07-10
 
 ### Added
 
 - Explanation of the recommended reverse chronological release ordering.
 
-## [0.0.1] - 2014-5-31
+## [0.0.1] - 2014-05-31
 
 ### Added
 

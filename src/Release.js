@@ -91,10 +91,7 @@ class Release {
 
         if (this.version) {
             const v = url ? `[${this.version}]` : this.version.toString();
-            t.push(
-                `## ${v} - ${this.date.getFullYear()}-${this.date.getMonth() +
-                    1}-${this.date.getDate()}`
-            );
+            t.push(`## ${v} - ${formatDate(this.date)}`);
         } else if (url) {
             t.push('## [UNRELEASED]');
         } else {
@@ -148,3 +145,18 @@ class Release {
 }
 
 module.exports = Release;
+
+function formatDate(date) {
+    let year = date.getFullYear(),
+        month = date.getMonth() + 1,
+        day = date.getDate();
+
+    if (month < 10) {
+        month = '0' + month;
+    }
+    if (day < 10) {
+        day = '0' + day;
+    }
+
+    return `${year}-${month}-${day}`;
+}
