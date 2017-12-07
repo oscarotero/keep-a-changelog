@@ -14,6 +14,7 @@ class Changelog {
         this.url = url;
         this.releases = [];
         this.unreleased = new Release();
+        this.unreleased.changelog = this;
     }
 
     addRelease(release) {
@@ -23,6 +24,7 @@ class Changelog {
 
         this.releases.push(release);
         this.releases.sort((a, b) => a.compare(b));
+        release.changelog = this;
 
         return this;
     }
@@ -55,7 +57,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
         t.push('');
 
         if (!this.unreleased.isEmpty() && this.releases[0]) {
-            t.push(this.unreleased.getCompareLink(this.url, this.releases[0]));
+            const line = this.unreleased.getCompareLink();
+
+            if (line) {
+                t.push(line);
+            }
         }
 
         this.releases.forEach((release, index) => {
@@ -65,7 +71,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
                 return;
             }
 
-            t.push(release.getCompareLink(this.url, prev));
+            t.push(release.getCompareLink());
         });
 
         t.push('');

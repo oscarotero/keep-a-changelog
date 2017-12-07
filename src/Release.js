@@ -1,5 +1,6 @@
 const Semver = require('semver');
 const Change = require('./Change');
+const _changelog = Symbol.for('changelog');
 
 class Release {
     static create(version, date) {
@@ -18,6 +19,10 @@ class Release {
             fixed: [],
             security: []
         };
+    }
+
+    set changelog(changelog) {
+        this[_changelog] = changelog;
     }
 
     compare(release) {
@@ -81,17 +86,19 @@ class Release {
     }
 
     toString() {
+        const url = this[_changelog] ? this[_changelog].url : null;
         let t = [];
 
         if (this.version) {
+            const v = url ? `[${this.version}]` : this.version.toString();
             t.push(
-                `## [${
-                    this.version
-                }] - ${this.date.getFullYear()}-${this.date.getMonth() +
+                `## ${v} - ${this.date.getFullYear()}-${this.date.getMonth() +
                     1}-${this.date.getDate()}`
             );
-        } else {
+        } else if (url) {
             t.push('## [UNRELEASED]');
+        } else {
+            t.push('## UNRELEASED');
         }
 
         if (this.description.trim()) {
@@ -113,14 +120,28 @@ class Release {
         return t.join('\n').trim();
     }
 
-    getCompareLink(url, prev) {
+    getCompareLink() {
+        const changelog = this[_changelog];
+
+        if (!changelog || !changelog.url || !changelog.releases.length) {
+            return;
+        }
+
+        if (changelog.unreleased === this) {
+            return `[UNRELEASED]: ${changelog.url}/compare/v${changelog.releases[0].version}...HEAD`;
+        }
+
         if (this.version) {
-            return `[${this.version}]: ${url}/compare/v${prev.version}...v${
+            const index = changelog.releases.indexOf(this);
+
+            if (index === -1 || !changelog.releases[index + 1]) {
+                return;
+            }
+
+            return `[${this.version}]: ${changelog.url}/compare/v${changelog.releases[index + 1].version}...v${
                 this.version
             }`;
         }
-
-        return `[UNRELEASED]: ${url}/compare/v${prev.version}...HEAD`;
     }
 }
 
