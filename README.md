@@ -2,7 +2,15 @@
 
 Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
 
-## Usage:
+## Install
+
+You can install it from the [npm repository](https://www.npmjs.com/package/keep-a-changelog) using npm/yarn:
+
+```sh
+npm install keep-a-changelog
+```
+
+## Usage
 
 ```js
 const { parse } = require('keep-a-changelog');
