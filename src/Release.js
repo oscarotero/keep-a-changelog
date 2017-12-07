@@ -128,7 +128,9 @@ class Release {
         }
 
         if (changelog.unreleased === this) {
-            return `[UNRELEASED]: ${changelog.url}/compare/v${changelog.releases[0].version}...HEAD`;
+            return `[UNRELEASED]: ${changelog.url}/compare/v${
+                changelog.releases[0].version
+            }...HEAD`;
         }
 
         if (this.version) {
@@ -138,9 +140,9 @@ class Release {
                 return;
             }
 
-            return `[${this.version}]: ${changelog.url}/compare/v${changelog.releases[index + 1].version}...v${
-                this.version
-            }`;
+            return `[${this.version}]: ${changelog.url}/compare/v${
+                changelog.releases[index + 1].version
+            }...v${this.version}`;
         }
     }
 }

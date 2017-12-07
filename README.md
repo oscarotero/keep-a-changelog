@@ -36,3 +36,7 @@ const changelog = Changelog.create('My project', 'http://github.com/oscarotero/m
 
 console.log(changelog.toString());
 ```
+
+## Cli
+
+This library provides the `changelog` command to normalize the changelog format.

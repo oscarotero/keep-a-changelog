@@ -52,7 +52,7 @@ module.exports = function parser(markdown) {
             continue;
         }
 
-        if (line.startsWith('-') || line.startsWith('*')) {
+        if (type && (line.startsWith('-') || line.startsWith('*'))) {
             change = Change.create(line.substr(1).trim());
             release.addChange(type, change);
             continue;

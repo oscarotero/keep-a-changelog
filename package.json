@@ -4,6 +4,9 @@
   "homepage": "https://github.com/oscarotero/keep-a-changelog#readme",
   "version": "0.1.0",
   "main": "src/index.js",
+  "bin": {
+    "changelog": "bin.js"
+  },
   "directories": {
     "test": "test"
   },
