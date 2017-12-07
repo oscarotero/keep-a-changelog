@@ -4,81 +4,106 @@ const Release = require('./Release');
 
 module.exports = function parser(markdown) {
     const lines = markdown.trim().split('\n');
-    const changelog = new Changelog(
-        lines
+
+    const changelog = new Changelog();
+
+    //Title
+    if (lines.length && lines[0].startsWith('# ')) {
+        changelog.title = lines
             .shift()
-            .split('-')
-            .pop()
-            .trim()
-    );
+            .substr(1)
+            .trim();
+    }
 
-    let release, change, line, type;
+    //Description
+    changelog.description = getUntil(lines, '## ');
 
-    while (lines.length) {
-        line = lines.shift().trim();
+    //Releases
+    while (moveWhile(lines, '## ')) {
+        let release;
+        const line = lines
+            .shift()
+            .substr(2)
+            .trim();
+        const matches = line.match(
+            /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/
+        );
 
-        if (line.startsWith('## ')) {
-            const matches = line.match(
-                /##\s+\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/
+        if (matches) {
+            release = new Release(matches[1], matches[2]);
+            changelog.addRelease(release);
+        } else if (line.toLowerCase().includes('unreleased')) {
+            release = changelog.unreleased;
+        } else {
+            throw new Error(`Syntax error in the release title\n${line}`);
+        }
+
+        //Release description
+        release.description = getUntil(lines, '### ', '[');
+
+        //Release change
+        while (moveWhile(lines, '### ')) {
+            const type = lines
+                .shift()
+                .substr(3)
+                .trim()
+                .toLowerCase();
+
+            while (moveWhile(lines, '-', '*')) {
+                release.addChange(
+                    type,
+                    new Change(
+                        lines
+                            .shift()
+                            .substr(1)
+                            .trim(),
+                        getUntil(lines, '-', '*', '#', '[').replace(
+                            /\n\s\s/g,
+                            '\n'
+                        )
+                    )
+                );
+            }
+        }
+    }
+
+    //Skip release links
+    while (moveWhile(lines, '[')) {
+        if (!changelog.url) {
+            const matches = lines[0].match(
+                /^\[.*\]\:\s*(http.*)\/compare\/.*$/
             );
 
             if (matches) {
-                release = Release.create(matches[1], matches[2]);
-                changelog.addRelease(release);
-            } else if (line.toLowerCase().includes('unreleased')) {
-                release = changelog.unreleased;
-            } else {
-                throw new Error(`Syntax error in the release title\n${line}`);
+                changelog.url = matches[1];
             }
-
-            change = type = null;
-            continue;
         }
 
-        if (line.startsWith('### ')) {
-            type = line
-                .split(' ', 2)
-                .pop()
-                .toLowerCase();
-            continue;
-        }
+        lines.shift();
+    }
 
-        if (!release) {
-            if (!changelog.description) {
-                changelog.description = line;
-            } else {
-                changelog.description += `\n${line}`;
-            }
-            continue;
-        }
-
-        if (type && (line.startsWith('-') || line.startsWith('*'))) {
-            change = Change.create(line.substr(1).trim());
-            release.addChange(type, change);
-            continue;
-        }
-
-        //skip compare links
-        if (line.startsWith('[') && line.includes('/compare/')) {
-            if (!changelog.url) {
-                const matches = line.match(
-                    /^\[.*\]\:\s*(http.*)\/compare\/.*$/
-                );
-
-                if (matches) {
-                    changelog.url = matches[1];
-                }
-            }
-            continue;
-        }
-
-        if (change) {
-            change.title += `\n${line}`;
-            continue;
-        }
-
-        release.description += `\n${line}`;
+    if (lines.length) {
+        throw new Error(`Syntax error the following line:
+${lines[0]}`);
     }
 
     return changelog;
 };
+
+function getUntil(lines, ...starts) {
+    let buffer = '';
+
+    while (lines.length && !starts.some(start => lines[0].startsWith(start))) {
+        buffer += `\n${lines.shift()}`;
+    }
+
+    return buffer.trim();
+}
+
+function moveWhile(lines, ...starts) {
+    while (lines.length && !lines[0].trim()) {
+        lines.shift();
+    }
+
+    return lines.length && starts.some(start => lines[0].startsWith(start));
+}

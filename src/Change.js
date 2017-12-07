@@ -1,18 +1,14 @@
 class Change {
-    static create(title) {
-        return new Change(title);
-    }
-
-    constructor(title) {
+    constructor(title, description = '') {
         this.title = title;
-        this.body = null;
+        this.description = description;
     }
 
     toString() {
         let t = [`- ${this.title}`];
 
-        if (this.body) {
-            t = t.concat(this.body.split('\n').map(line => `  ${line}`));
+        if (this.description) {
+            t = t.concat(this.description.split('\n').map(line => `  ${line}`));
         }
 
         return t.join('\n').trim();

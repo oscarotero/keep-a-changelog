@@ -20,16 +20,16 @@ console.log(changelog.toString());
 ```js
 const { Changelog, Release } = require('keep-a-changelog');
 
-const changelog = Changelog.create('My project', 'http://github.com/oscarotero/my-project')
+const changelog = new Changelog('My project')
     .addRelease(
-        Release.create('0.1.0', '2017-12-06')
+        new Release('0.1.0', '2017-12-06')
             .added('New awesome feature')
             .added('New other awesome feature')
             .fixed('Bug #3')
             .removed('Drop support for X')
     )
     .addRelease(
-        Release.create('0.2.0', '2017-12-09')
+        new Release('0.2.0', '2017-12-09')
             .security('Fixed security vulnerability')
             .deprecated('Feature X is deprecated')
     );

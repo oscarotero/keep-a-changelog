@@ -3,14 +3,18 @@ const Change = require('./Change');
 const _changelog = Symbol.for('changelog');
 
 class Release {
-    static create(version, date) {
-        return new Release(new Semver(version), new Date(date));
-    }
+    constructor(version, date, description = '') {
+        if (typeof version === 'string') {
+            version = new Semver(version);
+        }
 
-    constructor(version, date) {
+        if (typeof date === 'string') {
+            date = new Date(date);
+        }
+
         this.version = version;
         this.date = date;
-        this.description = '';
+        this.description = description;
         this.changes = {
             added: [],
             changed: [],
@@ -90,12 +94,17 @@ class Release {
         let t = [];
 
         if (this.version) {
-            const v = url ? `[${this.version}]` : this.version.toString();
-            t.push(`## ${v} - ${formatDate(this.date)}`);
-        } else if (url) {
-            t.push('## [UNRELEASED]');
+            if (this.hasCompareLink()) {
+                t.push(`## [${this.version}] - ${formatDate(this.date)}`);
+            } else {
+                t.push(`## ${this.version} - ${formatDate(this.date)}`);
+            }
         } else {
-            t.push('## UNRELEASED');
+            if (this.hasCompareLink()) {
+                t.push('## [UNRELEASED]');
+            } else {
+                t.push('## UNRELEASED');
+            }
         }
 
         if (this.description.trim()) {
@@ -118,11 +127,11 @@ class Release {
     }
 
     getCompareLink() {
-        const changelog = this[_changelog];
-
-        if (!changelog || !changelog.url || !changelog.releases.length) {
+        if (!this.hasCompareLink()) {
             return;
         }
+
+        const changelog = this[_changelog];
 
         if (changelog.unreleased === this) {
             return `[UNRELEASED]: ${changelog.url}/compare/v${
@@ -130,17 +139,32 @@ class Release {
             }...HEAD`;
         }
 
-        if (this.version) {
-            const index = changelog.releases.indexOf(this);
+        const index = changelog.releases.indexOf(this);
+        const next = changelog.releases[index + 1];
 
-            if (index === -1 || !changelog.releases[index + 1]) {
-                return;
-            }
+        return `[${this.version}]: ${changelog.url}/compare/v${
+            next.version
+        }...v${this.version}`;
+    }
 
-            return `[${this.version}]: ${changelog.url}/compare/v${
-                changelog.releases[index + 1].version
-            }...v${this.version}`;
+    hasCompareLink() {
+        const changelog = this[_changelog];
+
+        if (!changelog || !changelog.url || !changelog.releases.length) {
+            return false;
         }
+
+        if (changelog.unreleased === this) {
+            return true;
+        }
+
+        if (this.version) {
+            return (
+                changelog.releases.length > changelog.releases.indexOf(this) + 1
+            );
+        }
+
+        return false;
     }
 }
 

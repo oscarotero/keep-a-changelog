@@ -1,17 +1,10 @@
 const Release = require('./Release');
 
 class Changelog {
-    static create(title, url) {
-        return new Changelog(
-            title,
-            url || 'https://github.com/username/projectname'
-        );
-    }
-
-    constructor(title, url) {
+    constructor(title, description = '') {
         this.title = title;
-        this.description = null;
-        this.url = url;
+        this.description = description;
+        this.url = null;
         this.releases = [];
         this.unreleased = new Release();
         this.unreleased.changelog = this;
@@ -30,7 +23,7 @@ class Changelog {
     }
 
     toString() {
-        let t = [`# Changelog - ${this.title}`];
+        let t = [`# ${this.title}`];
 
         const description =
             this.description.trim() ||
@@ -56,22 +49,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
 
         t.push('');
 
-        if (!this.unreleased.isEmpty() && this.releases[0]) {
-            const line = this.unreleased.getCompareLink();
+        if (!this.unreleased.isEmpty() && this.unreleased.hasCompareLink()) {
+            t.push(this.unreleased.getCompareLink());
+        }
+
+        this.releases.forEach(release => {
+            const line = release.getCompareLink();
 
             if (line) {
                 t.push(line);
             }
-        }
-
-        this.releases.forEach((release, index) => {
-            const prev = this.releases[index + 1];
-
-            if (!prev) {
-                return;
-            }
-
-            t.push(release.getCompareLink());
         });
 
         t.push('');
