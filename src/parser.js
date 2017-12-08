@@ -4,7 +4,20 @@ const Release = require('./Release');
 
 module.exports = function parser(markdown) {
     const lines = markdown.trim().split('\n');
+    const totalLines = lines.length;
 
+    try {
+        return parseLines(lines);
+    } catch (error) {
+        throw new Error(
+            `Parse error in the line ${totalLines - lines.length}: ${
+                error.message
+            }`
+        );
+    }
+};
+
+function parseLines(lines) {
     const changelog = new Changelog();
 
     //Title
@@ -35,11 +48,11 @@ module.exports = function parser(markdown) {
         } else if (line.toLowerCase().includes('unreleased')) {
             release = changelog.unreleased;
         } else {
-            throw new Error(`Syntax error in the release title\n${line}`);
+            throw new Error(`Syntax error in the release title "${line}"`);
         }
 
         //Release description
-        release.description = getUntil(lines, '### ', '[');
+        release.description = getUntil(lines, '## ', '### ', '[');
 
         //Release change
         while (moveWhile(lines, '### ')) {
@@ -83,12 +96,11 @@ module.exports = function parser(markdown) {
     }
 
     if (lines.length) {
-        throw new Error(`Syntax error the following line:
-${lines[0]}`);
+        throw new Error(`Syntax error: "${lines[0]}"`);
     }
 
     return changelog;
-};
+}
 
 function getUntil(lines, ...starts) {
     let buffer = '';
