@@ -19,6 +19,12 @@ const changelog = new Changelog('Changelog')
             .added('Parser errors contains the line number in the CHANGELOG file')
             .fixed('Fixed parsing bug when the changelog is using incorrect title levels')
     )
+    .addRelease(
+        new Release('0.3.1', '2017-12-11')
+            .added('CLI Api: New option `--file`, to change the filename used')
+            .added('CLI Api: New option `--url`, to set or change the project url')
+            .added('CLI Api: New option `--https`, to change the use of https in the url scheme')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

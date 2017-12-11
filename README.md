@@ -47,4 +47,22 @@ console.log(changelog.toString());
 
 ## Cli
 
-This library provides the `changelog` command to normalize the changelog format.
+This library provides the `changelog` command to normalize the changelog format. It reads the CHANGELOG.md file and override it with the new format:
+
+```sh
+changelog
+```
+
+To use other file name:
+
+```sh
+changelog --file=History.md
+```
+
+Available options:
+
+Option | Description
+-------|-------------
+`--file` | The markdown file of the changelog. The default value is `CHANGELOG.md`.
+`--url` | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository.
+`--https` | Set to false to use `http` instead `https` in the url (`--https=false`).

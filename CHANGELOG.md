@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.3.1] - 2017-12-11
+
+### Added
+
+- CLI Api: New option `--file`, to change the filename used
+- CLI Api: New option `--url`, to set or change the project url
+- CLI Api: New option `--https`, to change the use of https in the url scheme
+
 ## [0.3.0] - 2017-12-08
 
 ### Added
@@ -35,5 +43,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[0.3.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/oscarotero/keep-a-changelog/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/oscarotero/keep-a-changelog/compare/v0.1.0...v0.2.0
