@@ -15,7 +15,10 @@ class Change {
     }
 
     toString() {
-        const url = (this.release && this.release.changelog) ? this.release.changelog.url : null;
+        const url =
+            this.release && this.release.changelog
+                ? this.release.changelog.url
+                : null;
 
         let t = [`- ${this.title}`];
 

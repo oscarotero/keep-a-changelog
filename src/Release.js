@@ -139,17 +139,16 @@ class Release {
         const changelog = this[_changelog];
 
         if (changelog.unreleased === this) {
-            return `[UNRELEASED]: ${changelog.url}/compare/v${
-                changelog.releases[0].version
-            }...HEAD`;
+            return `[UNRELEASED]: ${changelog.url}/compare/v${changelog
+                .releases[0].version}...HEAD`;
         }
 
         const index = changelog.releases.indexOf(this);
         const next = changelog.releases[index + 1];
 
-        return `[${this.version}]: ${changelog.url}/compare/v${
-            next.version
-        }...v${this.version}`;
+        return `[${this
+            .version}]: ${changelog.url}/compare/v${next.version}...v${this
+            .version}`;
     }
 
     hasCompareLink() {

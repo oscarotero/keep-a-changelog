@@ -10,9 +10,8 @@ module.exports = function parser(markdown) {
         return parseLines(lines);
     } catch (error) {
         throw new Error(
-            `Parse error in the line ${totalLines - lines.length}: ${
-                error.message
-            }`
+            `Parse error in the line ${totalLines -
+                lines.length}: ${error.message}`
         );
     }
 };
@@ -22,10 +21,7 @@ function parseLines(lines) {
 
     //Title
     if (lines.length && lines[0].startsWith('# ')) {
-        changelog.title = lines
-            .shift()
-            .substr(1)
-            .trim();
+        changelog.title = lines.shift().substr(1).trim();
     }
 
     //Description
@@ -34,10 +30,7 @@ function parseLines(lines) {
     //Releases
     while (moveWhile(lines, '## ')) {
         let release;
-        const line = lines
-            .shift()
-            .substr(2)
-            .trim();
+        const line = lines.shift().substr(2).trim();
         const matches = line.match(
             /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/
         );
@@ -56,20 +49,13 @@ function parseLines(lines) {
 
         //Release change
         while (moveWhile(lines, '### ')) {
-            const type = lines
-                .shift()
-                .substr(3)
-                .trim()
-                .toLowerCase();
+            const type = lines.shift().substr(3).trim().toLowerCase();
 
             while (moveWhile(lines, '-', '*')) {
                 release.addChange(
                     type,
                     new Change(
-                        lines
-                            .shift()
-                            .substr(1)
-                            .trim(),
+                        lines.shift().substr(1).trim(),
                         getUntil(lines, '-', '*', '#', '[').replace(
                             /\n\s\s/g,
                             '\n'
