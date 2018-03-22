@@ -25,6 +25,11 @@ const changelog = new Changelog('Changelog')
             .added('CLI Api: New option `--url`, to set or change the project url')
             .added('CLI Api: New option `--https`, to change the use of https in the url scheme')
     )
+    .addRelease(
+        new Release('0.4.0', '2018-03-22')
+            .fixed('Use UTC date functions to fix decrement issue - #1')
+            .added('Create links automatically to the issues')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

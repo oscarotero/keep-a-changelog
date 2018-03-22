@@ -29,6 +29,10 @@ class Release {
         this[_changelog] = changelog;
     }
 
+    get changelog() {
+        return this[_changelog];
+    }
+
     compare(release) {
         if (!this.version) {
             return -1;
@@ -61,6 +65,7 @@ class Release {
         }
 
         this.changes[type].push(change);
+        change.release = this;
 
         return this;
     }
@@ -90,7 +95,7 @@ class Release {
     }
 
     toString() {
-        const url = this[_changelog] ? this[_changelog].url : null;
+        const url = this.changelog ? this.changelog.url : null;
         let t = [];
 
         if (this.version) {
