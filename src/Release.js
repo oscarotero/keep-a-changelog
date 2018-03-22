@@ -171,9 +171,9 @@ class Release {
 module.exports = Release;
 
 function formatDate(date) {
-    let year = date.getFullYear(),
-        month = date.getMonth() + 1,
-        day = date.getDate();
+    let year = date.getUTCFullYear(),
+        month = date.getUTCMonth() + 1,
+        day = date.getUTCDate();
 
     if (month < 10) {
         month = '0' + month;
