@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - None
 - Test with issue link #1
 - Test with issue link #2 in the middle of the text
-- [#3](https://github.com/olivierlacan/keep-a-changelog/issues/3) Test with issue link in the beginning of the text
+- #3 Test with issue link in the beginning of the text
 - Test with no issue link #123b
 
 ## [1.0.0] - 2017-06-20
@@ -151,3 +151,7 @@ notable changes.
 [0.0.4]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
+
+---
+
+This is a footer

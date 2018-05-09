@@ -1,41 +1,32 @@
-const _release = Symbol.for('release');
-
 class Change {
     constructor(title, description = '') {
-        this.title = title;
-        this.description = description;
-    }
-
-    set release(release) {
-        this[_release] = release;
-    }
-
-    get release() {
-        return this[_release];
+        this.issues = [];
+        this.title = extractIssues(title, this.issues);
+        this.description = extractIssues(description, this.issues);
     }
 
     toString() {
-        const url =
-            this.release && this.release.changelog
-                ? this.release.changelog.url
-                : null;
-
-        let t = [`- ${this.title}`];
+        let t = this.title.split('\n').map(line => `  ${line.trim()}`);
+        t[0] = '-' + t[0].substr(1);
 
         if (this.description) {
+            t.push('');
+
             t = t.concat(this.description.split('\n').map(line => `  ${line}`));
         }
 
-        return t.map(line => linkify(line, url)).join('\n').trim();
+        return t.join('\n').trim();
     }
 }
 
 module.exports = Change;
 
-function linkify(text, url) {
-    if (url) {
-        return text.replace(/#(\d+)([^\w\]]|$)/g, `[#$1](${url}/issues/$1)$2`);
-    }
+function extractIssues(text, issues) {
+    return text.replace(/#(\d+)([^\w\]]|$)/g, (matches, index, end) => {
+        if (!issues.includes(index)) {
+            issues.push(index);
+        }
 
-    return text;
+        return `[#${index}]${end}`;
+    });
 }

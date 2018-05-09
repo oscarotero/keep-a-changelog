@@ -4,10 +4,9 @@ class Changelog {
     constructor(title, description = '') {
         this.title = title;
         this.description = description;
+        this.footer = null;
         this.url = null;
         this.releases = [];
-        this.unreleased = new Release();
-        this.unreleased.changelog = this;
     }
 
     addRelease(release) {
@@ -23,7 +22,10 @@ class Changelog {
     }
 
     toString() {
-        let t = [`# ${this.title}`];
+        const t = [`# ${this.title}`];
+
+        let links = [];
+        let compareLinks = [];
 
         const description =
             this.description.trim() ||
@@ -37,31 +39,35 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
             t.push(description);
         }
 
-        if (!this.unreleased.isEmpty()) {
-            t.push('');
-            t.push(this.unreleased.toString());
-        }
-
         this.releases.forEach(release => {
             t.push('');
-            t.push(release.toString());
-        });
+            t.push(release.toString(this));
 
-        t.push('');
+            links = links.concat(release.getLinks(this));
 
-        if (!this.unreleased.isEmpty() && this.unreleased.hasCompareLink()) {
-            t.push(this.unreleased.getCompareLink());
-        }
+            const link = release.getCompareLink(this);
 
-        this.releases.forEach(release => {
-            const line = release.getCompareLink();
-
-            if (line) {
-                t.push(line);
+            if (link) {
+                compareLinks.push(link);
             }
         });
 
         t.push('');
+
+        links.forEach(link => t.push(link));
+
+        t.push('');
+
+        compareLinks.forEach(link => t.push(link));
+
+        t.push('');
+
+        if (this.footer) {
+            t.push('---');
+            t.push('');
+            t.push(this.footer);
+            t.push('');
+        }
 
         return t.join('\n');
     }

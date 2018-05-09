@@ -30,6 +30,13 @@ const changelog = new Changelog('Changelog')
             .fixed('Use UTC date functions to fix decrement issue - #1')
             .added('Create links automatically to the issues')
     )
+    .addRelease(
+        new Release('0.5.0', '2018-05-09')
+            .fixed('Parser refactoring')
+            .added('Allow to insert a footer at the end of the changelog')
+            .changed('Placed the urls of the issues at bottom')
+            .changed('Indent automatically the extra lines of the changes')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

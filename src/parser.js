@@ -3,105 +3,169 @@ const Change = require('./Change');
 const Release = require('./Release');
 
 module.exports = function parser(markdown) {
-    const lines = markdown.trim().split('\n');
-    const totalLines = lines.length;
+    const tokens = tokenize(markdown);
 
     try {
-        return parseLines(lines);
+        return parseTokens(tokens);
     } catch (error) {
         throw new Error(
-            `Parse error in the line ${totalLines -
-                lines.length}: ${error.message}`
+            `Parse error in the line ${tokens[0][0]}: ${error.message}`
         );
     }
 };
 
-function parseLines(lines) {
+function parseTokens(tokens) {
     const changelog = new Changelog();
 
-    //Title
-    if (lines.length && lines[0].startsWith('# ')) {
-        changelog.title = lines.shift().substr(1).trim();
-    }
-
-    //Description
-    changelog.description = getUntil(lines, '## ');
+    changelog.title = getContent(tokens, 'h1', true);
+    changelog.description = getContent(tokens, 'p');
 
     //Releases
-    while (moveWhile(lines, '## ')) {
-        let release;
-        const line = lines.shift().substr(2).trim();
-        const matches = line.match(
+    let release;
+
+    while ((release = getContent(tokens, 'h2').toLowerCase())) {
+        const matches = release.match(
             /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/
         );
 
         if (matches) {
             release = new Release(matches[1], matches[2]);
-            changelog.addRelease(release);
-        } else if (line.toLowerCase().includes('unreleased')) {
-            release = changelog.unreleased;
+        } else if (release.includes('unreleased')) {
+            release = new Release();
         } else {
-            throw new Error(`Syntax error in the release title "${line}"`);
+            throw new Error(`Syntax error in the release title`);
         }
 
-        //Release description
-        release.description = getUntil(lines, '## ', '### ', '[');
+        changelog.addRelease(release);
+        release.description = getContent(tokens, 'p');
 
-        //Release change
-        while (moveWhile(lines, '### ')) {
-            const type = lines.shift().substr(3).trim().toLowerCase();
+        let type;
 
-            while (moveWhile(lines, '-', '*')) {
-                release.addChange(
-                    type,
-                    new Change(
-                        lines.shift().substr(1).trim(),
-                        getUntil(lines, '-', '*', '#', '[').replace(
-                            /\n\s\s/g,
-                            '\n'
-                        )
-                    )
-                );
+        while ((type = getContent(tokens, 'h3').toLowerCase())) {
+            let change;
+
+            while ((change = getContent(tokens, 'li'))) {
+                release.addChange(type, change);
             }
         }
     }
 
     //Skip release links
-    while (moveWhile(lines, '[')) {
+    let link = getContent(tokens, 'link');
+
+    while (link) {
         if (!changelog.url) {
-            const matches = lines[0].match(
-                /^\[.*\]\:\s*(http.*)\/compare\/.*$/
-            );
+            const matches = link.match(/^\[.*\]\:\s*(http.*)\/compare\/.*$/);
 
             if (matches) {
                 changelog.url = matches[1];
             }
         }
 
-        lines.shift();
+        link = getContent(tokens, 'link');
     }
 
-    if (lines.length) {
-        throw new Error(`Syntax error: "${lines[0]}"`);
+    //Footer
+    if (getContent(tokens, 'hr')) {
+        changelog.footer = getContent(tokens, 'p');
+    }
+
+    if (tokens.length) {
+        throw new Error(`Unexpected content ${JSON.stringify(tokens)}`);
     }
 
     return changelog;
 }
 
-function getUntil(lines, ...starts) {
-    let buffer = '';
+function getContent(tokens, type, required = false) {
+    if (!tokens[0] || tokens[0][1] !== type) {
+        if (required) {
+            throw new Error(`Required token missing in: "${tokens[0][0]}"`);
+        }
 
-    while (lines.length && !starts.some(start => lines[0].startsWith(start))) {
-        buffer += `\n${lines.shift()}`;
+        return '';
     }
 
-    return buffer.trim();
+    return tokens.shift()[2].join('\n');
 }
 
-function moveWhile(lines, ...starts) {
-    while (lines.length && !lines[0].trim()) {
-        lines.shift();
+function tokenize(markdown) {
+    const tokens = [];
+
+    markdown
+        .trim()
+        .split('\n')
+        .map(line => {
+            if (line.startsWith('---')) {
+                return ['hr', ['-']];
+            }
+
+            if (line.startsWith('# ')) {
+                return ['h1', [line.substr(1).trim()]];
+            }
+
+            if (line.startsWith('## ')) {
+                return ['h2', [line.substr(2).trim()]];
+            }
+
+            if (line.startsWith('### ')) {
+                return ['h3', [line.substr(3).trim()]];
+            }
+
+            if (line.startsWith('-')) {
+                return ['li', [line.substr(1).trim()]];
+            }
+
+            if (line.startsWith('*')) {
+                return ['li', [line.substr(1).trim()]];
+            }
+
+            if (line.match(/^\[.*\]\:\s*http.*$/)) {
+                return ['link', [line.trim()]];
+            }
+
+            return ['p', [line]];
+        })
+        .forEach((line, index, lines) => {
+            const [type, [content]] = line;
+
+            if (index > 0) {
+                const [prevType] = lines[index - 1];
+
+                switch (type) {
+                    case 'p':
+                        if (prevType === 'p' || prevType === 'li') {
+                            return tokens[0][2].push(content);
+                        }
+                        break;
+                }
+            }
+
+            tokens.unshift([index + 1, type, [content]]);
+        });
+
+    return tokens
+        .filter(token => !isEmpty(token[2]))
+        .map(token => {
+            const content = token[2];
+
+            while (isEmpty(content[content.length - 1])) {
+                content.pop();
+            }
+
+            while (isEmpty(content[0])) {
+                content.shift();
+            }
+
+            return token;
+        })
+        .reverse();
+}
+
+function isEmpty(val) {
+    if (Array.isArray(val)) {
+        val = val.join('');
     }
 
-    return lines.length && starts.some(start => lines[0].startsWith(start));
+    return !val || val.trim() === '';
 }
