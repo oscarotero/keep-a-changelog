@@ -22,11 +22,19 @@ class Change {
 module.exports = Change;
 
 function extractIssues(text, issues) {
-    return text.replace(/#(\d+)([^\w\]]|$)/g, (matches, index, end) => {
-        if (!issues.includes(index)) {
-            issues.push(index);
-        }
+    return text
+        .replace(/\[#(\d+)\]([^\(]|$)/g, (matches, index, end) => {
+            if (!issues.includes(index)) {
+                issues.push(index);
+            }
 
-        return `[#${index}]${end}`;
-    });
+            return `[#${index}]${end}`;
+        })
+        .replace(/#(\d+)([^\w\]]|$)/g, (matches, index, end) => {
+            if (!issues.includes(index)) {
+                issues.push(index);
+            }
+
+            return `[#${index}]${end}`;
+        });
 }
