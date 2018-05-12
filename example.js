@@ -42,6 +42,10 @@ const changelog = new Changelog('Changelog')
             .fixed('Issues autodetection problems with texts like `#3.4`')
             .fixed('Test execution was commented')
     )
+    .addRelease(
+        new Release('0.5.2', '2018-05-12')
+            .fixed('Issues autodetection links')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
