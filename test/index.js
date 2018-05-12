@@ -10,6 +10,6 @@ const expected = fs.readFileSync(__dirname + '/changelog.expected.md', 'UTF-8');
 
 describe('Changelog testing', function() {
     it('should match the generated changelog with the expected', function() {
-        //assert.equal(changelog.toString().trim(), expected.trim());
+        assert.equal(changelog.toString().trim(), expected.trim());
     });
 });

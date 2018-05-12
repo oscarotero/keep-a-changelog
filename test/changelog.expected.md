@@ -13,7 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Test with issue link [#1]
 - Test with issue link [#2] in the middle of the text
 - [#3] Test with issue link in the beginning of the text
+- Test with issue dot [#4].
 - Test with no issue link #123b
+- Test with `package#2.0`
 
 ## [1.0.0] - 2017-06-20
 
@@ -176,6 +178,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#1]: https://github.com/olivierlacan/keep-a-changelog/issues/1
 [#2]: https://github.com/olivierlacan/keep-a-changelog/issues/2
 [#3]: https://github.com/olivierlacan/keep-a-changelog/issues/3
+[#4]: https://github.com/olivierlacan/keep-a-changelog/issues/4
 
 [UNRELEASED]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...v1.0.0

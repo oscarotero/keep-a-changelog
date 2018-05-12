@@ -30,7 +30,7 @@ function extractIssues(text, issues) {
 
             return `[#${index}]${end}`;
         })
-        .replace(/#(\d+)([^\w\]]|$)/g, (matches, index, end) => {
+        .replace(/#(\d+)([^\w\]\.]|[^\d\w]?$)/g, (matches, index, end) => {
             if (!issues.includes(index)) {
                 issues.push(index);
             }

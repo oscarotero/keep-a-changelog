@@ -37,6 +37,11 @@ const changelog = new Changelog('Changelog')
             .changed('Placed the urls of the issues at bottom')
             .changed('Indent automatically the extra lines of the changes')
     )
+    .addRelease(
+        new Release('0.5.1', '2018-05-12')
+            .fixed('Issues autodetection problems with texts like `#3.4`')
+            .fixed('Test execution was commented')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

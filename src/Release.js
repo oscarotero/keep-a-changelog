@@ -127,12 +127,14 @@ class Release {
         const next = changelog.releases[index + 1];
 
         if (!this.version) {
-            return `[UNRELEASED]: ${changelog.url}/compare/v${next.version}...HEAD`;
+            return `[UNRELEASED]: ${changelog.url}/compare/v${
+                next.version
+            }...HEAD`;
         }
 
-        return `[${this
-            .version}]: ${changelog.url}/compare/v${next.version}...v${this
-            .version}`;
+        return `[${this.version}]: ${changelog.url}/compare/v${
+            next.version
+        }...v${this.version}`;
     }
 
     getLinks(changelog) {
