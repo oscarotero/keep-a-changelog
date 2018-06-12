@@ -59,6 +59,12 @@ To use other file name:
 changelog --file=History.md
 ```
 
+To generate an empty new CHANGELOG.md file:
+
+```sh
+changelog --init
+```
+
 Available options:
 
 Option | Description
@@ -66,3 +72,4 @@ Option | Description
 `--file` | The markdown file of the changelog. The default value is `CHANGELOG.md`.
 `--url` | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository.
 `--https` | Set to false to use `http` instead `https` in the url (`--https=false`).
+`--init` | Init a new empty changelog file.

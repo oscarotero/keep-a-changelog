@@ -2,7 +2,7 @@
   "name": "keep-a-changelog",
   "description": "Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.",
   "homepage": "https://github.com/oscarotero/keep-a-changelog#readme",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "main": "src/index.js",
   "bin": {
     "changelog": "bin.js"
@@ -30,8 +30,8 @@
     "yargs-parser": "^10.0.0"
   },
   "devDependencies": {
-    "mocha": "^5.0.4",
-    "prettier": "^1.11.1"
+    "mocha": "^5.2.0",
+    "prettier": "^1.13.5"
   },
   "scripts": {
     "prettier": "prettier src/*.js test/*.js bin.js --single-quote --tab-width 4 --write",

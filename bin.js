@@ -3,19 +3,28 @@
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-const { parser } = require('./src');
+const { parser, Changelog, Release } = require('./src');
 const argv = require('yargs-parser')(process.argv.slice(2), {
     default: {
         file: 'CHANGELOG.md',
         url: null,
         https: true
     },
-    boolean: ['https']
+    boolean: ['https', 'init']
 });
 
 const file = path.join(process.cwd(), argv.file);
 
 try {
+    if (argv.init) {
+        const changelog = new Changelog('Changelog').addRelease(
+            new Release('0.1.0', new Date(), 'First version')
+        );
+
+        save(file, changelog, true);
+        process.exit(0);
+    }
+
     const changelog = parser(fs.readFileSync(file, 'UTF-8'));
 
     if (!changelog.url && !argv.url) {
@@ -60,9 +69,14 @@ function getHttpUrl(remoteUrl) {
     return url.format(parsed);
 }
 
-function save(file, changelog) {
+function save(file, changelog, isNew) {
     fs.writeFileSync(file, changelog.toString());
-    console.log(green('Updated file'), file);
+
+    if (isNew) {
+        console.log(green('Generated new file'), file);
+    } else {
+        console.log(green('Updated file'), file);
+    }
 }
 
 function red(message) {

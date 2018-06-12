@@ -46,6 +46,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.5.2', '2018-05-12')
             .fixed('Issues autodetection links')
     )
+    .addRelease(
+        new Release('0.6.0', '2018-06-12')
+            .added('CLI Api: New option `--init`, to generate an empty CHANGELOG.md file')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
