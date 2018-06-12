@@ -13,11 +13,11 @@ npm install keep-a-changelog
 ## Usage
 
 ```js
-const { parse } = require('keep-a-changelog');
+const { parser } = require('keep-a-changelog');
 const fs = require('fs');
 
 //Parse a changelog file
-const changelog = parse(fs.readFileSync('CHANGELOG.md', 'UTF-8'));
+const changelog = parser(fs.readFileSync('CHANGELOG.md', 'UTF-8'));
 
 //Generate the new changelog string
 console.log(changelog.toString());
