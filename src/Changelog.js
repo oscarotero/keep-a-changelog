@@ -43,7 +43,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
             t.push('');
             t.push(release.toString(this));
 
-            links = links.concat(release.getLinks(this));
+            release.getLinks(this).forEach(link => {
+                if (!links.includes(link)) {
+                    links.push(link);
+                }
+            });
 
             const link = release.getCompareLink(this);
 
