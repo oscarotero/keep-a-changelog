@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- Test
+
+## [2.0.0] - UNRELEASED
+
+### Added
+
 - None
 - Test with issue link [#1]
 - Test with issue link [#2] in the middle of the text
@@ -181,6 +187,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#4]: https://github.com/olivierlacan/keep-a-changelog/issues/4
 
 [UNRELEASED]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
+[2.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0

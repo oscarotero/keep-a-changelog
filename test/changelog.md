@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Added
+- Test
+
+## [2.0.0] - unreleased
+
+### Added
 - None
 - Test with issue link [#1]
 - Test with issue link #2 in the middle of the text

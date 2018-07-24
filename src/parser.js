@@ -31,7 +31,8 @@ function parseTokens(tokens) {
         if (matches) {
             release = new Release(matches[1], matches[2]);
         } else if (release.includes('unreleased')) {
-            release = new Release();
+            const matches = release.match(/\[?([^\]]+)\]?\s*-\s*unreleased$/);
+            release = matches ? new Release(matches[1]) : new Release();
         } else {
             throw new Error(`Syntax error in the release title`);
         }

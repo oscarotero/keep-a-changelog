@@ -54,6 +54,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.6.1', '2018-06-30')
             .fixed('Prevent inserting duplicated links')
     )
+    .addRelease(
+        new Release('0.6.2', '2018-07-24')
+            .added('Support for unreleased versions (releases with version but without date)')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

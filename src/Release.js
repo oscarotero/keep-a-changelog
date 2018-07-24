@@ -33,6 +33,14 @@ class Release {
             return 1;
         }
 
+        if (!this.date) {
+            return -1;
+        }
+
+        if (!release.date) {
+            return 1;
+        }
+
         return -this.version.compare(release.version);
     }
 
@@ -124,10 +132,23 @@ class Release {
         }
 
         const index = changelog.releases.indexOf(this);
-        const next = changelog.releases[index + 1];
+
+        let offset = 1;
+        let next = changelog.releases[index + offset];
+
+        while (!next.date) {
+            ++offset;
+            next = changelog.releases[index + offset];
+        }
 
         if (!this.version) {
             return `[UNRELEASED]: ${changelog.url}/compare/v${
+                next.version
+            }...HEAD`;
+        }
+
+        if (!this.date) {
+            return `[${this.version}]: ${changelog.url}/compare/v${
                 next.version
             }...HEAD`;
         }
@@ -171,6 +192,10 @@ class Release {
 module.exports = Release;
 
 function formatDate(date) {
+    if (!date) {
+        return 'UNRELEASED';
+    }
+
     let year = date.getUTCFullYear(),
         month = date.getUTCMonth() + 1,
         day = date.getUTCDate();
