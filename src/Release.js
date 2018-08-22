@@ -49,9 +49,7 @@ class Release {
             return false;
         }
 
-        return Array.from(this.changes.values()).every(
-            change => !change.length
-        );
+        return Array.from(this.changes.values()).every(change => !change.length);
     }
 
     addChange(type, change) {
@@ -142,20 +140,14 @@ class Release {
         }
 
         if (!this.version) {
-            return `[Unreleased]: ${changelog.url}/compare/v${
-                next.version
-            }...HEAD`;
+            return `[Unreleased]: ${changelog.url}/compare/v${next.version}...HEAD`;
         }
 
         if (!this.date) {
-            return `[${this.version}]: ${changelog.url}/compare/v${
-                next.version
-            }...HEAD`;
+            return `[${this.version}]: ${changelog.url}/compare/v${next.version}...HEAD`;
         }
 
-        return `[${this.version}]: ${changelog.url}/compare/v${
-            next.version
-        }...v${this.version}`;
+        return `[${this.version}]: ${changelog.url}/compare/v${next.version}...v${this.version}`;
     }
 
     getLinks(changelog) {
@@ -169,9 +161,7 @@ class Release {
             changes.forEach(change => {
                 change.issues.forEach(issue => {
                     if (!links.includes(issue)) {
-                        links.push(
-                            `[#${issue}]: ${changelog.url}/issues/${issue}`
-                        );
+                        links.push(`[#${issue}]: ${changelog.url}/issues/${issue}`);
                     }
                 });
             })

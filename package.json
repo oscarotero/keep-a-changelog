@@ -25,16 +25,16 @@
     "url": "https://github.com/oscarotero/keep-a-changelog/issues"
   },
   "dependencies": {
-    "gitconfiglocal": "^2.0.1",
-    "semver": "^5.5.0",
+    "gitconfiglocal": "^2.0.2",
+    "semver": "^5.5.1",
     "yargs-parser": "^10.1.0"
   },
   "devDependencies": {
     "mocha": "^5.2.0",
-    "prettier": "^1.13.7"
+    "prettier": "^1.14.2"
   },
   "scripts": {
-    "prettier": "prettier src/*.js test/*.js bin.js --single-quote --tab-width 4 --write",
+    "prettier": "prettier src/*.js test/*.js bin.js --single-quote --tab-width 4 --print-width 100 --write",
     "test": "mocha test",
     "changelog": "node example.js"
   }

@@ -8,9 +8,7 @@ module.exports = function parser(markdown) {
     try {
         return parseTokens(tokens);
     } catch (error) {
-        throw new Error(
-            `Parse error in the line ${tokens[0][0]}: ${error.message}`
-        );
+        throw new Error(`Parse error in the line ${tokens[0][0]}: ${error.message}`);
     }
 };
 
@@ -24,9 +22,7 @@ function parseTokens(tokens) {
     let release;
 
     while ((release = getContent(tokens, 'h2').toLowerCase())) {
-        const matches = release.match(
-            /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/
-        );
+        const matches = release.match(/\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/);
 
         if (matches) {
             release = new Release(matches[1], matches[2]);

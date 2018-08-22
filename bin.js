@@ -37,9 +37,7 @@ try {
             }
 
             changelog.url = getHttpUrl(
-                config.remote &&
-                    config.remote.origin &&
-                    config.remote.origin.url
+                config.remote && config.remote.origin && config.remote.origin.url
             );
             save(file, changelog);
         });
@@ -62,9 +60,7 @@ function getHttpUrl(remoteUrl) {
         parsed.protocol = 'http';
     }
 
-    parsed.pathname = parsed.pathname
-        .replace(/\.git$/, '')
-        .replace(/^\/\:/, '/');
+    parsed.pathname = parsed.pathname.replace(/\.git$/, '').replace(/^\/\:/, '/');
 
     return url.format(parsed);
 }
