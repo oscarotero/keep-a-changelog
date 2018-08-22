@@ -49,8 +49,8 @@ class Release {
             return false;
         }
 
-        return Array.from(this.changes.values()).some(
-            change => change.length > 0
+        return Array.from(this.changes.values()).every(
+            change => !change.length
         );
     }
 
