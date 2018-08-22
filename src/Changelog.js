@@ -56,13 +56,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
             }
         });
 
-        t.push('');
+        if (links.length) {
+            t.push('');
 
-        links.forEach(link => t.push(link));
+            links.forEach(link => t.push(link));
+        }
 
-        t.push('');
+        if (compareLinks.length) {
+            t.push('');
 
-        compareLinks.forEach(link => t.push(link));
+            compareLinks.forEach(link => t.push(link));
+        }
 
         t.push('');
 
