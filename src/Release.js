@@ -103,9 +103,9 @@ class Release {
             }
         } else {
             if (this.hasCompareLink(changelog)) {
-                t.push('## [UNRELEASED]');
+                t.push('## [Unreleased]');
             } else {
-                t.push('## UNRELEASED');
+                t.push('## Unreleased');
             }
         }
 
@@ -142,7 +142,7 @@ class Release {
         }
 
         if (!this.version) {
-            return `[UNRELEASED]: ${changelog.url}/compare/v${
+            return `[Unreleased]: ${changelog.url}/compare/v${
                 next.version
             }...HEAD`;
         }
@@ -193,7 +193,7 @@ module.exports = Release;
 
 function formatDate(date) {
     if (!date) {
-        return 'UNRELEASED';
+        return 'Unreleased';
     }
 
     let year = date.getUTCFullYear(),
