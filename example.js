@@ -58,6 +58,12 @@ const changelog = new Changelog('Changelog')
         new Release('0.6.2', '2018-07-24')
             .added('Support for unreleased versions (releases with version but without date)')
     )
+    .addRelease(
+        new Release('0.6.3', '2018-08-22')
+            .fixed('Fixed trailing newlines when no links are present - #5')
+            .fixed('Fixed case of unreleased version to match http://keepachangelog.com/ - #4')
+            .fixed('Fixed Release isEmpty and add tests - #3')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

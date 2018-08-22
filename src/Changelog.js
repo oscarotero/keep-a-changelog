@@ -24,8 +24,8 @@ class Changelog {
     toString() {
         const t = [`# ${this.title}`];
 
-        let links = [];
-        let compareLinks = [];
+        const links = [];
+        const compareLinks = [];
 
         const description =
             this.description.trim() ||

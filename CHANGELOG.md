@@ -5,11 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [0.6.3] - 2018-08-22
 
 ### Fixed
 
-- Fixed case of unreleased version to match http://keepachangelog.com/
+- Fixed trailing newlines when no links are present - [#5]
+- Fixed case of unreleased version to match http://keepachangelog.com/ - [#4]
+- Fixed Release isEmpty and add tests - [#3]
 
 ## [0.6.2] - 2018-07-24
 
@@ -105,9 +107,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[#5]: https://github.com/oscarotero/keep-a-changelog/issues/5
+[#4]: https://github.com/oscarotero/keep-a-changelog/issues/4
+[#3]: https://github.com/oscarotero/keep-a-changelog/issues/3
 [#1]: https://github.com/oscarotero/keep-a-changelog/issues/1
 
-[Unreleased]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.2...HEAD
+[0.6.3]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/oscarotero/keep-a-changelog/compare/v0.5.2...v0.6.0
