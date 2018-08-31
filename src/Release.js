@@ -49,7 +49,7 @@ class Release {
         return Array.from(this.changes.values()).every(change => !change.length);
     }
 
-    setVersion (version) {
+    setVersion(version) {
         if (typeof version === 'string') {
             version = new Semver(version);
         }
@@ -73,7 +73,6 @@ class Release {
 
         return this;
     }
-    
 
     added(change) {
         return this.addChange('added', change);
