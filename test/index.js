@@ -1,6 +1,7 @@
 const fs = require('fs');
 const { parser, Changelog, Release } = require('../src');
 const assert = require('assert');
+const Semver = require('semver');
 
 const changelog = parser(fs.readFileSync(__dirname + '/changelog.md', 'UTF-8'));
 const expected = fs.readFileSync(__dirname + '/changelog.expected.md', 'UTF-8');
@@ -42,5 +43,37 @@ describe('Release testing', function() {
             assert.equal(new Release().fixed('fixed').isEmpty(), false);
             assert.equal(new Release().security('security').isEmpty(), false);
         });
+    });
+
+    describe('setVersion', function() {
+        it('should update the version of a null-version release', function() {
+            const release = new Release();
+            assert.equal(release.version, undefined);
+            release.setVersion('1.2.3');
+            assert.equal(release.version instanceof Semver, true);
+            assert.equal(release.version.toString(), '1.2.3');
+        });
+
+        it('should update the version of a versioned release', function() {
+            const release = new Release('1.2.2');
+            assert.equal(release.version instanceof Semver, true);
+            assert.equal(release.version.toString(), '1.2.2');
+            release.setVersion('1.2.3');
+            assert.equal(release.version instanceof Semver, true);
+            assert.equal(release.version.toString(), '1.2.3');
+        });
+
+        it('should sort the parent changelog\'s releases', function() {
+            const release = new Release('1.2.2');
+            let sortCalled = false;
+            release.changelog = {
+                sortReleases() {
+                    sortCalled = true
+                }
+            };
+            assert.equal(sortCalled, false);
+            release.setVersion('1.2.3');
+            assert.equal(sortCalled, true);
+        })
     });
 });
