@@ -64,6 +64,11 @@ const changelog = new Changelog('Changelog')
             .fixed('Fixed case of unreleased version to match http://keepachangelog.com/ - #4')
             .fixed('Fixed Release isEmpty and add tests - #3')
     )
+    .addRelease(
+        new Release('0.6.4', '2018-09-03')
+            .added('Added `findRelease` function to `Changelog` for finding a release by version number - #6')
+            .added('Added `setVersion` function to `Release` for changing the version of a release - #6')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
