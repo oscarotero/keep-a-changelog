@@ -104,17 +104,17 @@ describe('Release testing', function() {
             assert.equal(release.version.toString(), '1.2.3');
         });
 
-        it('should sort the parent changelog\'s releases', function() {
+        it("should sort the parent changelog's releases", function() {
             const release = new Release('1.2.2');
             let sortCalled = false;
             release.changelog = {
                 sortReleases() {
-                    sortCalled = true
+                    sortCalled = true;
                 }
             };
             assert.equal(sortCalled, false);
             release.setVersion('1.2.3');
             assert.equal(sortCalled, true);
-        })
+        });
     });
 });

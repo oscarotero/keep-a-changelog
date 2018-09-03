@@ -24,9 +24,11 @@ class Changelog {
 
     findRelease(version) {
         if (!version) {
-            return this.releases.find(release => !release.version)
+            return this.releases.find(release => !release.version);
         }
-        return this.releases.find(release => release.version && Semver.eq(release.version, version))
+        return this.releases.find(
+            release => release.version && Semver.eq(release.version, version)
+        );
     }
 
     sortReleases() {
