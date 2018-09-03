@@ -18,6 +18,47 @@ describe('Changelog testing', function() {
     it('should match the generated changelog with the expected', function() {
         assert.equal(changelog.toString().trim(), expected.trim());
     });
+
+    describe('findRelease', function() {
+        it('should find an Unreleased release if no argument is passed in', function() {
+            const changelog = new Changelog('Changelog');
+            const unreleased = new Release();
+            const versioned = new Release('1.2.3');
+            changelog.addRelease(unreleased).addRelease(versioned);
+            assert.equal(changelog.findRelease(), unreleased);
+        });
+
+        it('should find an Unreleased release if null is passed in', function() {
+            const changelog = new Changelog('Changelog');
+            const unreleased = new Release();
+            const versioned = new Release('1.2.3');
+            changelog.addRelease(unreleased).addRelease(versioned);
+            assert.equal(changelog.findRelease(null), unreleased);
+        });
+
+        it('should return undefined when there is no Unreleased release', function() {
+            const changelog = new Changelog('Changelog');
+            const versioned = new Release('1.2.3');
+            changelog.addRelease(versioned);
+            assert.equal(changelog.findRelease(null), undefined);
+        });
+
+        it('should find the given release', function() {
+            const changelog = new Changelog('Changelog');
+            const unreleased = new Release();
+            const versioned = new Release('1.2.3');
+            changelog.addRelease(unreleased).addRelease(versioned);
+            assert.equal(changelog.findRelease('1.2.3'), versioned);
+        });
+
+        it('should return undefined for a non-existent release', function() {
+            const changelog = new Changelog('Changelog');
+            const unreleased = new Release();
+            const versioned = new Release('1.2.3');
+            changelog.addRelease(unreleased).addRelease(versioned);
+            assert.equal(changelog.findRelease('1.0.0'), undefined);
+        });
+    });
 });
 
 describe('Release testing', function() {
