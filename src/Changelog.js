@@ -1,4 +1,5 @@
 const Release = require('./Release');
+const Semver = require('semver');
 
 class Changelog {
     constructor(title, description = '') {
@@ -15,10 +16,23 @@ class Changelog {
         }
 
         this.releases.push(release);
-        this.releases.sort((a, b) => a.compare(b));
+        this.sortReleases();
         release.changelog = this;
 
         return this;
+    }
+
+    findRelease(version) {
+        if (!version) {
+            return this.releases.find(release => !release.version);
+        }
+        return this.releases.find(
+            release => release.version && Semver.eq(release.version, version)
+        );
+    }
+
+    sortReleases() {
+        this.releases.sort((a, b) => a.compare(b));
     }
 
     toString() {

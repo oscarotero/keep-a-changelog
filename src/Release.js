@@ -3,15 +3,12 @@ const Change = require('./Change');
 
 class Release {
     constructor(version, date, description = '') {
-        if (typeof version === 'string') {
-            version = new Semver(version);
-        }
+        this.setVersion(version);
 
         if (typeof date === 'string') {
             date = new Date(date);
         }
 
-        this.version = version;
         this.date = date;
         this.description = description;
         this.changes = new Map([
@@ -50,6 +47,17 @@ class Release {
         }
 
         return Array.from(this.changes.values()).every(change => !change.length);
+    }
+
+    setVersion(version) {
+        if (typeof version === 'string') {
+            version = new Semver(version);
+        }
+        this.version = version;
+        //Re-sort the releases of the parent changelog
+        if (this.changelog) {
+            this.changelog.sortReleases();
+        }
     }
 
     addChange(type, change) {
