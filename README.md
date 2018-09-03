@@ -1,5 +1,7 @@
 # keep-a-changelog
 
+[![Build Status](https://travis-ci.org/oscarotero/keep-a-changelog.svg?branch=master)](https://travis-ci.org/oscarotero/keep-a-changelog)
+
 Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
 
 ## Install
