@@ -109,12 +109,9 @@ function tokenize(markdown) {
                 return ['h3', [line.substr(3).trim()]];
             }
 
-            if (line.startsWith('-')) {
-                return ['li', [line.substr(1).trim()]];
-            }
-
-            if (line.startsWith('*')) {
-                return ['li', [line.substr(1).trim()]];
+            const li = /\s*[-\*]\s+(.*)/.exec(line);
+            if (li) {
+                return ['li', [li[1]]];
             }
 
             if (line.match(/^\[.*\]\:\s*http.*$/)) {
