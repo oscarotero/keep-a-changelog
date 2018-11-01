@@ -111,7 +111,7 @@ function tokenize(markdown) {
                 return ['h3', [line.substr(3).trim()]];
             }
 
-            const li = /\s*[-\*]\s+(.*)/.exec(line);
+            const li = /^\s*[-\*]\s+(.*)/.exec(line);
             if (li) {
                 return ['li', [li[1]]];
             }
