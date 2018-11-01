@@ -69,6 +69,10 @@ const changelog = new Changelog('Changelog')
             .added('Added `findRelease` function to `Changelog` for finding a release by version number - #6')
             .added('Added `setVersion` function to `Release` for changing the version of a release - #6')
     )
+    .addRelease(
+        new Release('0.6.5', '2018-11-01')
+            .fixed('Updated issue autodetection to prevent unwanted extractions - #7')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

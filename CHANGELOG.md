@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.5] - 2018-11-01
+
+### Fixed
+
+- Updated issue autodetection to prevent unwanted extractions - [#7]
+
 ## [0.6.4] - 2018-09-03
 
 ### Added
@@ -114,12 +120,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
+[#7]: https://github.com/oscarotero/keep-a-changelog/issues/7
 [#6]: https://github.com/oscarotero/keep-a-changelog/issues/6
 [#5]: https://github.com/oscarotero/keep-a-changelog/issues/5
 [#4]: https://github.com/oscarotero/keep-a-changelog/issues/4
 [#3]: https://github.com/oscarotero/keep-a-changelog/issues/3
 [#1]: https://github.com/oscarotero/keep-a-changelog/issues/1
 
+[0.6.5]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.2...v0.6.3
 [0.6.2]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.1...v0.6.2
