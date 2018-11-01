@@ -16,4 +16,15 @@ describe('Parser testing', function() {
             ['A cool feature', 'Something neat']
         );
     });
+    it('should explain why a release is invalid ', function() {
+        assert.throws(
+            () => parser([
+                '# Changelog - demo',
+                '## [1.0.0]',
+                '### Added',
+                ' - Something'
+            ].join('\n')),
+            /Release title must contain release date in yyyy-mm-dd form/
+        );
+    });
 });

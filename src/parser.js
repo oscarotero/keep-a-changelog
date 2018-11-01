@@ -29,6 +29,8 @@ function parseTokens(tokens) {
         } else if (release.includes('unreleased')) {
             const matches = release.match(/\[?([^\]]+)\]?\s*-\s*unreleased$/);
             release = matches ? new Release(matches[1]) : new Release();
+        } else if (release.match(/\[?([^\]]+)\]?/)) {
+            throw new Error(`Release title must contain release date in yyyy-mm-dd form`);
         } else {
             throw new Error(`Syntax error in the release title`);
         }
