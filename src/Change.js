@@ -1,8 +1,8 @@
 class Change {
     constructor(title, description = '') {
         this.issues = [];
-        this.title = extractIssues(title, this.issues);
-        this.description = extractIssues(description, this.issues);
+        this.title = Change.extractIssues(title, this.issues);
+        this.description = Change.extractIssues(description, this.issues);
     }
 
     toString() {
@@ -21,20 +21,20 @@ class Change {
 
 module.exports = Change;
 
-function extractIssues(text, issues) {
+Change.extractIssues = function(text, issues) {
     return text
-        .replace(/\[#(\d+)\]([^\(]|$)/g, (matches, index, end) => {
+        .replace(/(^|[^\\])\[#(\d+)\](?=[^\(]|$)/g, (matches, start, index) => {
             if (!issues.includes(index)) {
                 issues.push(index);
             }
 
-            return `[#${index}]${end}`;
+            return `${start}[#${index}]`;
         })
-        .replace(/#(\d+)([^\w\]\.]|[^\d\w\]]?$)/g, (matches, index, end) => {
+        .replace(/(^|[\s,])#(\d+)(?=[\s,\.]|$)/g, (matches, start, index) => {
             if (!issues.includes(index)) {
                 issues.push(index);
             }
 
-            return `[#${index}]${end}`;
+            return `${start}[#${index}]`;
         });
-}
+};
