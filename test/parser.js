@@ -2,18 +2,18 @@ const assert = require('assert');
 const {parser} = require('../src');
 
 describe('Parser testing', function() {
-    it('should allow spaces before dashes and asterisks', function() {
+    it('should include nested bullets in title', function() {
         const changelog = parser([
             '# Changelog - demo',
             '## [1.0.0] - unreleased',
             '### Added',
-            '  - A cool feature',
+            '- A cool feature',
             '  * Something neat'
         ].join('\n'));
 
         assert.deepEqual(
             changelog.findRelease('1.0.0').changes.get('added').map(c => c.title),
-            ['A cool feature', 'Something neat']
+            ['A cool feature\n  * Something neat']
         );
     });
     it('should not consider lines with - in the middle as changes', function() {
@@ -21,13 +21,13 @@ describe('Parser testing', function() {
             '# Changelog - demo',
             '## [1.0.0] - unreleased',
             '### Added',
-            '  - A cool feature',
-            '    with multiple lines and a - in the middle',
+            '- A cool feature',
+            '  with multiple lines and a - in the middle',
         ].join('\n'));
 
         assert.deepEqual(
             changelog.findRelease('1.0.0').changes.get('added').map(c => c.title),
-            ['A cool feature\n    with multiple lines and a - in the middle']
+            ['A cool feature\n  with multiple lines and a - in the middle']
         );
     });
     it('should explain why a release is invalid ', function() {
