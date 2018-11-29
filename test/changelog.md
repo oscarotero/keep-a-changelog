@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Test with issue link [#1]
 - Test with issue link #4 in the middle of the text
 - #3 Test with issue link in the beginning of the text
-- Test with issue dot #2, #1.
+- Test with issue dot #2, #10.
 - Test with no issue link #123b
 - Test with `package#2.0`
 

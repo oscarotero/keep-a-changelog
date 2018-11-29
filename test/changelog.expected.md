@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Test with issue link [#1]
 - Test with issue link [#4] in the middle of the text
 - [#3] Test with issue link in the beginning of the text
-- Test with issue dot [#2], [#1].
+- Test with issue dot [#2], [#10].
 - Test with no issue link #123b
 - Test with `package#2.0`
 
@@ -185,6 +185,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#2]: https://github.com/olivierlacan/keep-a-changelog/issues/2
 [#3]: https://github.com/olivierlacan/keep-a-changelog/issues/3
 [#4]: https://github.com/olivierlacan/keep-a-changelog/issues/4
+[#10]: https://github.com/olivierlacan/keep-a-changelog/issues/10
 
 [Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [2.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD

@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
 
         if (links.length) {
             t.push('');
-            links.sort();
+            links.sort(compare);
             links.forEach(link => t.push(link));
         }
 
@@ -96,3 +96,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
 }
 
 module.exports = Changelog;
+
+function compare(a, b) {
+    if (a === b) {
+        return 0;
+    }
+    const reg = /^\[#(\d+)\]:/;
+    const aNumber = a.match(reg);
+    const bNumber = b.match(reg);
+
+    if (aNumber && bNumber) {
+        return parseInt(aNumber[1]) - parseInt(bNumber[1]);
+    }
+
+    return a < b ? -1 : 1;
+}
