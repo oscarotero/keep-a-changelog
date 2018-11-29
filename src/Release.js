@@ -116,16 +116,15 @@ class Release {
         }
 
         if (this.description.trim()) {
-            t.push('');
             t.push(this.description.trim());
+            t.push('');
         }
 
         this.changes.forEach((changes, type) => {
             if (changes.length) {
-                t.push('');
                 t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
-                t.push('');
                 t = t.concat(changes.map(change => change.toString()));
+                t.push('');
             }
         });
 
