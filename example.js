@@ -77,6 +77,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.6.6', '2018-11-29')
             .changed('Order the links alphabetically')
     )
+    .addRelease(
+        new Release('0.6.7', '2018-11-29')
+            .fixed('Fixed the links sorting to compare issues numerically instead alphabetically')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

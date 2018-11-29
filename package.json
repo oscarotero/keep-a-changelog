@@ -2,7 +2,7 @@
   "name": "keep-a-changelog",
   "description": "Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.",
   "homepage": "https://github.com/oscarotero/keep-a-changelog#readme",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "main": "src/index.js",
   "bin": {
     "changelog": "bin.js"
