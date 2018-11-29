@@ -72,7 +72,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
 
         if (links.length) {
             t.push('');
-
+            links.sort();
             links.forEach(link => t.push(link));
         }
 

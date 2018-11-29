@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.6] - 2018-11-29
+
+### Changed
+
+- Order the links alphabetically
+
 ## [0.6.5] - 2018-11-01
 
 ### Fixed
@@ -120,13 +126,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 First version
 
-[#7]: https://github.com/oscarotero/keep-a-changelog/issues/7
-[#6]: https://github.com/oscarotero/keep-a-changelog/issues/6
-[#5]: https://github.com/oscarotero/keep-a-changelog/issues/5
-[#4]: https://github.com/oscarotero/keep-a-changelog/issues/4
-[#3]: https://github.com/oscarotero/keep-a-changelog/issues/3
 [#1]: https://github.com/oscarotero/keep-a-changelog/issues/1
+[#3]: https://github.com/oscarotero/keep-a-changelog/issues/3
+[#4]: https://github.com/oscarotero/keep-a-changelog/issues/4
+[#5]: https://github.com/oscarotero/keep-a-changelog/issues/5
+[#6]: https://github.com/oscarotero/keep-a-changelog/issues/6
+[#7]: https://github.com/oscarotero/keep-a-changelog/issues/7
 
+[0.6.6]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.5...v0.6.6
 [0.6.5]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.4...v0.6.5
 [0.6.4]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.3...v0.6.4
 [0.6.3]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.2...v0.6.3

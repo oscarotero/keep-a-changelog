@@ -73,6 +73,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.6.5', '2018-11-01')
             .fixed('Updated issue autodetection to prevent unwanted extractions - #7')
     )
+    .addRelease(
+        new Release('0.6.6', '2018-11-29')
+            .changed('Order the links alphabetically')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
