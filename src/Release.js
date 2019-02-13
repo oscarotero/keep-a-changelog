@@ -4,12 +4,8 @@ const Change = require('./Change');
 class Release {
     constructor(version, date, description = '') {
         this.setVersion(version);
+        this.setDate(date);
 
-        if (typeof date === 'string') {
-            date = new Date(date);
-        }
-
-        this.date = date;
         this.description = description;
         this.changes = new Map([
             ['added', []],
@@ -58,6 +54,13 @@ class Release {
         if (this.changelog) {
             this.changelog.sortReleases();
         }
+    }
+
+    setDate(date) {
+        if (typeof date === 'string') {
+            date = new Date(date);
+        }
+        this.date = date;
     }
 
     addChange(type, change) {
