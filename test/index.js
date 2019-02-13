@@ -117,4 +117,29 @@ describe('Release testing', function() {
             assert.equal(sortCalled, true);
         });
     });
+
+    describe('setDate', function() {
+        it('should update the date of a null-date release', function() {
+            const release = new Release();
+            assert.equal(release.version, undefined);
+            release.setDate('2019-02-02');
+            assert.equal(release.date instanceof Date, true);
+            assert.equal(release.date.getUTCFullYear(), 2019);
+            assert.equal(release.date.getUTCMonth() + 1, 2);
+            assert.equal(release.date.getUTCDate(), 2);
+        });
+
+        it('should update the date of a dated release', function() {
+            const release = new Release('1.2.3', '2018-05-05');
+            assert.equal(release.date instanceof Date, true);
+            assert.equal(release.date.getUTCFullYear(), 2018);
+            assert.equal(release.date.getUTCMonth() + 1, 5);
+            assert.equal(release.date.getUTCDate(), 5);
+            release.setDate('2019-02-02');
+            assert.equal(release.date instanceof Date, true);
+            assert.equal(release.date.getUTCFullYear(), 2019);
+            assert.equal(release.date.getUTCMonth() + 1, 2);
+            assert.equal(release.date.getUTCDate(), 2);
+        });
+    });
 });
