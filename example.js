@@ -85,6 +85,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.7.0', '2018-11-29')
             .changed('Removed some spaces before and after some titles to inline with the changelog format')
     )
+    .addRelease(
+        new Release()
+            .added('New property Changelog.tagNameBuilder to customize how the tag names are generated - #10')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

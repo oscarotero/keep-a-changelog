@@ -2,8 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
+The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## [Unreleased]
+### Added
+- New property Changelog.tagNameBuilder to customize how the tag names are generated - [#10]
 
 ## [0.7.0] - 2018-11-29
 ### Changed
@@ -105,7 +109,9 @@ First version
 [#5]: https://github.com/oscarotero/keep-a-changelog/issues/5
 [#6]: https://github.com/oscarotero/keep-a-changelog/issues/6
 [#7]: https://github.com/oscarotero/keep-a-changelog/issues/7
+[#10]: https://github.com/oscarotero/keep-a-changelog/issues/10
 
+[Unreleased]: https://github.com/oscarotero/keep-a-changelog/compare/v0.7.0...HEAD
 [0.7.0]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.7...v0.7.0
 [0.6.7]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.6...v0.6.7
 [0.6.6]: https://github.com/oscarotero/keep-a-changelog/compare/v0.6.5...v0.6.6

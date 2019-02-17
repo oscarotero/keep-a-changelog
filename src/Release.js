@@ -150,14 +150,16 @@ class Release {
         }
 
         if (!this.version) {
-            return `[Unreleased]: ${changelog.url}/compare/v${next.version}...HEAD`;
+            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(next)}...HEAD`;
         }
 
         if (!this.date) {
-            return `[${this.version}]: ${changelog.url}/compare/v${next.version}...HEAD`;
+            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(next)}...HEAD`;
         }
 
-        return `[${this.version}]: ${changelog.url}/compare/v${next.version}...v${this.version}`;
+        return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(
+            next
+        )}...${changelog.tagName(this)}`;
     }
 
     getLinks(changelog) {

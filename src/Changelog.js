@@ -8,6 +8,7 @@ class Changelog {
         this.footer = null;
         this.url = null;
         this.releases = [];
+        this.tagNameBuilder = null;
     }
 
     addRelease(release) {
@@ -33,6 +34,14 @@ class Changelog {
 
     sortReleases() {
         this.releases.sort((a, b) => a.compare(b));
+    }
+
+    tagName(release) {
+        if (this.tagNameBuilder) {
+            return this.tagNameBuilder(release);
+        }
+
+        return `v${release.version}`;
     }
 
     toString() {
