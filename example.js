@@ -86,8 +86,9 @@ const changelog = new Changelog('Changelog')
             .changed('Removed some spaces before and after some titles to inline with the changelog format')
     )
     .addRelease(
-        new Release()
+        new Release('0.8.0', '2019-03-02')
             .added('New property Changelog.tagNameBuilder to customize how the tag names are generated - #10')
+            .fixed('Update `yargs-parser` dependency to v13.0.0')
     )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
