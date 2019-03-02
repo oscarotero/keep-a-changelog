@@ -47,6 +47,15 @@ const changelog = new Changelog('My project')
 console.log(changelog.toString());
 ```
 
+### Custom tag names
+
+By default, the tag names are `v` + version number. For example, the tag for the version `2.4.9` is `v2.4.9`. To change this behavior, set a new `tagNameBuilder`:
+
+```js
+const changelog = new Changelog();
+changelog.tagNameBuilder = release => `version-${release.version}`;
+```
+
 ## Cli
 
 This library provides the `changelog` command to normalize the changelog format. It reads the CHANGELOG.md file and override it with the new format:
