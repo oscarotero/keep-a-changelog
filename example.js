@@ -87,7 +87,8 @@ const changelog = new Changelog('Changelog')
     )
     .addRelease(
         new Release('0.8.0', '2019-03-02')
-            .added('New property Changelog.tagNameBuilder to customize how the tag names are generated - #10')
+            .added('New property `Changelog.tagNameBuilder` to customize how the tag names are generated - #10')
+            .added('New `Release.setDate()` function - #9')
             .fixed('Update `yargs-parser` dependency to v13.0.0')
     )
 
