@@ -18,7 +18,7 @@ class Release {
     }
 
     compare(release) {
-        if (!this.version) {
+        if (!this.version && release.version) {
             return -1;
         }
 
@@ -26,7 +26,7 @@ class Release {
             return 1;
         }
 
-        if (!this.date) {
+        if (!this.date && release.date) {
             return -1;
         }
 
@@ -142,23 +142,23 @@ class Release {
         const index = changelog.releases.indexOf(this);
 
         let offset = 1;
-        let next = changelog.releases[index + offset];
+        let previous = changelog.releases[index + offset];
 
-        while (!next.date) {
+        while (!previous.date) {
             ++offset;
-            next = changelog.releases[index + offset];
+            previous = changelog.releases[index + offset];
         }
 
         if (!this.version) {
-            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(next)}...HEAD`;
+            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(previous)}...HEAD`;
         }
 
         if (!this.date) {
-            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(next)}...HEAD`;
+            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(previous)}...HEAD`;
         }
 
         return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(
-            next
+            previous
         )}...${changelog.tagName(this)}`;
     }
 
@@ -187,7 +187,10 @@ class Release {
             return false;
         }
 
-        return changelog.releases.length > changelog.releases.indexOf(this) + 1;
+        const index = changelog.releases.indexOf(this);
+        const next = changelog.releases[index + 1];
+
+        return next && next.version && next.date;
     }
 }
 

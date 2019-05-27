@@ -91,6 +91,10 @@ const changelog = new Changelog('Changelog')
             .added('New `Release.setDate()` function - #9')
             .fixed('Update `yargs-parser` dependency to v13.0.0')
     )
+    .addRelease(
+        new Release('0.8.1', '2019-05-27')
+            .fixed('Support for more than one unreleased version')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
