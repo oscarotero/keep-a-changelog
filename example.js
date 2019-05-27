@@ -94,6 +94,7 @@ const changelog = new Changelog('Changelog')
     .addRelease(
         new Release('0.8.1', '2019-05-27')
             .fixed('Support for more than one unreleased version')
+            .fixed('Updated semver to the latest version')
     )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';

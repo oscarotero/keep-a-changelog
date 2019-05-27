@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.8.1] - 2019-05-27
 ### Fixed
 - Support for more than one unreleased version
+- Updated semver to the latest version
 
 ## [0.8.0] - 2019-03-02
 ### Added
