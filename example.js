@@ -96,6 +96,11 @@ const changelog = new Changelog('Changelog')
             .fixed('Support for more than one unreleased version')
             .fixed('Updated semver to the latest version')
     )
+    .addRelease(
+        new Release('0.8.2')
+            .added('Allow to customize the HEAD branch to compare the unreleased versions')
+            .fixed('Compare with master branch in gitlab')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

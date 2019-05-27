@@ -5,6 +5,7 @@ class Changelog {
     constructor(title, description = '') {
         this.title = title;
         this.description = description;
+        this.head = 'HEAD';
         this.footer = null;
         this.url = null;
         this.releases = [];
