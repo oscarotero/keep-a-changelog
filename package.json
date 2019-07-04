@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "gitconfiglocal": "^2.1.0",
+    "moment": "^2.24.0",
     "semver": "^6.1.0",
     "yargs-parser": "^13.0.0"
   },
