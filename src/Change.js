@@ -12,7 +12,7 @@ class Change {
         if (this.description) {
             t.push('');
 
-            t = t.concat(this.description.split('\n').map(line => `  ${line}`));
+            t = t.concat(this.description.split('\n').map(line => `  ${line.trim()}`));
         }
 
         return t.join('\n').trim();
