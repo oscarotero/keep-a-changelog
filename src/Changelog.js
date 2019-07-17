@@ -5,7 +5,7 @@ const Semver = require('semver');
 class Changelog {
   constructor(title, description = '') {
     this.title = title;
-    this.description = description;
+    this.description = description.trim();
     this.footer = null;
     this.url = null;
     this.releases = [];
