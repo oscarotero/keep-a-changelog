@@ -117,17 +117,17 @@ class Release {
     let t = [];
 
     if (this.version) {
-      //if (this.hasCompareLink(changelog)) {
-      t.push(`## [${this.version}] - ${this._formatDate(this.date)}`);
-      /*} else {
+      if (this.hasCompareLink(changelog)) {
+        t.push(`## [${this.version}] - ${this._formatDate(this.date)}`);
+      } else {
         t.push(`## ${this.version} - ${this._formatDate(this.date)}`);
-      }*/
+      }
     } else {
-      //if (this.hasCompareLink(changelog)) {
-      t.push('## [Unreleased]');
-      /*} else {
+      if (this.hasCompareLink(changelog)) {
+        t.push('## [Unreleased]');
+      } else {
         t.push('## Unreleased');
-      }*/
+      }
     }
 
     if (this.description.trim()) {

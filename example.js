@@ -3,6 +3,16 @@ const { Changelog, Release } = require('./src');
 const file = __dirname + '/CHANGELOG.md';
 
 const changelog = new Changelog('Changelog')
+    .setConfigs({
+        changesLabels: {
+        added: '### Added',
+        changed: '### Changed',
+        deprecated: '### Deprecated',
+        removed: '### Removed',
+        fixed: '### Fixed',
+        security: '### Security',
+        },
+    })
     .addRelease(
         new Release('0.1.0', '2017-12-07', 'First version')
     )
