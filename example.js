@@ -2,6 +2,8 @@ const fs = require('fs');
 const { Changelog, Release } = require('./src');
 const file = __dirname + '/CHANGELOG.md';
 
+Release.DATE_FORMAT = 'YYYY/MM/DD';
+
 const changelog = new Changelog('Changelog')
     .setConfigs({
         changesLabels: {
