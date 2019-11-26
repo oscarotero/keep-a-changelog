@@ -97,9 +97,11 @@ const changelog = new Changelog('Changelog')
             .fixed('Updated semver to the latest version')
     )
     .addRelease(
-        new Release('0.8.2')
+        new Release('0.8.2', '2019-11-26')
             .added('Allow to customize the HEAD branch to compare the unreleased versions')
             .fixed('Compare with master branch in gitlab')
+            .fixed('Nested lists were flatten')
+            .fixed('Updated yargs-parser')
     )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';

@@ -6,7 +6,7 @@ class Change {
     }
 
     toString() {
-        let t = this.title.split('\n').map(line => `  ${line.trim()}`);
+        let t = this.title.split('\n').map(line => `  ${line}`);
         t[0] = '-' + t[0].substr(1);
 
         if (this.description) {

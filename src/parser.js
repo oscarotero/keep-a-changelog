@@ -121,20 +121,22 @@ function tokenize(markdown) {
                 return ['link', [line.trim()]];
             }
 
-            return ['p', [line]];
+            return ['p', [line.trimEnd()]];
         })
-        .forEach((line, index, lines) => {
+        .forEach((line, index) => {
             const [type, [content]] = line;
 
             if (index > 0) {
-                const [prevType] = lines[index - 1];
+                const prevType = tokens[0][1];
 
-                switch (type) {
-                    case 'p':
-                        if (prevType === 'p' || prevType === 'li') {
-                            return tokens[0][2].push(content);
-                        }
-                        break;
+                if (type === 'p') {
+                    if (prevType === 'p') {
+                        return tokens[0][2].push(content);
+                    }
+
+                    if (prevType === 'li') {
+                        return tokens[0][2].push(content.replace(/^\s\s/, ''));
+                    }
                 }
             }
 

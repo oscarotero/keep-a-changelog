@@ -150,11 +150,15 @@ class Release {
         }
 
         if (!this.version) {
-            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(previous)}...${changelog.head}`;
+            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(previous)}...${
+                changelog.head
+            }`;
         }
 
         if (!this.date) {
-            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(previous)}...${changelog.head}`;
+            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(previous)}...${
+                changelog.head
+            }`;
         }
 
         return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(
