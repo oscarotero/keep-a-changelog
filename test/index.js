@@ -8,7 +8,7 @@ const expected = fs.readFileSync(__dirname + '/changelog.expected.md', 'UTF-8');
 const emptyExpected = fs.readFileSync(__dirname + '/empty.expected.md', 'UTF-8');
 
 //fs.writeFileSync(__dirname + '/changelog.expected.md', changelog.toString());
-console.log(changelog.toString());
+// console.log(changelog.toString());
 
 describe('Changelog testing', function() {
     it('should generate an empty changelog', function() {

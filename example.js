@@ -103,6 +103,10 @@ const changelog = new Changelog('Changelog')
             .fixed('Nested lists were flatten')
             .fixed('Updated yargs-parser')
     )
+    .addRelease(
+        new Release('0.9.0', '2019-11-26')
+            .removed('Support for node < 10')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
