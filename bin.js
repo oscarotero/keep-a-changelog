@@ -68,7 +68,7 @@ function getHttpUrl(remoteUrl) {
 function save(file, changelog, isNew) {
     const url = changelog.url;
 
-    if (url && url.contains('gitlab.com')) {
+    if (url && url.includes('gitlab.com')) {
         changelog.head = 'master';
     }
 

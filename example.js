@@ -107,6 +107,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.9.0', '2019-11-26')
             .removed('Support for node < 10')
     )
+    .addRelease(
+        new Release('0.9.1', '2019-11-26')
+            .fixed('Undefined function bug in CLI')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
