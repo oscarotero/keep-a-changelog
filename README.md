@@ -55,6 +55,41 @@ By default, the tag names are `v` + version number. For example, the tag for the
 const changelog = new Changelog();
 changelog.tagNameBuilder = release => `version-${release.version}`;
 ```
+### Custom Change Types
+
+By default and according to the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format, the change types are
+`Added`,
+`Changed`,
+`Deprecated`,
+`Removed`,
+`Fixed`,
+and `Security`.
+In case you'd like add another type in order to use is in your changelog, you basically need to extend the `Release` class to support new types. Additionally, you have to tell the `parser` that it should create instances of your new extended `Release` in order to parse your changelog correctly.
+
+For example, we would like to add a type `Maintenance`.
+Extend the provided `Release` class:
+```js
+class CustomRelease extends Release {
+    constructor(version, date, description) {
+        super(version, date, description);
+        // add whatever types you want - in lowercase
+        const newChangeTypes = [
+            ['maintenance', []]
+        ];
+
+        this.changes = new Map([...this.changes, ...newChangeTypes]);
+    }
+    // for convenience, add a new method to add change of type 'maintanance'
+    maintenance(change) {
+        return this.addChange('maintenance', change);
+    }
+}
+```
+And once you want to use the parser:
+```js
+const releaseCreator = (ver, date, desc) => new CustomRelease(ver, date, desc)
+const changelog = parser(changelogTextContent, {releaseCreator})
+```
 
 ## Cli
 

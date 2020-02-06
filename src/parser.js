@@ -2,17 +2,23 @@ const Changelog = require('./Changelog');
 const Change = require('./Change');
 const Release = require('./Release');
 
-module.exports = function parser(markdown) {
+const defaultOptions = {
+    releaseCreator: function(version, date, description) {
+        return new Release(version, date, description);
+    }
+};
+module.exports = function parser(markdown, options) {
+    const opts = Object.assign({}, defaultOptions, options);
     const tokens = tokenize(markdown);
 
     try {
-        return parseTokens(tokens);
+        return parseTokens(tokens, opts);
     } catch (error) {
         throw new Error(`Parse error in the line ${tokens[0][0]}: ${error.message}`);
     }
 };
 
-function parseTokens(tokens) {
+function parseTokens(tokens, opts) {
     const changelog = new Changelog();
 
     changelog.title = getContent(tokens, 'h1', true);
@@ -25,10 +31,10 @@ function parseTokens(tokens) {
         const matches = release.match(/\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/);
 
         if (matches) {
-            release = new Release(matches[1], matches[2]);
+            release = opts.releaseCreator(matches[1], matches[2]);
         } else if (release.includes('unreleased')) {
             const matches = release.match(/\[?([^\]]+)\]?\s*-\s*unreleased$/);
-            release = matches ? new Release(matches[1]) : new Release();
+            release = matches ? opts.releaseCreator(matches[1]) : opts.releaseCreator();
         } else {
             throw new Error(`Syntax error in the release title`);
         }

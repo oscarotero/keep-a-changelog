@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { parser, Changelog, Release } = require('../src');
+const { customReleaseCreator } = require('./fixture/CustomRelease');
 const assert = require('assert');
 const Semver = require('semver');
 
@@ -140,6 +141,24 @@ describe('Release testing', function() {
             assert.equal(release.date.getUTCFullYear(), 2019);
             assert.equal(release.date.getUTCMonth() + 1, 2);
             assert.equal(release.date.getUTCDate(), 2);
+        });
+    });
+    describe('extending Release with custom type: Maintenance', function() {
+        it('adds a change with a new method maintenance()', function() {
+            assert.equal(customReleaseCreator().maintenance('maintenance').isEmpty(), false);
+        });
+        it('creates release entry with Maintanace subsection', function() {
+            const release = customReleaseCreator()
+                .maintenance('upgrade')
+                .maintenance('fix vulnerabilities');
+            const expectedResult = [
+                '## Unreleased',
+                '### Maintenance',
+                '- upgrade',
+                '- fix vulnerabilities'
+            ].join('\n');
+
+            assert.equal(release.toString(), expectedResult);
         });
     });
 });
