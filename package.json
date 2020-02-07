@@ -34,7 +34,7 @@
     "prettier": "^1.19.1"
   },
   "scripts": {
-    "prettier": "prettier src/*.js test/*.js bin.js --single-quote --tab-width 4 --print-width 100 --write",
+    "prettier": "prettier src/*.js test/**/*.js bin.js --single-quote --tab-width 4 --print-width 100 --write",
     "test": "mocha test",
     "changelog": "node example.js"
   }
