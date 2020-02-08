@@ -1,5 +1,5 @@
 const Release = require('./Release');
-const Semver = require('semver');
+const eq = require('semver/functions/eq');
 
 class Changelog {
     constructor(title, description = '') {
@@ -28,9 +28,7 @@ class Changelog {
         if (!version) {
             return this.releases.find(release => !release.version);
         }
-        return this.releases.find(
-            release => release.version && Semver.eq(release.version, version)
-        );
+        return this.releases.find(release => release.version && eq(release.version, version));
     }
 
     sortReleases() {

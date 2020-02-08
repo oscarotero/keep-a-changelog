@@ -1,12 +1,10 @@
 const Changelog = require('./Changelog');
-const Change = require('./Change');
 const Release = require('./Release');
 
 const defaultOptions = {
-    releaseCreator: function(version, date, description) {
-        return new Release(version, date, description);
-    }
+    releaseCreator: (version, date, description) => new Release(version, date, description)
 };
+
 module.exports = function parser(markdown, options) {
     const opts = Object.assign({}, defaultOptions, options);
     const tokens = tokenize(markdown);

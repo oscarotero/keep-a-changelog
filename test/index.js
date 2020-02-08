@@ -2,7 +2,7 @@ const fs = require('fs');
 const { parser, Changelog, Release } = require('../src');
 const { customReleaseCreator } = require('./fixture/CustomRelease');
 const assert = require('assert');
-const Semver = require('semver');
+const Semver = require('semver/classes/semver');
 
 const changelog = parser(fs.readFileSync(__dirname + '/changelog.md', 'UTF-8'));
 const expected = fs.readFileSync(__dirname + '/changelog.expected.md', 'UTF-8');

@@ -111,6 +111,12 @@ const changelog = new Changelog('Changelog')
         new Release('0.9.1', '2019-11-26')
             .fixed('Undefined function bug in CLI')
     )
+    .addRelease(
+        new Release('0.10.0', '2020-02-08')
+            .added('Documentation to extend `Release` class + test coverage #12 #13')
+            .added('Ability to use extended `Release` within `parser` #12 #13')
+            .fixed('Upgrade semver and mocha to the latest version')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

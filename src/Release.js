@@ -1,4 +1,4 @@
-const Semver = require('semver');
+const Semver = require('semver/classes/semver');
 const Change = require('./Change');
 
 class Release {
