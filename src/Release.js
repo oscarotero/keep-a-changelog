@@ -13,7 +13,7 @@ class Release {
             ['deprecated', []],
             ['removed', []],
             ['fixed', []],
-            ['security', []]
+            ['security', []],
         ]);
     }
 
@@ -42,7 +42,7 @@ class Release {
             return false;
         }
 
-        return Array.from(this.changes.values()).every(change => !change.length);
+        return Array.from(this.changes.values()).every((change) => !change.length);
     }
 
     setVersion(version) {
@@ -126,7 +126,7 @@ class Release {
         this.changes.forEach((changes, type) => {
             if (changes.length) {
                 t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
-                t = t.concat(changes.map(change => change.toString()));
+                t = t.concat(changes.map((change) => change.toString()));
                 t.push('');
             }
         });
@@ -173,9 +173,9 @@ class Release {
             return links;
         }
 
-        this.changes.forEach(changes =>
-            changes.forEach(change => {
-                change.issues.forEach(issue => {
+        this.changes.forEach((changes) =>
+            changes.forEach((change) => {
+                change.issues.forEach((issue) => {
                     if (!links.includes(issue)) {
                         links.push(`[#${issue}]: ${changelog.url}/issues/${issue}`);
                     }

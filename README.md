@@ -111,6 +111,19 @@ To generate an empty new CHANGELOG.md file:
 changelog --init
 ```
 
+You can release automatically the latest "Unreleased" version:
+
+```sh
+changelog --release
+```
+
+And return the latest released version:
+
+```sh
+changelog --latest-release
+> 0.3.1
+```
+
 Available options:
 
 Option | Description
@@ -119,3 +132,5 @@ Option | Description
 `--url` | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository.
 `--https` | Set to false to use `http` instead `https` in the url (`--https=false`).
 `--init` | Init a new empty changelog file.
+`--latest-release` | Print the latest release version.
+`--release` | Updated the latest unreleased version with the current date.

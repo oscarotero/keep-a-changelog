@@ -8,9 +8,9 @@ const argv = require('yargs-parser')(process.argv.slice(2), {
     default: {
         file: 'CHANGELOG.md',
         url: null,
-        https: true
+        https: true,
     },
-    boolean: ['https', 'init']
+    boolean: ['https', 'init', 'latest-release', 'release'],
 });
 
 const file = path.join(process.cwd(), argv.file);
@@ -26,6 +26,26 @@ try {
     }
 
     const changelog = parser(fs.readFileSync(file, 'UTF-8'));
+
+    if (argv.latestRelease) {
+        const release = changelog.releases.find((release) => release.date && release.version);
+
+        if (release) {
+            console.log(release.version.toString());
+        }
+
+        process.exit(0);
+    }
+
+    if (argv.release) {
+        const release = changelog.releases.find((release) => {
+            return !release.date && release.version;
+        });
+
+        if (release) {
+            release.date = new Date();
+        }
+    }
 
     if (!changelog.url && !argv.url) {
         const gitconfig = require('gitconfiglocal');

@@ -117,6 +117,13 @@ const changelog = new Changelog('Changelog')
             .added('Ability to use extended `Release` within `parser` #12 #13')
             .fixed('Upgrade semver and mocha to the latest version')
     )
+    .addRelease(
+        new Release('0.10.1', '2020-05-04')
+            .added('New command --latest-release added to cli')
+            .added('New command --release added to cli')
+            .fixed('Removed trailing space in the default description generated with --init')
+            .fixed('Updated dependencies')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 

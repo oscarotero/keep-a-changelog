@@ -14,7 +14,7 @@ class CustomRelease extends Release {
 }
 
 module.exports = {
-    customReleaseCreator: function(version, date, description) {
+    customReleaseCreator: function (version, date, description) {
         return new CustomRelease(version, date, description);
-    }
+    },
 };

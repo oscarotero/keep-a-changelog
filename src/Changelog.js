@@ -26,9 +26,9 @@ class Changelog {
 
     findRelease(version) {
         if (!version) {
-            return this.releases.find(release => !release.version);
+            return this.releases.find((release) => !release.version);
         }
-        return this.releases.find(release => release.version && eq(release.version, version));
+        return this.releases.find((release) => release.version && eq(release.version, version));
     }
 
     sortReleases() {
@@ -53,7 +53,7 @@ class Changelog {
             this.description.trim() ||
             `All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).`;
 
         if (description) {
@@ -61,11 +61,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
             t.push(description);
         }
 
-        this.releases.forEach(release => {
+        this.releases.forEach((release) => {
             t.push('');
             t.push(release.toString(this));
 
-            release.getLinks(this).forEach(link => {
+            release.getLinks(this).forEach((link) => {
                 if (!links.includes(link)) {
                     links.push(link);
                 }
@@ -81,13 +81,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
         if (links.length) {
             t.push('');
             links.sort(compare);
-            links.forEach(link => t.push(link));
+            links.forEach((link) => t.push(link));
         }
 
         if (compareLinks.length) {
             t.push('');
 
-            compareLinks.forEach(link => t.push(link));
+            compareLinks.forEach((link) => t.push(link));
         }
 
         t.push('');

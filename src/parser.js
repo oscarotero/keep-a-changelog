@@ -2,7 +2,7 @@ const Changelog = require('./Changelog');
 const Release = require('./Release');
 
 const defaultOptions = {
-    releaseCreator: (version, date, description) => new Release(version, date, description)
+    releaseCreator: (version, date, description) => new Release(version, date, description),
 };
 
 module.exports = function parser(markdown, options) {
@@ -96,7 +96,7 @@ function tokenize(markdown) {
     markdown
         .trim()
         .split('\n')
-        .map(line => {
+        .map((line) => {
             if (line.startsWith('---')) {
                 return ['hr', ['-']];
             }
@@ -148,8 +148,8 @@ function tokenize(markdown) {
         });
 
     return tokens
-        .filter(token => !isEmpty(token[2]))
-        .map(token => {
+        .filter((token) => !isEmpty(token[2]))
+        .map((token) => {
             const content = token[2];
 
             while (isEmpty(content[content.length - 1])) {
