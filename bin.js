@@ -1,110 +1,113 @@
-#!/usr/bin/env node
+#!/usr/bin/env deno
 
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
-const { parser, Changelog, Release } = require('./src');
-const argv = require('yargs-parser')(process.argv.slice(2), {
-    default: {
-        file: 'CHANGELOG.md',
-        url: null,
-        https: true,
-    },
-    boolean: ['https', 'init', 'latest-release', 'release'],
+import { writeFileStr, readFileStr } from "https://deno.land/std/fs/mod.ts";
+import { join as joinPath } from "https://deno.land/std/path/mod.ts";
+import { parser, Changelog, Release } from "./mod.js";
+import { parse as parseFlag } from "https://deno.land/std/flags/mod.ts";
+
+const argv = parseFlag(Deno.args, {
+  default: {
+    file: "CHANGELOG.md",
+    url: null,
+    https: true,
+  },
+  boolean: ["https", "init", "latest-release", "release"],
 });
 
-const file = path.join(process.cwd(), argv.file);
+const file = joinPath(Deno.cwd(), argv.file);
 
 try {
-    if (argv.init) {
-        const changelog = new Changelog('Changelog').addRelease(
-            new Release('0.1.0', new Date(), 'First version')
-        );
+  if (argv.init) {
+    const changelog = new Changelog("Changelog").addRelease(
+      new Release("0.1.0", new Date(), "First version"),
+    );
 
-        save(file, changelog, true);
-        process.exit(0);
+    save(file, changelog, true);
+    Deno.exit(0);
+  }
+
+  const changelog = parser(await readFileStr(file, "utf8"));
+
+  if (argv.latestRelease) {
+    const release = changelog.releases.find((release) =>
+      release.date && release.version
+    );
+
+    if (release) {
+      console.log(release.version.toString());
     }
 
-    const changelog = parser(fs.readFileSync(file, 'UTF-8'));
+    Deno.exit(0);
+  }
 
-    if (argv.latestRelease) {
-        const release = changelog.releases.find((release) => release.date && release.version);
+  if (argv.release) {
+    const release = changelog.releases.find((release) => {
+      return !release.date && release.version;
+    });
 
-        if (release) {
-            console.log(release.version.toString());
-        }
-
-        process.exit(0);
+    if (release) {
+      release.date = new Date();
     }
+  }
 
-    if (argv.release) {
-        const release = changelog.releases.find((release) => {
-            return !release.date && release.version;
-        });
+  if (!changelog.url && !argv.url) {
+    const gitconfig = require("gitconfiglocal");
 
-        if (release) {
-            release.date = new Date();
-        }
-    }
+    gitconfig(Deno.cwd(), (err, config) => {
+      if (err) {
+        console.error(red(err));
+        return;
+      }
 
-    if (!changelog.url && !argv.url) {
-        const gitconfig = require('gitconfiglocal');
-
-        gitconfig(process.cwd(), (err, config) => {
-            if (err) {
-                console.error(red(err));
-                return;
-            }
-
-            changelog.url = getHttpUrl(
-                config.remote && config.remote.origin && config.remote.origin.url
-            );
-            save(file, changelog);
-        });
-    } else {
-        changelog.url = getHttpUrl(argv.url || changelog.url);
-        save(file, changelog);
-    }
+      changelog.url = getHttpUrl(
+        config.remote && config.remote.origin && config.remote.origin.url,
+      );
+      save(file, changelog);
+    });
+  } else {
+    changelog.url = getHttpUrl(argv.url || changelog.url);
+    save(file, changelog);
+  }
 } catch (err) {
-    console.error(red(err.message));
+  console.error(red(err.message));
 }
 
 function getHttpUrl(remoteUrl) {
-    if (!remoteUrl) {
-        return;
-    }
+  if (!remoteUrl) {
+    return;
+  }
 
-    const parsed = url.parse(remoteUrl.replace('git@', `https://`));
+  const url = new URL(remoteUrl.replace("git@", `https://`));
 
-    if (!argv.https) {
-        parsed.protocol = 'http';
-    }
+  if (!argv.https) {
+    url.protocol = "http";
+  }
 
-    parsed.pathname = parsed.pathname.replace(/\.git$/, '').replace(/^\/\:/, '/');
+  url.pathname = url.pathname.replace(/\.git$/, "").replace(/^\/\:/, "/");
 
-    return url.format(parsed);
+  return url.toString();
 }
 
 function save(file, changelog, isNew) {
-    const url = changelog.url;
+  const url = changelog.url;
 
-    if (url && url.includes('gitlab.com')) {
-        changelog.head = 'master';
-    }
+  if (url && url.includes("gitlab.com")) {
+    changelog.head = "master";
+  }
 
-    fs.writeFileSync(file, changelog.toString());
+  writeFileStr(file, changelog.toString());
 
-    if (isNew) {
-        console.log(green('Generated new file'), file);
-    } else {
-        console.log(green('Updated file'), file);
-    }
+  if (isNew) {
+    console.log(green("Generated new file"), file);
+  } else {
+    console.log(green("Updated file"), file);
+  }
 }
 
 function red(message) {
-    return '\u001b[' + 31 + 'm' + message + '\u001b[' + 39 + 'm';
+  return "\u001b[" + 31 + "m" + message + "\u001b[" + 39 + "m";
 }
 
 function green(message) {
-    return '\u001b[' + 32 + 'm' + message + '\u001b[' + 39 + 'm';
+  return "\u001b[" + 32 + "m" + message + "\u001b[" + 39 + "m";
 }

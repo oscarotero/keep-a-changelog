@@ -1,220 +1,220 @@
-const Semver = require('semver/classes/semver');
-const Change = require('./Change');
+import { Semver } from "./deps.js";
+import Change from "./Change.js";
 
-class Release {
-    constructor(version, date, description = '') {
-        this.setVersion(version);
-        this.setDate(date);
+export default class Release {
+  constructor(version, date, description = "") {
+    this.setVersion(version);
+    this.setDate(date);
 
-        this.description = description;
-        this.changes = new Map([
-            ['added', []],
-            ['changed', []],
-            ['deprecated', []],
-            ['removed', []],
-            ['fixed', []],
-            ['security', []],
-        ]);
+    this.description = description;
+    this.changes = new Map([
+      ["added", []],
+      ["changed", []],
+      ["deprecated", []],
+      ["removed", []],
+      ["fixed", []],
+      ["security", []],
+    ]);
+  }
+
+  compare(release) {
+    if (!this.version && release.version) {
+      return -1;
     }
 
-    compare(release) {
-        if (!this.version && release.version) {
-            return -1;
-        }
-
-        if (!release.version) {
-            return 1;
-        }
-
-        if (!this.date && release.date) {
-            return -1;
-        }
-
-        if (!release.date) {
-            return 1;
-        }
-
-        return -this.version.compare(release.version);
+    if (!release.version) {
+      return 1;
     }
 
-    isEmpty() {
-        if (this.description.trim()) {
-            return false;
-        }
-
-        return Array.from(this.changes.values()).every((change) => !change.length);
+    if (!this.date && release.date) {
+      return -1;
     }
 
-    setVersion(version) {
-        if (typeof version === 'string') {
-            version = new Semver(version);
-        }
-        this.version = version;
-        //Re-sort the releases of the parent changelog
-        if (this.changelog) {
-            this.changelog.sortReleases();
-        }
+    if (!release.date) {
+      return 1;
     }
 
-    setDate(date) {
-        if (typeof date === 'string') {
-            date = new Date(date);
-        }
-        this.date = date;
+    return -this.version.compare(release.version);
+  }
+
+  isEmpty() {
+    if (this.description.trim()) {
+      return false;
     }
 
-    addChange(type, change) {
-        if (!(change instanceof Change)) {
-            change = new Change(change);
-        }
+    return Array.from(this.changes.values()).every((change) => !change.length);
+  }
 
-        if (!this.changes.has(type)) {
-            throw new Error('Invalid change type');
-        }
+  setVersion(version) {
+    if (typeof version === "string") {
+      version = new Semver(version);
+    }
+    this.version = version;
+    //Re-sort the releases of the parent changelog
+    if (this.changelog) {
+      this.changelog.sortReleases();
+    }
+  }
 
-        this.changes.get(type).push(change);
+  setDate(date) {
+    if (typeof date === "string") {
+      date = new Date(date);
+    }
+    this.date = date;
+  }
 
-        return this;
+  addChange(type, change) {
+    if (!(change instanceof Change)) {
+      change = new Change(change);
     }
 
-    added(change) {
-        return this.addChange('added', change);
+    if (!this.changes.has(type)) {
+      throw new Error("Invalid change type");
     }
 
-    changed(change) {
-        return this.addChange('changed', change);
+    this.changes.get(type).push(change);
+
+    return this;
+  }
+
+  added(change) {
+    return this.addChange("added", change);
+  }
+
+  changed(change) {
+    return this.addChange("changed", change);
+  }
+
+  deprecated(change) {
+    return this.addChange("deprecated", change);
+  }
+
+  removed(change) {
+    return this.addChange("removed", change);
+  }
+
+  fixed(change) {
+    return this.addChange("fixed", change);
+  }
+
+  security(change) {
+    return this.addChange("security", change);
+  }
+
+  toString(changelog) {
+    let t = [];
+
+    if (this.version) {
+      if (this.hasCompareLink(changelog)) {
+        t.push(`## [${this.version}] - ${formatDate(this.date)}`);
+      } else {
+        t.push(`## ${this.version} - ${formatDate(this.date)}`);
+      }
+    } else {
+      if (this.hasCompareLink(changelog)) {
+        t.push("## [Unreleased]");
+      } else {
+        t.push("## Unreleased");
+      }
     }
 
-    deprecated(change) {
-        return this.addChange('deprecated', change);
+    if (this.description.trim()) {
+      t.push(this.description.trim());
+      t.push("");
     }
 
-    removed(change) {
-        return this.addChange('removed', change);
+    this.changes.forEach((changes, type) => {
+      if (changes.length) {
+        t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
+        t = t.concat(changes.map((change) => change.toString()));
+        t.push("");
+      }
+    });
+
+    return t.join("\n").trim();
+  }
+
+  getCompareLink(changelog) {
+    if (!this.hasCompareLink(changelog)) {
+      return;
     }
 
-    fixed(change) {
-        return this.addChange('fixed', change);
+    const index = changelog.releases.indexOf(this);
+
+    let offset = 1;
+    let previous = changelog.releases[index + offset];
+
+    while (!previous.date) {
+      ++offset;
+      previous = changelog.releases[index + offset];
     }
 
-    security(change) {
-        return this.addChange('security', change);
+    if (!this.version) {
+      return `[Unreleased]: ${changelog.url}/compare/${
+        changelog.tagName(previous)
+      }...${changelog.head}`;
     }
 
-    toString(changelog) {
-        let t = [];
+    if (!this.date) {
+      return `[${this.version}]: ${changelog.url}/compare/${
+        changelog.tagName(previous)
+      }...${changelog.head}`;
+    }
 
-        if (this.version) {
-            if (this.hasCompareLink(changelog)) {
-                t.push(`## [${this.version}] - ${formatDate(this.date)}`);
-            } else {
-                t.push(`## ${this.version} - ${formatDate(this.date)}`);
-            }
-        } else {
-            if (this.hasCompareLink(changelog)) {
-                t.push('## [Unreleased]');
-            } else {
-                t.push('## Unreleased');
-            }
-        }
+    return `[${this.version}]: ${changelog.url}/compare/${
+      changelog.tagName(
+        previous,
+      )
+    }...${changelog.tagName(this)}`;
+  }
 
-        if (this.description.trim()) {
-            t.push(this.description.trim());
-            t.push('');
-        }
+  getLinks(changelog) {
+    const links = [];
 
-        this.changes.forEach((changes, type) => {
-            if (changes.length) {
-                t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
-                t = t.concat(changes.map((change) => change.toString()));
-                t.push('');
-            }
+    if (!changelog.url) {
+      return links;
+    }
+
+    this.changes.forEach((changes) =>
+      changes.forEach((change) => {
+        change.issues.forEach((issue) => {
+          if (!links.includes(issue)) {
+            links.push(`[#${issue}]: ${changelog.url}/issues/${issue}`);
+          }
         });
+      })
+    );
 
-        return t.join('\n').trim();
+    return links;
+  }
+
+  hasCompareLink(changelog) {
+    if (!changelog || !changelog.url || !changelog.releases.length) {
+      return false;
     }
 
-    getCompareLink(changelog) {
-        if (!this.hasCompareLink(changelog)) {
-            return;
-        }
+    const index = changelog.releases.indexOf(this);
+    const next = changelog.releases[index + 1];
 
-        const index = changelog.releases.indexOf(this);
-
-        let offset = 1;
-        let previous = changelog.releases[index + offset];
-
-        while (!previous.date) {
-            ++offset;
-            previous = changelog.releases[index + offset];
-        }
-
-        if (!this.version) {
-            return `[Unreleased]: ${changelog.url}/compare/${changelog.tagName(previous)}...${
-                changelog.head
-            }`;
-        }
-
-        if (!this.date) {
-            return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(previous)}...${
-                changelog.head
-            }`;
-        }
-
-        return `[${this.version}]: ${changelog.url}/compare/${changelog.tagName(
-            previous
-        )}...${changelog.tagName(this)}`;
-    }
-
-    getLinks(changelog) {
-        const links = [];
-
-        if (!changelog.url) {
-            return links;
-        }
-
-        this.changes.forEach((changes) =>
-            changes.forEach((change) => {
-                change.issues.forEach((issue) => {
-                    if (!links.includes(issue)) {
-                        links.push(`[#${issue}]: ${changelog.url}/issues/${issue}`);
-                    }
-                });
-            })
-        );
-
-        return links;
-    }
-
-    hasCompareLink(changelog) {
-        if (!changelog || !changelog.url || !changelog.releases.length) {
-            return false;
-        }
-
-        const index = changelog.releases.indexOf(this);
-        const next = changelog.releases[index + 1];
-
-        return next && next.version && next.date;
-    }
+    return next && next.version && next.date;
+  }
 }
 
-module.exports = Release;
-
 function formatDate(date) {
-    if (!date) {
-        return 'Unreleased';
-    }
+  if (!date) {
+    return "Unreleased";
+  }
 
-    let year = date.getUTCFullYear(),
-        month = date.getUTCMonth() + 1,
-        day = date.getUTCDate();
+  let year = date.getUTCFullYear(),
+    month = date.getUTCMonth() + 1,
+    day = date.getUTCDate();
 
-    if (month < 10) {
-        month = '0' + month;
-    }
-    if (day < 10) {
-        day = '0' + day;
-    }
+  if (month < 10) {
+    month = "0" + month;
+  }
+  if (day < 10) {
+    day = "0" + day;
+  }
 
-    return `${year}-${month}-${day}`;
+  return `${year}-${month}-${day}`;
 }

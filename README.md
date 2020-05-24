@@ -1,25 +1,19 @@
 # keep-a-changelog
 
-[![Build Status](https://travis-ci.org/oscarotero/keep-a-changelog.svg?branch=master)](https://travis-ci.org/oscarotero/keep-a-changelog)
+[Keep a Changelog](https://github.com/oscarotero/keep-a-changelog) library for Deno
 
-Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
+[![Build Status](https://travis-ci.org/oscarotero/keep-a-changelog.svg?branch=deno)](https://travis-ci.org/oscarotero/keep-a-changelog)
 
-## Install
-
-You can install it from the [npm repository](https://www.npmjs.com/package/keep-a-changelog) using npm/yarn:
-
-```sh
-npm install keep-a-changelog
-```
+Deno package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
 
 ## Usage
 
 ```js
-const { parser } = require('keep-a-changelog');
-const fs = require('fs');
+import { parser } from 'https://deno.land/x/keep-a-changelog/mod.ts';
+import { writeFileStr } from "https://deno.land/std/fs/mod.ts";
 
 //Parse a changelog file
-const changelog = parser(fs.readFileSync('CHANGELOG.md', 'UTF-8'));
+const changelog = parser(await writeFileStr('CHANGELOG.md', 'utf8'));
 
 //Generate the new changelog string
 console.log(changelog.toString());
@@ -28,7 +22,7 @@ console.log(changelog.toString());
 ### Create a new changelog
 
 ```js
-const { Changelog, Release } = require('keep-a-changelog');
+import { Changelog, Release } from 'https://deno.land/x/keep-a-changelog/mod.ts';
 
 const changelog = new Changelog('My project')
     .addRelease(
@@ -55,6 +49,7 @@ By default, the tag names are `v` + version number. For example, the tag for the
 const changelog = new Changelog();
 changelog.tagNameBuilder = release => `version-${release.version}`;
 ```
+
 ### Custom Change Types
 
 By default and according to the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format, the change types are
@@ -64,10 +59,12 @@ By default and according to the [keepachangelog](http://keepachangelog.com/en/1.
 `Removed`,
 `Fixed`,
 and `Security`.
+
 In case you'd like add another type in order to use is in your changelog, you basically need to extend the `Release` class to support new types. Additionally, you have to tell the `parser` that it should create instances of your new extended `Release` in order to parse your changelog correctly.
 
 For example, we would like to add a type `Maintenance`.
 Extend the provided `Release` class:
+
 ```js
 class CustomRelease extends Release {
     constructor(version, date, description) {
@@ -85,7 +82,9 @@ class CustomRelease extends Release {
     }
 }
 ```
+
 And once you want to use the parser:
+
 ```js
 const releaseCreator = (ver, date, desc) => new CustomRelease(ver, date, desc)
 const changelog = parser(changelogTextContent, {releaseCreator})
