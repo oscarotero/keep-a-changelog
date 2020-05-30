@@ -1,6 +1,6 @@
 import { writeFileStr } from "https://deno.land/std/fs/mod.ts";
 import { Changelog, Release } from "./mod.js";
-import { __dirname } from "./mod.js";
+import { __dirname } from "./deps.js";
 
 const path = __dirname(import.meta.url);
 const file = path("CHANGELOG.md");

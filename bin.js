@@ -1,7 +1,7 @@
 #!/usr/bin/env deno
 
 import { writeFileStr, readFileStr } from "https://deno.land/std/fs/mod.ts";
-import { join as joinPath } from "https://deno.land/std/path/mod.ts";
+import { join } from "https://deno.land/std/path/mod.ts";
 import { parser, Changelog, Release } from "./mod.js";
 import { parse as parseFlag } from "https://deno.land/std/flags/mod.ts";
 
@@ -14,7 +14,7 @@ const argv = parseFlag(Deno.args, {
   boolean: ["https", "init", "latest-release", "release"],
 });
 
-const file = joinPath(Deno.cwd(), argv.file);
+const file = join(Deno.cwd(), argv.file);
 
 try {
   if (argv.init) {

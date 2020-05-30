@@ -1,7 +1,7 @@
 import { parser, Changelog, Release } from "../mod.js";
 import { readFileStr } from "https://deno.land/std/fs/mod.ts";
 import customRelease from "./fixture/CustomRelease.js";
-import { __dirname } from "../src/deps.js";
+import { __dirname } from "../deps.js";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 import { Semver } from "../src/deps.js";
 

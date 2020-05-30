@@ -3,7 +3,7 @@ import {
   assertThrows,
 } from "https://deno.land/std/testing/asserts.ts";
 import { readFileStr } from "https://deno.land/std/fs/mod.ts";
-import { __dirname } from "../src/deps.js";
+import { __dirname } from "../deps.js";
 import { parser } from "../mod.js";
 import releaseCreator from "./fixture/CustomRelease.js";
 
