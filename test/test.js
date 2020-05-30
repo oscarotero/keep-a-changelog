@@ -3,19 +3,15 @@ import { readFileStr } from "https://deno.land/std/fs/mod.ts";
 import customRelease from "./fixture/CustomRelease.js";
 import { __dirname } from "../src/deps.js";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
-import Semver from "../src/deps.js";
+import { Semver } from "../src/deps.js";
 
-const changelog = parser(__dirname(import.meta.url, "/changelog.md", "utf8"));
-const expected = await readFileStr(
-  __dirname(import.meta.url, "/changelog.expected.md"),
-  "utf8",
-);
-const emptyExpected = await readFileStr(
-  __dirname(import.meta.url, "/empty.expected.md"),
-  "utf8",
-);
+const path = __dirname(import.meta.url);
 
-//fs.writeFileSync(__dirname + '/changelog.expected.md', changelog.toString());
+const changelog = parser(await readFileStr(path("/changelog.md")));
+const expected = await readFileStr(path("/changelog.expected.md"));
+const emptyExpected = await readFileStr(path("/empty.expected.md"));
+
+//writeFileStr(path('/changelog.expected.md'), changelog.toString());
 // console.log(changelog.toString());
 
 Deno.test("Changelog testing", function () {
