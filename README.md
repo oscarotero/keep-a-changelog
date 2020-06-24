@@ -10,7 +10,7 @@ Deno package to parse and generate changelogs following the [keepachangelog](htt
 
 ```js
 import { parser } from 'https://deno.land/x/keep-a-changelog/mod.ts';
-import { writeFileStr } from "https://deno.land/std/fs/mod.ts";
+import { writeFileStr } from 'https://deno.land/std/fs/mod.ts';
 
 //Parse a changelog file
 const changelog = parser(await writeFileStr('CHANGELOG.md', 'utf8'));
@@ -93,6 +93,20 @@ const changelog = parser(changelogTextContent, {releaseCreator})
 ## Cli
 
 This library provides the `changelog` command to normalize the changelog format. It reads the CHANGELOG.md file and override it with the new format:
+
+### Install the library as script
+
+```sh
+deno install --allow-read --allow-write --unstable --name changelog https://raw.githubusercontent.com/oscarotero/keep-a-changelog/deno/bin.js
+```
+
+Make sure that your deno bin scripts are in the PATH
+
+```sh
+export PATH="/Users/oscarotero/.deno/bin:$PATH"
+```
+
+Run the script:
 
 ```sh
 changelog
