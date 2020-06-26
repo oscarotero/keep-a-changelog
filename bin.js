@@ -51,19 +51,10 @@ try {
   }
 
   if (!changelog.url && !argv.url) {
-    const gitconfig = require("gitconfiglocal");
+    const originUrl = run("git remote get-url origin");
 
-    gitconfig(Deno.cwd(), (err, config) => {
-      if (err) {
-        console.error(red(err));
-        return;
-      }
-
-      changelog.url = getHttpUrl(
-        config.remote && config.remote.origin && config.remote.origin.url,
-      );
-      save(file, changelog);
-    });
+    changelog.url = getHttpUrl(originUrl);
+    save(file, changelog);
   } else {
     changelog.url = getHttpUrl(argv.url || changelog.url);
     save(file, changelog);
@@ -110,4 +101,31 @@ function red(message) {
 
 function green(message) {
   return "\u001b[" + 32 + "m" + message + "\u001b[" + 39 + "m";
+}
+
+function run(...args) {
+  const process = Deno.run({
+    cmd: args,
+    stdout: "piped",
+    stderr: "piped",
+  });
+
+  const buff = new Uint8Array(1);
+  let response = "";
+  const decoder = new TextDecoder();
+
+  while (true) {
+    try {
+      let result = await process.stdout?.read(buff);
+      if (!result) {
+        break;
+      }
+
+      response = response + decoder.decode(buff);
+    } catch (ex) {
+      break;
+    }
+  }
+
+  return response;
 }

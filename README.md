@@ -97,7 +97,7 @@ This library provides the `changelog` command to normalize the changelog format.
 ### Install the library as script
 
 ```sh
-deno install --allow-read --allow-write --unstable --name changelog https://raw.githubusercontent.com/oscarotero/keep-a-changelog/deno/bin.js
+deno install --allow-read --allow-write --allow-run --unstable --name changelog https://raw.githubusercontent.com/oscarotero/keep-a-changelog/deno/bin.js
 ```
 
 Make sure that your deno bin scripts are in the PATH
