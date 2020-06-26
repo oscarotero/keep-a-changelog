@@ -51,7 +51,7 @@ try {
   }
 
   if (!changelog.url && !argv.url) {
-    const originUrl = await run("git remote get-url origin");
+    const originUrl = await run('git', 'remote', 'get-url', 'origin');
 
     changelog.url = getHttpUrl(originUrl);
     save(file, changelog);
@@ -116,7 +116,8 @@ async function run(...args) {
 
   while (true) {
     try {
-      let result = await process.stdout?.read(buff);
+      const result = await process.stdout?.read(buff);
+
       if (!result) {
         break;
       }
