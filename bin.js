@@ -51,32 +51,18 @@ try {
   }
 
   if (!changelog.url && !argv.url) {
-    const originUrl = await run('git', 'remote', 'get-url', 'origin');
-
-    changelog.url = getHttpUrl(originUrl);
-    save(file, changelog);
-  } else {
-    changelog.url = getHttpUrl(argv.url || changelog.url);
-    save(file, changelog);
+    console.error(
+      red(
+        'Please, set the repository url with --url="https://github.com/username/repository"',
+      ),
+    );
+    Deno.exit(1);
   }
+
+  changelog.url = argv.url || changelog.url;
+  save(file, changelog);
 } catch (err) {
   console.error(red(err.message));
-}
-
-function getHttpUrl(remoteUrl) {
-  if (!remoteUrl) {
-    return;
-  }
-
-  const url = new URL(remoteUrl.replace("git@", `https://`));
-
-  if (!argv.https) {
-    url.protocol = "http";
-  }
-
-  url.pathname = url.pathname.replace(/\.git$/, "").replace(/^\/\:/, "/");
-
-  return url.toString();
 }
 
 function save(file, changelog, isNew) {
