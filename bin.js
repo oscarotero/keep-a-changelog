@@ -51,7 +51,7 @@ try {
   }
 
   if (!changelog.url && !argv.url) {
-    const originUrl = run("git remote get-url origin");
+    const originUrl = await run("git remote get-url origin");
 
     changelog.url = getHttpUrl(originUrl);
     save(file, changelog);
@@ -103,7 +103,7 @@ function green(message) {
   return "\u001b[" + 32 + "m" + message + "\u001b[" + 39 + "m";
 }
 
-function run(...args) {
+async function run(...args) {
   const process = Deno.run({
     cmd: args,
     stdout: "piped",
