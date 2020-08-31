@@ -1,6 +1,5 @@
 #!/usr/bin/env deno
 
-import { writeFileStr, readFileStr } from "https://deno.land/std/fs/mod.ts";
 import { join } from "https://deno.land/std/path/mod.ts";
 import { parser, Changelog, Release } from "./mod.js";
 import { parse as parseFlag } from "https://deno.land/std/flags/mod.ts";
@@ -26,7 +25,7 @@ try {
     Deno.exit(0);
   }
 
-  const changelog = parser(await readFileStr(file, "utf8"));
+  const changelog = parser(Deno.readTextFileSync(file, "utf8"));
 
   if (argv.latestRelease) {
     const release = changelog.releases.find((release) =>
@@ -72,7 +71,7 @@ function save(file, changelog, isNew) {
     changelog.head = "master";
   }
 
-  writeFileStr(file, changelog.toString());
+  Deno.writeTextFile(file, changelog.toString());
 
   if (isNew) {
     console.log(green("Generated new file"), file);

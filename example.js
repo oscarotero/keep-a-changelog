@@ -1,4 +1,3 @@
-import { writeFileStr } from "https://deno.land/std/fs/mod.ts";
 import { Changelog, Release } from "./mod.js";
 import { __dirname } from "./deps.js";
 
@@ -154,8 +153,17 @@ const changelog = new Changelog("Changelog")
         "Removed trailing space in the default description generated with --init",
       )
       .fixed("Updated dependencies"),
+  )
+  .addRelease(
+    new Release("1.0.0", "2020-06-24")
+      .added("Support for deno")
+      .removed("Support for node"),
+  )
+  .addRelease(
+    new Release("1.0.1", "2020-08-31")
+      .fixed("Support for latest version of deno Std library"),
   );
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
 
-await writeFileStr(file, changelog.toString());
+Deno.writeTextFileSync(file, changelog.toString());

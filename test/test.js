@@ -1,5 +1,4 @@
 import { parser, Changelog, Release } from "../mod.js";
-import { readFileStr } from "https://deno.land/std/fs/mod.ts";
 import customRelease from "./fixture/CustomRelease.js";
 import { __dirname } from "../deps.js";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
@@ -7,9 +6,9 @@ import { Semver } from "../src/deps.js";
 
 const path = __dirname(import.meta.url);
 
-const changelog = parser(await readFileStr(path("/changelog.md")));
-const expected = await readFileStr(path("/changelog.expected.md"));
-const emptyExpected = await readFileStr(path("/empty.expected.md"));
+const changelog = parser(Deno.readTextFileSync(path("/changelog.md")));
+const expected = Deno.readTextFileSync(path("/changelog.expected.md"));
+const emptyExpected = Deno.readTextFileSync(path("/empty.expected.md"));
 
 //writeFileStr(path('/changelog.expected.md'), changelog.toString());
 // console.log(changelog.toString());
