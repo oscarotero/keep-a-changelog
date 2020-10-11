@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.10.2] - 2020-10-11
+### Added
+- New command option --quiet added to cli
+  - Behavior change: `changelong` command will exit with code 1 if it fails to parse the changelog file
+
 ## [0.10.1] - 2020-05-04
 ### Added
 - New command --latest-release added to cli
@@ -157,6 +162,7 @@ First version
 [#12]: https://github.com/oscarotero/keep-a-changelog/issues/12
 [#13]: https://github.com/oscarotero/keep-a-changelog/issues/13
 
+[0.10.2]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/oscarotero/keep-a-changelog/compare/v0.9.1...v0.10.0
 [0.9.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.9.0...v0.9.1
