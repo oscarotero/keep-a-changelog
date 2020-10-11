@@ -9,8 +9,9 @@ const argv = require('yargs-parser')(process.argv.slice(2), {
         file: 'CHANGELOG.md',
         url: null,
         https: true,
+        quiet: false,
     },
-    boolean: ['https', 'init', 'latest-release', 'release'],
+    boolean: ['https', 'init', 'latest-release', 'release', 'quiet'],
 });
 
 const file = path.join(process.cwd(), argv.file);
@@ -67,6 +68,9 @@ try {
     }
 } catch (err) {
     console.error(red(err.message));
+    if (!argv.quiet) {
+        process.exit(1);
+    }
 }
 
 function getHttpUrl(remoteUrl) {
