@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.10.2] - 2020-10-11
 ### Added
-- New command option --quiet added to cli
-  - Behavior change: `changelong` command will exit with code 1 if it fails to parse the changelog file
+- New command option --quiet added to cli [#14] [#15]
+
+### Changed
+- `changelong` command will exit with code 1 if it fails to parse the changelog file
 
 ## [0.10.1] - 2020-05-04
 ### Added
@@ -161,6 +163,8 @@ First version
 [#10]: https://github.com/oscarotero/keep-a-changelog/issues/10
 [#12]: https://github.com/oscarotero/keep-a-changelog/issues/12
 [#13]: https://github.com/oscarotero/keep-a-changelog/issues/13
+[#14]: https://github.com/oscarotero/keep-a-changelog/issues/14
+[#15]: https://github.com/oscarotero/keep-a-changelog/issues/15
 
 [0.10.2]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.0...v0.10.1

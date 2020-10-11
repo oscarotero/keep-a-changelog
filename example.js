@@ -124,6 +124,11 @@ const changelog = new Changelog('Changelog')
             .fixed('Removed trailing space in the default description generated with --init')
             .fixed('Updated dependencies')
     )
+    .addRelease(
+        new Release('0.10.2', '2020-10-11')
+            .added('New command option --quiet added to cli #14 #15')
+            .changed('`changelong` command will exit with code 1 if it fails to parse the changelog file')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
