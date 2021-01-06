@@ -129,7 +129,7 @@ function tokenize(markdown) {
                 if (nextLine && nextLine.match(/\s+http.*$/)) {
                     // We found a multi-line link: treat it like a single line
                     allLines[index + 1] = '';
-                    return ['link', [line.trim() + '\n' + nextLine.trim()]];
+                    return ['link', [line.trim() + '\n' + nextLine.trimEnd()]];
                 }
             }
 
