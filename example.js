@@ -129,6 +129,10 @@ const changelog = new Changelog('Changelog')
             .added('New command option --quiet added to cli #14 #15')
             .changed('`changelong` command will exit with code 1 if it fails to parse the changelog file')
     )
+    .addRelease(
+        new Release('0.10.3', '2021-01-09')
+            .fixed('Support for multiline links #16')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
