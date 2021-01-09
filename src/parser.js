@@ -96,7 +96,7 @@ function tokenize(markdown) {
     markdown
         .trim()
         .split('\n')
-        .map((line) => {
+        .map((line, index, allLines) => {
             if (line.startsWith('---')) {
                 return ['hr', ['-']];
             }
@@ -123,6 +123,14 @@ function tokenize(markdown) {
 
             if (line.match(/^\[.*\]\:\s*http.*$/)) {
                 return ['link', [line.trim()]];
+            }
+            if (line.match(/^\[.*\]\:$/)) {
+                const nextLine = allLines[index + 1];
+                if (nextLine && nextLine.match(/\s+http.*$/)) {
+                    // We found a multi-line link: treat it like a single line
+                    allLines[index + 1] = '';
+                    return ['link', [line.trim() + '\n' + nextLine.trimEnd()]];
+                }
             }
 
             return ['p', [line.trimEnd()]];
