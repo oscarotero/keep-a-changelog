@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.10.4] - 2021-03-04
+### Fixed
+- Allow to pass a version number to `--release` command [#18]
+
 ## [0.10.3] - 2021-01-09
 ### Fixed
 - Support for multiline links [#16]
@@ -170,7 +174,9 @@ First version
 [#14]: https://github.com/oscarotero/keep-a-changelog/issues/14
 [#15]: https://github.com/oscarotero/keep-a-changelog/issues/15
 [#16]: https://github.com/oscarotero/keep-a-changelog/issues/16
+[#18]: https://github.com/oscarotero/keep-a-changelog/issues/18
 
+[0.10.4]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.3...v0.10.4
 [0.10.3]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.2...v0.10.3
 [0.10.2]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/oscarotero/keep-a-changelog/compare/v0.10.0...v0.10.1

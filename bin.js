@@ -11,7 +11,7 @@ const argv = require('yargs-parser')(process.argv.slice(2), {
         https: true,
         quiet: false,
     },
-    boolean: ['https', 'init', 'latest-release', 'release', 'quiet'],
+    boolean: ['https', 'init', 'latest-release', 'quiet'],
 });
 
 const file = path.join(process.cwd(), argv.file);
@@ -40,11 +40,25 @@ try {
 
     if (argv.release) {
         const release = changelog.releases.find((release) => {
-            return !release.date && release.version;
+            if (release.date) {
+                return false;
+            }
+
+            if (typeof argv.release === "string") {
+                return !release.version || argv.release === release.version.toString();
+            }
+
+            return !!release.version;
         });
 
         if (release) {
             release.date = new Date();
+            if (typeof argv.release === "string") {
+                release.setVersion(argv.release);
+            }
+        } else {
+            console.error("Not found any valid unreleased version");
+            process.exit(1);
         }
     }
 

@@ -133,6 +133,10 @@ const changelog = new Changelog('Changelog')
         new Release('0.10.3', '2021-01-09')
             .fixed('Support for multiline links #16')
     )
+    .addRelease(
+        new Release('0.10.4', '2021-03-04')
+            .fixed('Allow to pass a version number to `--release` command #18')
+    )
 
 changelog.url = 'https://github.com/oscarotero/keep-a-changelog';
 
