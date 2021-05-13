@@ -104,7 +104,7 @@ It reads the CHANGELOG.md file and override it with the new format:
 ### Install the library as script
 
 ```sh
-deno install --allow-read --allow-write --unstable --name changelog https://raw.githubusercontent.com/oscarotero/keep-a-changelog/deno/bin.js
+deno install --allow-read --allow-write --unstable https://deno.land/x/changelog@v1.1.0/mod.js
 ```
 
 Make sure that your deno bin scripts are in the PATH
