@@ -3,6 +3,7 @@ import { eq } from "./deps.js";
 
 export default class Changelog {
   constructor(title, description = "") {
+    this.flag = null;
     this.title = title;
     this.description = description;
     this.head = "HEAD";
@@ -46,7 +47,14 @@ export default class Changelog {
   }
 
   toString() {
-    const t = [`# ${this.title}`];
+    const t = [];
+
+    if (this.flag) {
+      t.push(`<!-- ${this.flag} -->`);
+      t.push("");
+    }
+
+    t.push(`# ${this.title}`);
 
     const links = [];
     const compareLinks = [];

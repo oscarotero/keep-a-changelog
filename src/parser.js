@@ -22,6 +22,7 @@ export default function parser(markdown, options) {
 function parseTokens(tokens, opts) {
   const changelog = new Changelog();
 
+  changelog.flag = getContent(tokens, "flag");
   changelog.title = getContent(tokens, "h1", true);
   changelog.description = getContent(tokens, "p");
 
@@ -130,6 +131,11 @@ function tokenize(markdown) {
 
       if (line.match(/^\[.*\]\:\s*http.*$/)) {
         return ["link", [line.trim()]];
+      }
+
+      if (/^<!--.*-->$/.test(line)) {
+        const [, flag] = line.match(/^<!--(.*)-->$/);
+        return ["flag", [flag.trim()]];
       }
 
       return ["p", [line.trimEnd()]];

@@ -1,7 +1,7 @@
 #!/usr/bin/env deno
 
 import { join } from "https://deno.land/std/path/mod.ts";
-import { parser, Changelog, Release } from "./mod.js";
+import { Changelog, parser, Release } from "./mod.js";
 import { parse as parseFlag } from "https://deno.land/std/flags/mod.ts";
 
 const argv = parseFlag(Deno.args, {
@@ -10,7 +10,7 @@ const argv = parseFlag(Deno.args, {
     url: null,
     https: true,
   },
-  boolean: ["https", "init", "latest-release", "release"],
+  boolean: ["https", "init", "latest-release"],
 });
 
 const file = join(Deno.cwd(), argv.file);
@@ -41,11 +41,25 @@ try {
 
   if (argv.release) {
     const release = changelog.releases.find((release) => {
-      return !release.date && release.version;
+      if (release.date) {
+        return false;
+      }
+
+      if (typeof argv.release === "string") {
+        return !release.version || argv.release === release.version.toString();
+      }
+
+      return !!release.version;
     });
 
     if (release) {
       release.date = new Date();
+      if (typeof argv.release === "string") {
+        release.setVersion(argv.release);
+      }
+    } else {
+      console.error("Not found any valid unreleased version");
+      Deno.exit(1);
     }
   }
 

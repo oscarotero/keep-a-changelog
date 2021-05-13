@@ -1,4 +1,4 @@
-import { parser, Changelog, Release } from "../mod.js";
+import { Changelog, parser, Release } from "../mod.js";
 import customRelease from "./fixture/CustomRelease.js";
 import { __dirname } from "../deps.js";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";

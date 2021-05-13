@@ -162,8 +162,14 @@ const changelog = new Changelog("Changelog")
   .addRelease(
     new Release("1.0.1", "2020-08-31")
       .fixed("Support for latest version of deno Std library"),
+  )
+  .addRelease(
+    new Release("1.1.0", "2021-05-13")
+      .added("Support for flags like 'deno-fmt-ignore-file'")
+      .added("Allow to pass a version number to `--release` command #18"),
   );
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
+changelog.flag = "deno-fmt-ignore-file";
 
 Deno.writeTextFileSync(file, changelog.toString());
