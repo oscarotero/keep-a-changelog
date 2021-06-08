@@ -10,7 +10,7 @@ const changelog = parser(Deno.readTextFileSync(path("/changelog.md")));
 const expected = Deno.readTextFileSync(path("/changelog.expected.md"));
 const emptyExpected = Deno.readTextFileSync(path("/empty.expected.md"));
 
-//writeFileStr(path('/changelog.expected.md'), changelog.toString());
+// Deno.writeTextFileSync(path('/changelog.expected.md'), changelog.toString());
 // console.log(changelog.toString());
 
 Deno.test("Changelog testing", function () {

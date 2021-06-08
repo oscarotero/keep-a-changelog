@@ -24,13 +24,13 @@ export default class Change {
   }
 
   toString() {
-    let t = this.title.split("\n").map((line) => `  ${line}`);
+    let t = this.title.split("\n").map((line) => `  ${line}`.trimEnd());
     t[0] = "-" + t[0].substr(1);
 
     if (this.description) {
       t.push("");
 
-      t = t.concat(this.description.split("\n").map((line) => `  ${line}`));
+      t = t.concat(this.description.split("\n").map((line) => `  ${line}`.trimEnd()));
     }
 
     return t.join("\n").trim();
