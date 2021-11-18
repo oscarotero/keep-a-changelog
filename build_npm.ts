@@ -1,3 +1,4 @@
+// deno test -A test
 // deno run -A build_npm.ts 2.0.0
 
 import { build } from "https://deno.land/x/dnt@0.7.2/mod.ts";
