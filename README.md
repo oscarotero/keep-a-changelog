@@ -1,21 +1,31 @@
-# keep-a-changelog
+# Changelog
 
 [Keep a Changelog](https://github.com/oscarotero/keep-a-changelog) library for
-Deno
-
-[![Build Status](https://travis-ci.org/oscarotero/keep-a-changelog.svg?branch=deno)](https://travis-ci.org/oscarotero/keep-a-changelog)
+Node & Deno
 
 Deno package to parse and generate changelogs following the
 [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
 
-## Usage
+## Usage in Node
 
 ```js
-import { parser } from "https://deno.land/x/keep-a-changelog/mod.ts";
-import { writeFileStr } from "https://deno.land/std/fs/mod.ts";
+import { parser } from "keep-a-changelog";
+import fs from "fs";
 
 //Parse a changelog file
-const changelog = parser(await writeFileStr("CHANGELOG.md", "utf8"));
+const changelog = parser(fs.readFileSync("CHANGELOG.md", "UTF-8"));
+
+//Generate the new changelog string
+console.log(changelog.toString());
+```
+
+## Usage in Deno
+
+```js
+import { parser } from "https://deno.land/x/changelog@2.0.0/mod.js";
+
+//Parse a changelog file
+const changelog = parser(await Deno.readTextFile("CHANGELOG.md"));
 
 //Generate the new changelog string
 console.log(changelog.toString());
@@ -24,10 +34,7 @@ console.log(changelog.toString());
 ### Create a new changelog
 
 ```js
-import {
-  Changelog,
-  Release,
-} from "https://deno.land/x/keep-a-changelog/mod.ts";
+import { Changelog, Release } from "https://deno.land/x/changelog@2.0.0/mod.js";
 
 const changelog = new Changelog("My project")
   .addRelease(
