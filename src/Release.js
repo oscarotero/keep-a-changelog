@@ -205,9 +205,9 @@ function formatDate(date) {
     return "Unreleased";
   }
 
-  let year = date.getUTCFullYear(),
-    month = date.getUTCMonth() + 1,
-    day = date.getUTCDate();
+  const year = date.getUTCFullYear();
+  let month = date.getUTCMonth() + 1;
+  let day = date.getUTCDate();
 
   if (month < 10) {
     month = "0" + month;
