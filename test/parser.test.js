@@ -1,16 +1,12 @@
 import {
   assertEquals,
   assertThrows,
-} from "https://deno.land/std/testing/asserts.ts";
-import { __dirname } from "../deps.js";
+} from "https://deno.land/std@0.115.1/testing/asserts.ts";
 import { parser } from "../mod.js";
 import releaseCreator from "./fixture/CustomRelease.js";
 
-const path = __dirname(import.meta.url);
-
-const changelogContent = Deno.readTextFileSync(
-  path("changelog.custom.type.md"),
-);
+const file = new URL("./changelog.custom.type.md", import.meta.url).pathname;
+const changelogContent = Deno.readTextFileSync(file);
 
 Deno.test("parser testing", function () {
   // is unable to parse changelog with unknown types

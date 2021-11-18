@@ -30,7 +30,9 @@ export default class Change {
     if (this.description) {
       t.push("");
 
-      t = t.concat(this.description.split("\n").map((line) => `  ${line}`.trimEnd()));
+      t = t.concat(
+        this.description.split("\n").map((line) => `  ${line}`.trimEnd()),
+      );
     }
 
     return t.join("\n").trim();
