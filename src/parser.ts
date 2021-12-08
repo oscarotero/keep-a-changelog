@@ -2,6 +2,10 @@ import Changelog from "./Changelog.ts";
 import Release from "./Release.ts";
 
 export interface Options {
+  /**
+   * Custom function to create Release instances.
+   * Needed if you want to use a custom Release class.
+   */
   releaseCreator: (
     version?: string,
     date?: string,
@@ -14,12 +18,13 @@ const defaultOptions: Options = {
     new Release(version, date, description),
 };
 
-export default function parser(markdown: string, options?: Options) {
+/** Parse a markdown string */
+export default function parser(markdown: string, options?: Options): Changelog {
   const opts = Object.assign({}, defaultOptions, options);
   const tokens = tokenize(markdown);
 
   try {
-    return parseTokens(tokens, opts);
+    return processTokens(tokens, opts);
   } catch (error) {
     throw new Error(
       `Parse error in the line ${tokens[0][0]}: ${error.message}`,
@@ -27,7 +32,8 @@ export default function parser(markdown: string, options?: Options) {
   }
 }
 
-function parseTokens(tokens: Token[], opts: Options): Changelog {
+/** Process an array of tokens to build the Changelog */
+function processTokens(tokens: Token[], opts: Options): Changelog {
   const changelog = new Changelog("");
 
   changelog.flag = getContent(tokens, "flag");
@@ -94,6 +100,7 @@ function parseTokens(tokens: Token[], opts: Options): Changelog {
   return changelog;
 }
 
+/** Returns the content of a token */
 function getContent(
   tokens: Token[],
   type: TokenType,
@@ -113,6 +120,7 @@ function getContent(
 type TokenType = "h1" | "h2" | "h3" | "li" | "p" | "link" | "flag" | "hr";
 type Token = [number, TokenType, string[]];
 
+/** Tokenize a markdown string */
 function tokenize(markdown: string): Token[] {
   const tokens: Token[] = [];
 
@@ -195,6 +203,7 @@ function tokenize(markdown: string): Token[] {
     .reverse();
 }
 
+/** Check if a string or array is empty */
 function isEmpty(val: string | string[]): boolean {
   if (Array.isArray(val)) {
     val = val.join("");
