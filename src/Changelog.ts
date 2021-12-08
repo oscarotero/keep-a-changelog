@@ -79,10 +79,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
         }
       });
 
-      const link = release.getCompareLink(this);
+      const compareLink = release.getCompareLink(this);
 
-      if (link) {
-        compareLinks.push(link);
+      if (compareLink) {
+        compareLinks.push(compareLink);
       }
     });
 

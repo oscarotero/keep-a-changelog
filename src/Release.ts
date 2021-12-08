@@ -119,15 +119,16 @@ export default class Release {
 
   toString(changelog: Changelog) {
     let t: string[] = [];
+    const hasCompareLink = this.getCompareLink(changelog) !== undefined;
 
     if (this.version) {
-      if (this.hasCompareLink(changelog)) {
+      if (hasCompareLink) {
         t.push(`## [${this.version}] - ${formatDate(this.date)}`);
       } else {
         t.push(`## ${this.version} - ${formatDate(this.date)}`);
       }
     } else {
-      if (this.hasCompareLink(changelog)) {
+      if (hasCompareLink) {
         t.push("## [Unreleased]");
       } else {
         t.push("## Unreleased");
@@ -151,18 +152,32 @@ export default class Release {
   }
 
   getCompareLink(changelog: Changelog) {
-    if (!this.hasCompareLink(changelog)) {
+    if (!changelog.url) {
       return;
     }
 
     const index = changelog.releases.indexOf(this);
 
+    if (index === -1) {
+      return;
+    }
+
     let offset = 1;
     let previous = changelog.releases[index + offset];
 
-    while (!previous.date) {
+    while (previous && !previous.date) {
       ++offset;
       previous = changelog.releases[index + offset];
+    }
+
+    if (!previous) {
+      if (!this.version || !this.date) {
+        return;
+      }
+
+      return `[${this.version}]: ${changelog.url}/releases/tag/${
+        changelog.tagName(this)
+      }`;
     }
 
     if (!this.version) {
@@ -202,17 +217,6 @@ export default class Release {
     );
 
     return links;
-  }
-
-  hasCompareLink(changelog: Changelog) {
-    if (!changelog || !changelog.url || !changelog.releases.length) {
-      return false;
-    }
-
-    const index = changelog.releases.indexOf(this);
-    const next = changelog.releases[index + 1];
-
-    return next && next.version && next.date;
   }
 }
 

@@ -5,9 +5,11 @@ const changelog = new Changelog("Changelog")
   .addRelease(
     new Release(
       "2.0.0",
-      "2021-11-18",
-      "New version merging Deno and Node code. There are no changes.",
-    ),
+      undefined,
+      "New version merging Deno and Node code using Deno's `dnt` package.",
+    )
+      .changed("Code converted to TypeScript.")
+      .changed("Added the link of the first version #21."),
   );
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
