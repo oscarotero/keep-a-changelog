@@ -3,9 +3,10 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+and this project adheres to
+[Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 ### Added
 - Test
 
@@ -46,12 +47,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Start versioning based on the current English version at 0.3.0 to help
   translation authors keep things up-to-date.
 - Rewrite "What makes unicorns cry?" section.
-- Rewrite "Ignoring Deprecations" sub-section to clarify the ideal
-  scenario.
-- Improve "Commit log diffs" sub-section to further argument against
-  them.
-- Merge "Why can’t people just use a git log diff?" with "Commit log
-  diffs"
+- Rewrite "Ignoring Deprecations" sub-section to clarify the ideal scenario.
+- Improve "Commit log diffs" sub-section to further argument against them.
+- Merge "Why can’t people just use a git log diff?" with "Commit log diffs"
 - Fix typos in Simplified Chinese and Traditional Chinese translations.
 - Fix typos in Brazilian Portugese translation.
 - Fix typos in Turkish translation.
@@ -71,8 +69,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [0.2.0] - 2015-10-06
 ### Changed
-- Remove exclusionary mentions of "open source" since this project can
-  benefit both "open" and "closed" source projects equally.
+- Remove exclusionary mentions of "open source" since this project can benefit
+  both "open" and "closed" source projects equally.
 
 ## [0.1.0] - 2015-10-06
 ### Added
@@ -85,8 +83,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.0.8] - 2015-02-17
 ### Changed
 - Update year to match in every README example.
-- Reluctantly stop making fun of Brits only, since most of the world
-  writes dates in a strange way.
+- Reluctantly stop making fun of Brits only, since most of the world writes
+  dates in a strange way.
 
 ### Fixed
 - Fix typos in recent README changes.
@@ -109,24 +107,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.0.5] - 2014-08-09
 ### Added
 - Markdown links to version tags on release headings.
-- Unreleased section to gather unreleased changes and encourage note
-  keeping prior to releases.
+- Unreleased section to gather unreleased changes and encourage note keeping
+  prior to releases.
 
 ## [0.0.4] - 2014-08-09
 ### Added
-- Better explanation of the difference between the file ("CHANGELOG")
-  and its function "the change log".
+- Better explanation of the difference between the file ("CHANGELOG") and its
+  function "the change log".
 
 ### Changed
-- Refer to a "change log" instead of a "CHANGELOG" throughout the site
-  to differentiate between the file and the purpose of the file — the
-  logging of changes.
+- Refer to a "change log" instead of a "CHANGELOG" throughout the site to
+  differentiate between the file and the purpose of the file — the logging of
+  changes.
 
 ### Removed
-- Remove empty sections from CHANGELOG, they occupy too much space and
-  create too much noise in the file. People will have to assume that the
-  missing sections were intentionally left out because they contained no
-  notable changes.
+- Remove empty sections from CHANGELOG, they occupy too much space and create
+  too much noise in the file. People will have to assume that the missing
+  sections were intentionally left out because they contained no notable
+  changes.
 
 ## [0.0.3] - 2014-08-09
 ### Added
@@ -136,7 +134,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Explanation of the recommended reverse chronological release ordering.
 
-## 0.0.1 - 2014-05-31
+## [0.0.1] - 2014-05-31
 ### Added
 - This CHANGELOG file to hopefully serve as an evolving example of a
   standardized open source project CHANGELOG.
@@ -151,6 +149,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [#4]: https://github.com/olivierlacan/keep-a-changelog/issues/4
 [#10]: https://github.com/olivierlacan/keep-a-changelog/issues/10
 
+[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [2.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0
@@ -163,6 +162,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.0.4]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
+[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
 
 ---
 
