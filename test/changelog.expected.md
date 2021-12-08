@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 ### Added
 - Test
 
@@ -134,7 +134,7 @@ and this project adheres to
 ### Added
 - Explanation of the recommended reverse chronological release ordering.
 
-## 0.0.1 - 2014-05-31
+## [0.0.1] - 2014-05-31
 ### Added
 - This CHANGELOG file to hopefully serve as an evolving example of a
   standardized open source project CHANGELOG.
@@ -149,6 +149,7 @@ and this project adheres to
 [#4]: https://github.com/olivierlacan/keep-a-changelog/issues/4
 [#10]: https://github.com/olivierlacan/keep-a-changelog/issues/10
 
+[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [2.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.3.0...v1.0.0
 [0.3.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.2.0...v0.3.0
@@ -161,6 +162,7 @@ and this project adheres to
 [0.0.4]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
+[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
 
 ---
 

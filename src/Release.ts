@@ -152,7 +152,7 @@ export default class Release {
   }
 
   getCompareLink(changelog: Changelog) {
-    if (!changelog.url) {
+    if (!changelog?.url) {
       return;
     }
 
