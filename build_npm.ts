@@ -1,18 +1,36 @@
 // deno test --allow-read test
-// deno run -A build_npm.ts 2.0.0
+// deno run --unstable -A build_npm.ts 2.0.0
 
 import { build } from "https://deno.land/x/dnt@0.7.2/mod.ts";
+import { dirname, join } from "https://deno.land/std@0.117.0/path/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.117.0/fs/mod.ts";
 
 await Deno.remove("npm", { recursive: true }).catch(() => {});
+
+const testFiles = [
+  "changelog.custom.type.md",
+  "changelog.expected.md",
+  "changelog.md",
+  "empty.expected.md",
+];
+
+for (const file of testFiles) {
+  await copyFile(`test/${file}`, `esm/test/${file}`);
+  await copyFile(`test/${file}`, `umd/test/${file}`);
+}
+
+await copyFile("LICENSE");
+await copyFile("README.md");
+await copyFile("CHANGELOG.md");
 
 await build({
   typeCheck: false,
   entryPoints: [
-    "./mod.js",
+    "./mod.ts",
     {
       kind: "bin",
       name: "changelog",
-      path: "bin.js",
+      path: "bin.ts",
     },
   ],
   outDir: "./npm",
@@ -39,6 +57,8 @@ await build({
   },
 });
 
-await Deno.copyFile("LICENSE", "npm/LICENSE");
-await Deno.copyFile("README.md", "npm/README.md");
-await Deno.copyFile("CHANGELOG.md", "npm/CHANGELOG.md");
+async function copyFile(from: string, to = from) {
+  to = join("npm", to);
+  await ensureDir(dirname(to));
+  await Deno.copyFile(from, to);
+}
