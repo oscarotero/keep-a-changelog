@@ -22,7 +22,7 @@ console.log(changelog.toString());
 ## Usage in Deno
 
 ```js
-import { parser } from "https://deno.land/x/changelog@2.0.0/mod.js";
+import { parser } from "https://deno.land/x/changelog@2.0.0/mod.ts";
 
 //Parse a changelog file
 const changelog = parser(await Deno.readTextFile("CHANGELOG.md"));
@@ -34,7 +34,7 @@ console.log(changelog.toString());
 ### Create a new changelog
 
 ```js
-import { Changelog, Release } from "https://deno.land/x/changelog@2.0.0/mod.js";
+import { Changelog, Release } from "https://deno.land/x/changelog@2.0.0/mod.ts";
 
 const changelog = new Changelog("My project")
   .addRelease(
@@ -110,14 +110,16 @@ It reads the CHANGELOG.md file and override it with the new format:
 
 ### Install the library as script
 
+Deno:
+
 ```sh
-deno install --allow-read --allow-write --name changelog https://deno.land/x/changelog@v1.1.0/bin.js
+deno install --allow-read --allow-write --name changelog https://deno.land/x/changelog/bin.ts
 ```
 
-Make sure that your deno bin scripts are in the PATH
+Node:
 
 ```sh
-export PATH="/Users/oscarotero/.deno/bin:$PATH"
+npm install keep-a-changelog -g
 ```
 
 Run the script:
@@ -161,3 +163,4 @@ Available options:
 | `--init`           | Init a new empty changelog file.                                                                                                                                                                               |
 | `--latest-release` | Print the latest release version.                                                                                                                                                                              |
 | `--release`        | Updated the latest unreleased version with the current date.                                                                                                                                                   |
+| `--quiet`          | Do not output error messages                                                                                                                                                                                   |
