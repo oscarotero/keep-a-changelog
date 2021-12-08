@@ -1,4 +1,5 @@
-import { Changelog, Release } from "./mod.js";
+// deno run --allow-write example.ts
+import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(

@@ -6,6 +6,7 @@ import { build } from "https://deno.land/x/dnt@0.7.2/mod.ts";
 await Deno.remove("npm", { recursive: true }).catch(() => {});
 
 await build({
+  typeCheck: false,
   entryPoints: [
     "./mod.js",
     {

@@ -1,7 +1,7 @@
-import { Changelog, parser, Release } from "../mod.js";
+import { Changelog, parser, Release } from "../mod.ts";
 import customRelease from "./fixture/CustomRelease.js";
 import { assertEquals } from "https://deno.land/std@0.115.1/testing/asserts.ts";
-import { Semver } from "../src/deps.js";
+import { Semver } from "../src/deps.ts";
 
 const changelogFile = new URL("./changelog.md", import.meta.url).pathname;
 const expectedFile =

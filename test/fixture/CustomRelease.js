@@ -1,4 +1,4 @@
-import { Release } from "../../mod.js";
+import { Release } from "../../mod.ts";
 
 class CustomRelease extends Release {
   constructor(version, date, description) {

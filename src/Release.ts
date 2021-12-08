@@ -1,8 +1,19 @@
-import { Semver } from "./deps.js";
-import Change from "./Change.js";
+import { Semver } from "./deps.ts";
+import Change from "./Change.ts";
+import Changelog from "./Changelog.ts";
 
 export default class Release {
-  constructor(version, date, description = "") {
+  changelog?: Changelog;
+  version?: Semver;
+  date?: Date;
+  description: string;
+  changes: Map<string, Change[]>;
+
+  constructor(
+    version?: string | Semver,
+    date?: string | Date,
+    description = "",
+  ) {
     this.setVersion(version);
     this.setDate(date);
 
@@ -17,7 +28,7 @@ export default class Release {
     ]);
   }
 
-  compare(release) {
+  compare(release: Release) {
     if (!this.version && release.version) {
       return -1;
     }
@@ -34,7 +45,11 @@ export default class Release {
       return 1;
     }
 
-    return -this.version.compare(release.version);
+    if (this.version && release.version) {
+      return -this.version.compare(release.version);
+    }
+
+    return 0;
   }
 
   isEmpty() {
@@ -45,25 +60,26 @@ export default class Release {
     return Array.from(this.changes.values()).every((change) => !change.length);
   }
 
-  setVersion(version) {
+  setVersion(version?: string | Semver) {
     if (typeof version === "string") {
       version = new Semver(version);
     }
     this.version = version;
+
     //Re-sort the releases of the parent changelog
     if (this.changelog) {
       this.changelog.sortReleases();
     }
   }
 
-  setDate(date) {
+  setDate(date?: Date | string) {
     if (typeof date === "string") {
       date = new Date(date);
     }
     this.date = date;
   }
 
-  addChange(type, change) {
+  addChange(type: string, change: Change | string) {
     if (!(change instanceof Change)) {
       change = new Change(change);
     }
@@ -72,37 +88,37 @@ export default class Release {
       throw new Error("Invalid change type");
     }
 
-    this.changes.get(type).push(change);
+    this.changes.get(type)!.push(change);
 
     return this;
   }
 
-  added(change) {
+  added(change: Change | string) {
     return this.addChange("added", change);
   }
 
-  changed(change) {
+  changed(change: Change | string) {
     return this.addChange("changed", change);
   }
 
-  deprecated(change) {
+  deprecated(change: Change | string) {
     return this.addChange("deprecated", change);
   }
 
-  removed(change) {
+  removed(change: Change | string) {
     return this.addChange("removed", change);
   }
 
-  fixed(change) {
+  fixed(change: Change | string) {
     return this.addChange("fixed", change);
   }
 
-  security(change) {
+  security(change: Change | string) {
     return this.addChange("security", change);
   }
 
-  toString(changelog) {
-    let t = [];
+  toString(changelog: Changelog) {
+    let t: string[] = [];
 
     if (this.version) {
       if (this.hasCompareLink(changelog)) {
@@ -134,7 +150,7 @@ export default class Release {
     return t.join("\n").trim();
   }
 
-  getCompareLink(changelog) {
+  getCompareLink(changelog: Changelog) {
     if (!this.hasCompareLink(changelog)) {
       return;
     }
@@ -168,8 +184,8 @@ export default class Release {
     }...${changelog.tagName(this)}`;
   }
 
-  getLinks(changelog) {
-    const links = [];
+  getLinks(changelog: Changelog) {
+    const links: string[] = [];
 
     if (!changelog.url) {
       return links;
@@ -188,7 +204,7 @@ export default class Release {
     return links;
   }
 
-  hasCompareLink(changelog) {
+  hasCompareLink(changelog: Changelog) {
     if (!changelog || !changelog.url || !changelog.releases.length) {
       return false;
     }
@@ -200,14 +216,14 @@ export default class Release {
   }
 }
 
-function formatDate(date) {
+function formatDate(date?: Date) {
   if (!date) {
     return "Unreleased";
   }
 
   const year = date.getUTCFullYear();
-  let month = date.getUTCMonth() + 1;
-  let day = date.getUTCDate();
+  let month: number | string = date.getUTCMonth() + 1;
+  let day: number | string = date.getUTCDate();
 
   if (month < 10) {
     month = "0" + month;

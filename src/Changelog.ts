@@ -1,23 +1,22 @@
-import Release from "./Release.js";
-import { eq } from "./deps.js";
+import Release from "./Release.ts";
+import { eq, Semver } from "./deps.ts";
 
 export default class Changelog {
-  constructor(title, description = "") {
-    this.flag = null;
+  flag?: string;
+  title: string;
+  description: string;
+  head = "HEAD";
+  footer?: string;
+  url?: string;
+  releases: Release[] = [];
+  tagNameBuilder?: (release: Release) => string;
+
+  constructor(title: string, description = "") {
     this.title = title;
     this.description = description;
-    this.head = "HEAD";
-    this.footer = null;
-    this.url = null;
-    this.releases = [];
-    this.tagNameBuilder = null;
   }
 
-  addRelease(release) {
-    if (!(release instanceof Release)) {
-      throw new Error("Invalid release. Must be an instance of Release");
-    }
-
+  addRelease(release: Release) {
     this.releases.push(release);
     this.sortReleases();
     release.changelog = this;
@@ -25,7 +24,7 @@ export default class Changelog {
     return this;
   }
 
-  findRelease(version) {
+  findRelease(version?: Semver | string) {
     if (!version) {
       return this.releases.find((release) => !release.version);
     }
@@ -38,7 +37,7 @@ export default class Changelog {
     this.releases.sort((a, b) => a.compare(b));
   }
 
-  tagName(release) {
+  tagName(release: Release) {
     if (this.tagNameBuilder) {
       return this.tagNameBuilder(release);
     }
@@ -56,8 +55,8 @@ export default class Changelog {
 
     t.push(`# ${this.title}`);
 
-    const links = [];
-    const compareLinks = [];
+    const links: string[] = [];
+    const compareLinks: string[] = [];
 
     const description = this.description.trim() ||
       `All notable changes to this project will be documented in this file.
@@ -112,7 +111,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).`;
   }
 }
 
-function compare(a, b) {
+function compare(a: string, b: string) {
   if (a === b) {
     return 0;
   }

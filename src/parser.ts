@@ -1,12 +1,20 @@
-import Changelog from "./Changelog.js";
-import Release from "./Release.js";
+import Changelog from "./Changelog.ts";
+import Release from "./Release.ts";
 
-const defaultOptions = {
+export interface Options {
+  releaseCreator: (
+    version?: string,
+    date?: string,
+    description?: string,
+  ) => Release;
+}
+
+const defaultOptions: Options = {
   releaseCreator: (version, date, description) =>
     new Release(version, date, description),
 };
 
-export default function parser(markdown, options) {
+export default function parser(markdown: string, options?: Options) {
   const opts = Object.assign({}, defaultOptions, options);
   const tokens = tokenize(markdown);
 
@@ -19,8 +27,8 @@ export default function parser(markdown, options) {
   }
 }
 
-function parseTokens(tokens, opts) {
-  const changelog = new Changelog();
+function parseTokens(tokens: Token[], opts: Options): Changelog {
+  const changelog = new Changelog("");
 
   changelog.flag = getContent(tokens, "flag");
   changelog.title = getContent(tokens, "h1", true);
@@ -86,7 +94,11 @@ function parseTokens(tokens, opts) {
   return changelog;
 }
 
-function getContent(tokens, type, required = false) {
+function getContent(
+  tokens: Token[],
+  type: TokenType,
+  required = false,
+): string {
   if (!tokens[0] || tokens[0][1] !== type) {
     if (required) {
       throw new Error(`Required token missing in: "${tokens[0][0]}"`);
@@ -95,53 +107,58 @@ function getContent(tokens, type, required = false) {
     return "";
   }
 
-  return tokens.shift()[2].join("\n");
+  return tokens.shift()![2].join("\n");
 }
 
-function tokenize(markdown) {
-  const tokens = [];
+type TokenType = "h1" | "h2" | "h3" | "li" | "p" | "link" | "flag" | "hr";
+type Token = [number, TokenType, string[]];
+
+function tokenize(markdown: string): Token[] {
+  const tokens: Token[] = [];
 
   markdown
     .trim()
     .split("\n")
-    .map((line) => {
+    .map((line, index: number): Token => {
+      const lineNumber = index + 1;
+
       if (line.startsWith("---")) {
-        return ["hr", ["-"]];
+        return [lineNumber, "hr", ["-"]];
       }
 
       if (line.startsWith("# ")) {
-        return ["h1", [line.substr(1).trim()]];
+        return [lineNumber, "h1", [line.substr(1).trim()]];
       }
 
       if (line.startsWith("## ")) {
-        return ["h2", [line.substr(2).trim()]];
+        return [lineNumber, "h2", [line.substr(2).trim()]];
       }
 
       if (line.startsWith("### ")) {
-        return ["h3", [line.substr(3).trim()]];
+        return [lineNumber, "h3", [line.substr(3).trim()]];
       }
 
       if (line.startsWith("-")) {
-        return ["li", [line.substr(1).trim()]];
+        return [lineNumber, "li", [line.substr(1).trim()]];
       }
 
       if (line.startsWith("*")) {
-        return ["li", [line.substr(1).trim()]];
+        return [lineNumber, "li", [line.substr(1).trim()]];
       }
 
       if (line.match(/^\[.*\]\:\s*http.*$/)) {
-        return ["link", [line.trim()]];
+        return [lineNumber, "link", [line.trim()]];
       }
 
-      if (/^<!--.*-->$/.test(line)) {
-        const [, flag] = line.match(/^<!--(.*)-->$/);
-        return ["flag", [flag.trim()]];
+      const result = line.match(/^<!--(.*)-->$/)!;
+      if (result) {
+        return [lineNumber, "flag", [result[1].trim()]];
       }
 
-      return ["p", [line.trimEnd()]];
+      return [lineNumber, "p", [line.trimEnd()]];
     })
-    .forEach((line, index) => {
-      const [type, [content]] = line;
+    .forEach((line: Token, index: number) => {
+      const [lineNumber, type, [content]] = line;
 
       if (index > 0) {
         const prevType = tokens[0][1];
@@ -157,7 +174,7 @@ function tokenize(markdown) {
         }
       }
 
-      tokens.unshift([index + 1, type, [content]]);
+      tokens.unshift([lineNumber, type, [content]]);
     });
 
   return tokens
@@ -178,7 +195,7 @@ function tokenize(markdown) {
     .reverse();
 }
 
-function isEmpty(val) {
+function isEmpty(val: string | string[]): boolean {
   if (Array.isArray(val)) {
     val = val.join("");
   }

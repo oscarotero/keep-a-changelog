@@ -1,7 +1,7 @@
 #!/usr/bin/env deno
 
 import { join } from "https://deno.land/std@0.113.0/path/mod.ts";
-import { Changelog, parser, Release } from "./mod.js";
+import { Changelog, parser, Release } from "./mod.ts";
 import { parse as parseFlag } from "https://deno.land/std@0.113.0/flags/mod.ts";
 import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
 
@@ -35,7 +35,7 @@ try {
     );
 
     if (release) {
-      console.log(release.version.toString());
+      console.log(release.version?.toString());
     }
 
     Deno.exit(0);
@@ -93,7 +93,7 @@ try {
   }
 }
 
-function save(file, changelog, isNew) {
+function save(file: string, changelog: Changelog, isNew = false) {
   const url = changelog.url;
 
   if (url && url.includes("gitlab.com")) {
@@ -109,11 +109,11 @@ function save(file, changelog, isNew) {
   }
 }
 
-function red(message) {
+function red(message: string) {
   return "\u001b[" + 31 + "m" + message + "\u001b[" + 39 + "m";
 }
 
-function green(message) {
+function green(message: string) {
   return "\u001b[" + 32 + "m" + message + "\u001b[" + 39 + "m";
 }
 

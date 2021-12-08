@@ -1,14 +1,18 @@
 export default class Change {
-  static extractIssues(text, issues) {
+  title: string;
+  description: string;
+  issues: string[] = [];
+
+  static extractIssues(text: string, issues: string[]) {
     return text
-      .replace(/(^|[^\\])\[#(\d+)\](?=[^\(]|$)/g, (matches, start, index) => {
+      .replace(/(^|[^\\])\[#(\d+)\](?=[^\(]|$)/g, (_, start, index) => {
         if (!issues.includes(index)) {
           issues.push(index);
         }
 
         return `${start}[#${index}]`;
       })
-      .replace(/(^|[\s,])#(\d+)(?=[\s,\.]|$)/g, (matches, start, index) => {
+      .replace(/(^|[\s,])#(\d+)(?=[\s,\.]|$)/g, (_, start, index) => {
         if (!issues.includes(index)) {
           issues.push(index);
         }
@@ -17,8 +21,7 @@ export default class Change {
       });
   }
 
-  constructor(title, description = "") {
-    this.issues = [];
+  constructor(title: string, description = "") {
     this.title = Change.extractIssues(title, this.issues);
     this.description = Change.extractIssues(description, this.issues);
   }

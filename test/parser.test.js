@@ -2,7 +2,7 @@ import {
   assertEquals,
   assertThrows,
 } from "https://deno.land/std@0.115.1/testing/asserts.ts";
-import { parser } from "../mod.js";
+import { parser } from "../mod.ts";
 import releaseCreator from "./fixture/CustomRelease.js";
 
 const file = new URL("./changelog.custom.type.md", import.meta.url).pathname;
