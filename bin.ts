@@ -30,7 +30,7 @@ try {
 
   const changelog = parser(Deno.readTextFileSync(file));
 
-  if (argv.latestRelease) {
+  if (argv['latest-release']) {
     const release = changelog.releases.find((release) =>
       release.date && release.version
     );
