@@ -8,6 +8,7 @@ import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
 const argv = parseFlag(Deno.args, {
   default: {
     file: "CHANGELOG.md",
+    release: null,
     url: null,
     https: true,
     quiet: false,
