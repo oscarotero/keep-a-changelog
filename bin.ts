@@ -1,8 +1,8 @@
 #!/usr/bin/env deno
 
-import { join } from "https://deno.land/std@0.113.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.120.0/path/mod.ts";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parse as parseFlag } from "https://deno.land/std@0.113.0/flags/mod.ts";
+import { parse as parseFlag } from "https://deno.land/std@0.120.0/flags/mod.ts";
 import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
 
 const argv = parseFlag(Deno.args, {
