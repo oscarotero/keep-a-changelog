@@ -1,6 +1,6 @@
 import { Changelog, parser, Release } from "../mod.ts";
 import customRelease from "./fixture/CustomRelease.ts";
-import { assertEquals } from "https://deno.land/std@0.115.1/testing/asserts.ts";
+import { assertEquals } from "./deps.ts";
 import { Semver } from "../src/deps.ts";
 
 const changelogFile = new URL("./changelog.md", import.meta.url).pathname;
@@ -71,7 +71,10 @@ Deno.test("Release testing", function () {
   assertEquals(new Release("1.2.3", new Date(), "     ").isEmpty(), true);
 
   // should be false if a description is set
-  assertEquals(new Release(undefined, undefined, "description").isEmpty(), false);
+  assertEquals(
+    new Release(undefined, undefined, "description").isEmpty(),
+    false,
+  );
   assertEquals(new Release("1.2.3", undefined, "description").isEmpty(), false);
   assertEquals(
     new Release("1.2.3", new Date(), "description").isEmpty(),

@@ -6,6 +6,7 @@ export default class Release {
   changelog?: Changelog;
   version?: Semver;
   date?: Date;
+  yanked = false;
   description: string;
   changes: Map<string, Change[]>;
 
@@ -120,18 +121,19 @@ export default class Release {
   toString(changelog?: Changelog) {
     let t: string[] = [];
     const hasCompareLink = this.getCompareLink(changelog) !== undefined;
+    const yanked = this.yanked ? " [YANKED]" : "";
 
     if (this.version) {
       if (hasCompareLink) {
-        t.push(`## [${this.version}] - ${formatDate(this.date)}`);
+        t.push(`## [${this.version}] - ${formatDate(this.date)}${yanked}`);
       } else {
-        t.push(`## ${this.version} - ${formatDate(this.date)}`);
+        t.push(`## ${this.version} - ${formatDate(this.date)}${yanked}`);
       }
     } else {
       if (hasCompareLink) {
-        t.push("## [Unreleased]");
+        t.push(`## [Unreleased]${yanked}`);
       } else {
-        t.push("## Unreleased");
+        t.push(`## Unreleased${yanked}`);
       }
     }
 

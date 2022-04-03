@@ -1,9 +1,6 @@
-// deno test --allow-read test
-// deno run --unstable -A build_npm.ts 2.0.1
-
-import { build } from "https://deno.land/x/dnt@0.14.0/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.120.0/path/mod.ts";
-import { ensureDir } from "https://deno.land/std@0.120.0/fs/mod.ts";
+import { build } from "https://deno.land/x/dnt@0.22.0/mod.ts";
+import { dirname, join } from "https://deno.land/std@0.133.0/path/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.133.0/fs/mod.ts";
 
 await Deno.remove("npm", { recursive: true }).catch(() => {});
 
@@ -26,7 +23,7 @@ await copyFile("CHANGELOG.md");
 await build({
   typeCheck: false,
   shims: {
-    deno: true
+    deno: true,
   },
   entryPoints: [
     "./mod.ts",

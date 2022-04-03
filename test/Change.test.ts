@@ -1,8 +1,5 @@
 import { Change } from "../mod.ts";
-import {
-  assert,
-  assertEquals,
-} from "https://deno.land/std@0.115.1/testing/asserts.ts";
+import { assert, assertEquals } from "./deps.ts";
 
 Deno.test("should extract issues from text", function () {
   const issues: string[] = [];

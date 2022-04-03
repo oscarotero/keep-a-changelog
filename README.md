@@ -34,7 +34,10 @@ console.log(changelog.toString());
 ### Create a new changelog
 
 ```js
-import { Changelog, Release } from "https://deno.land/x/changelog@v2.0.0/mod.ts";
+import {
+  Changelog,
+  Release,
+} from "https://deno.land/x/changelog@v2.0.0/mod.ts";
 
 const changelog = new Changelog("My project")
   .addRelease(

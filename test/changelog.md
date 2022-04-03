@@ -6,13 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] [Yanked]
 
 ### Added
 
 - Test
 
-## [2.0.0] - unreleased
+## [2.0.0] - unreleased [Yanked]
 
 ### Added
 
@@ -122,7 +122,7 @@ and this project adheres to
 
 - Fix Markdown links to tag comparison URL with footnote-style links.
 
-## [0.0.6] - 2014-12-12
+## [0.0.6] - 2014-12-12 [YANKED]
 
 ### Added
 

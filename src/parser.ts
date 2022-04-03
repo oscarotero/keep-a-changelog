@@ -45,16 +45,21 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
 
   while ((release = getContent(tokens, "h2").toLowerCase())) {
     const matches = release.match(
-      /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})$/,
+      /\[?([^\]]+)\]?\s*-\s*([\d]{4}-[\d]{1,2}-[\d]{1,2})(\s+\[yanked\])?$/,
     );
 
     if (matches) {
       release = opts.releaseCreator(matches[1], matches[2]);
+      release.yanked = !!matches[3];
     } else if (release.includes("unreleased")) {
-      const matches = release.match(/\[?([^\]]+)\]?\s*-\s*unreleased$/);
+      const matches = release.match(
+        /\[?([^\]]+)\]?\s*-\s*unreleased(\s+\[yanked\])?$/,
+      );
+      const yanked = release.includes("[yanked]");
       release = matches
         ? opts.releaseCreator(matches[1])
         : opts.releaseCreator();
+      release.yanked = yanked;
     } else {
       throw new Error(`Syntax error in the release title`);
     }

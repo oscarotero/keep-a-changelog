@@ -1,7 +1,4 @@
-import {
-  assertEquals,
-  assertThrows,
-} from "https://deno.land/std@0.115.1/testing/asserts.ts";
+import { assertEquals, assertThrows } from "./deps.ts";
 import { parser } from "../mod.ts";
 import releaseCreator from "./fixture/CustomRelease.ts";
 

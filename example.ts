@@ -3,6 +3,11 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.1.0", "2022-04-03")
+      .added("Support for `[YANKED]` releases #25")
+      .fixed("Updated dependencies"),
+  )
+  .addRelease(
     new Release("2.0.1", "2022-01-09")
       .fixed("Updated deps.")
       .fixed("`release` and `latest-release` args #23."),
