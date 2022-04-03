@@ -13,7 +13,7 @@ const testFiles = [
 
 for (const file of testFiles) {
   await copyFile(`test/${file}`, `esm/test/${file}`);
-  await copyFile(`test/${file}`, `umd/test/${file}`);
+  await copyFile(`test/${file}`, `script/test/${file}`);
 }
 
 await copyFile("LICENSE");

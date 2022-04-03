@@ -17,5 +17,5 @@ jobs:
 
       - name: Run tests
         run: |
-          deno test --allow-read test
-          deno run --unstable -A build_npm.ts 2.0.0
+          deno task test
+          deno task build-test
