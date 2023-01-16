@@ -126,14 +126,18 @@ export default class Release {
     if (this.version) {
       if (hasCompareLink) {
         t.push(`## [${this.version}] - ${formatDate(this.date)}${yanked}`);
+        t.push("");
       } else {
         t.push(`## ${this.version} - ${formatDate(this.date)}${yanked}`);
+        t.push("");
       }
     } else {
       if (hasCompareLink) {
         t.push(`## [Unreleased]${yanked}`);
+        t.push("");
       } else {
         t.push(`## Unreleased${yanked}`);
+        t.push("");
       }
     }
 
@@ -145,6 +149,7 @@ export default class Release {
     this.changes.forEach((changes, type) => {
       if (changes.length) {
         t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
+        t.push("");
         t = t.concat(changes.map((change) => change.toString()));
         t.push("");
       }
