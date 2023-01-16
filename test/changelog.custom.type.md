@@ -7,16 +7,22 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Maintenance
+
 - upgrade
 - fix vulnerabilities
 
 ## [2.0.0] - 2020-02-07
+
 ### Added
+
 - custom release
 
 ## [1.0.0] - 2020-02-06
+
 ### Maintenance
+
 - fix naming
 
 [Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v2.0.0...HEAD

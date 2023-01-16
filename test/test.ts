@@ -152,7 +152,9 @@ Deno.test("creates release entry with Maintanace subsection", function () {
     .maintenance("fix vulnerabilities");
   const expectedResult = [
     "## Unreleased",
+    "",
     "### Maintenance",
+    "",
     "- upgrade",
     "- fix vulnerabilities",
   ].join("\n");
