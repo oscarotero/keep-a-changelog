@@ -7,6 +7,7 @@ await Deno.remove("npm", { recursive: true }).catch(() => {});
 const testFiles = [
   "changelog.custom.type.md",
   "changelog.expected.md",
+  "changelog.expected.linted.md",
   "changelog.md",
   "empty.expected.md",
 ];
