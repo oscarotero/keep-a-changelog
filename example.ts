@@ -3,6 +3,12 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.2.0", "2023-01-18")
+      .added("New option `format` to configure the output option #28.")
+      .added("`Release.setYanked` function #26.")
+      .fixed("Removed unnecessary new line after the title #27."),
+  )
+  .addRelease(
     new Release("2.1.0", "2022-04-03")
       .added("Support for `[YANKED]` releases #25")
       .fixed("Updated dependencies"),

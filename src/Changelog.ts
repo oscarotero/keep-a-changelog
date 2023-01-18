@@ -10,6 +10,7 @@ export default class Changelog {
   url?: string;
   releases: Release[] = [];
   tagNameBuilder?: (release: Release) => string;
+  format: "compact" | "markdownlint" = "compact";
 
   constructor(title: string, description = "") {
     this.title = title;
@@ -55,6 +56,10 @@ export default class Changelog {
 
     t.push(`# ${this.title}`);
 
+    if (this.format === "markdownlint") {
+      t.push("");
+    }
+
     const links: string[] = [];
     const compareLinks: string[] = [];
 
@@ -65,7 +70,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).`;
 
     if (description) {
-      t.push("");
       t.push(description);
     }
 

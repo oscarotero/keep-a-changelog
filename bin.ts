@@ -1,18 +1,20 @@
 #!/usr/bin/env deno
 
-import { join } from "https://deno.land/std@0.120.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.173.0/path/mod.ts";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parse as parseFlag } from "https://deno.land/std@0.120.0/flags/mod.ts";
+import { parse as parseFlag } from "https://deno.land/std@0.173.0/flags/mod.ts";
 import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
 
 const argv = parseFlag(Deno.args, {
   default: {
     file: "CHANGELOG.md",
+    format: "compact",
     release: null,
     url: null,
     https: true,
     quiet: false,
   },
+  string: ["file", "format", "release", "url"],
   boolean: ["https", "init", "latest-release", "quiet"],
 });
 
@@ -24,11 +26,14 @@ try {
       new Release("0.1.0", new Date(), "First version"),
     );
 
+    changelog.format = argv.format as "compact" | "markdownlint";
+
     save(file, changelog, true);
     Deno.exit(0);
   }
 
   const changelog = parser(Deno.readTextFileSync(file));
+  changelog.format = argv.format as "compact" | "markdownlint";
 
   if (argv["latest-release"]) {
     const release = changelog.releases.find((release) =>

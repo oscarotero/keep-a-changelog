@@ -6,11 +6,14 @@ import { Semver } from "../src/deps.ts";
 const changelogFile = new URL("./changelog.md", import.meta.url).pathname;
 const expectedFile =
   new URL("./changelog.expected.md", import.meta.url).pathname;
+const expectedFileLinted =
+  new URL("./changelog.expected.linted.md", import.meta.url).pathname;
 const emptyExpectedFile =
   new URL("./empty.expected.md", import.meta.url).pathname;
 
 const changelog = parser(Deno.readTextFileSync(changelogFile));
 const expected = Deno.readTextFileSync(expectedFile);
+const expectedLinted = Deno.readTextFileSync(expectedFileLinted);
 const emptyExpected = Deno.readTextFileSync(emptyExpectedFile);
 
 // Deno.writeTextFileSync(expectedFile, changelog.toString());
@@ -21,7 +24,12 @@ Deno.test("Changelog testing", function () {
   assertEquals(new Changelog("Changelog").toString(), emptyExpected);
 
   // should match the generated changelog with the expected
+  changelog.format = "compact";
   assertEquals(changelog.toString().trim(), expected.trim());
+
+  // should match the generated changelog with the expected
+  changelog.format = "markdownlint";
+  assertEquals(changelog.toString().trim(), expectedLinted.trim());
 });
 
 Deno.test("should find an Unreleased release if no argument is passed in", function () {

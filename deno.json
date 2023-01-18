@@ -1,4 +1,5 @@
 {
+  "lock": false,
   "tasks": {
     "test": "deno test --allow-read test",
     "changelog": "deno run --allow-write example.ts",

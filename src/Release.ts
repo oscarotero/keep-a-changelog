@@ -80,6 +80,11 @@ export default class Release {
     this.date = date;
   }
 
+  setYanked(yanked = true) {
+    this.yanked = yanked;
+    return this;
+  }
+
   addChange(type: string, change: Change | string) {
     if (!(change instanceof Change)) {
       change = new Change(change);
@@ -137,6 +142,10 @@ export default class Release {
       }
     }
 
+    if (changelog?.format === "markdownlint") {
+      t.push("");
+    }
+
     if (this.description.trim()) {
       t.push(this.description.trim());
       t.push("");
@@ -145,6 +154,9 @@ export default class Release {
     this.changes.forEach((changes, type) => {
       if (changes.length) {
         t.push(`### ${type[0].toUpperCase()}${type.substring(1)}`);
+        if (changelog?.format === "markdownlint") {
+          t.push("");
+        }
         t = t.concat(changes.map((change) => change.toString()));
         t.push("");
       }

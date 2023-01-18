@@ -56,6 +56,17 @@ const changelog = new Changelog("My project")
 console.log(changelog.toString());
 ```
 
+### Custom output format
+
+By default, the output format of the markdown is "compact", that removes the
+space after the headings. You can change it to follow the
+[`markdownlint`](https://github.com/DavidAnson/markdownlint) rules:
+
+```js
+const changelog = new Changelog();
+changelog.format = "markdownlint";
+```
+
 ### Custom tag names
 
 By default, the tag names are `v` + version number. For example, the tag for the
@@ -73,10 +84,10 @@ By default and according to the
 [keepachangelog](http://keepachangelog.com/en/1.0.0/) format, the change types
 are `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
 
-In case you'd like add another type in order to use is in your changelog, you
-basically need to extend the `Release` class to support new types. Additionally,
-you have to tell the `parser` that it should create instances of your new
-extended `Release` in order to parse your changelog correctly.
+In case you'd like add another type, you need to extend the `Release` class to
+support new types. Additionally, you have to tell the `parser` that it should
+create instances of your new extended `Release` in order to parse your changelog
+correctly.
 
 For example, we would like to add a type `Maintenance`. Extend the provided
 `Release` class:
@@ -160,6 +171,7 @@ Available options:
 
 | Option             | Description                                                                                                                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--format`           | The output format for the generated markdown. It can be `markdownlint` or `compact`. The default value is `compact`.                                                                                                                                       |
 | `--file`           | The markdown file of the changelog. The default value is `CHANGELOG.md`.                                                                                                                                       |
 | `--url`            | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository. |
 | `--https`          | Set to false to use `http` instead `https` in the url (`--https=false`).                                                                                                                                       |
