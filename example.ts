@@ -3,6 +3,10 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.2.1", "2023-01-25")
+      .fixed("Allow list elements in the descriptions of releases and changelogs #30.")
+  )
+  .addRelease(
     new Release("2.2.0", "2023-01-18")
       .added("New option `format` to configure the output option #28.")
       .added("`Release.setYanked` function #26.")
