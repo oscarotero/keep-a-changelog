@@ -8,6 +8,9 @@ and this project adheres to
 
 ## [Unreleased] [YANKED]
 
+This is a brand new releases with:
+- Configuration is now done within the Web client, for authorized users.
+
 ### Added
 
 - Test

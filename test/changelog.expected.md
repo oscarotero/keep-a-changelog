@@ -6,6 +6,9 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] [YANKED]
+This is a brand new releases with:
+- Configuration is now done within the Web client, for authorized users.
+
 ### Added
 - Test
 

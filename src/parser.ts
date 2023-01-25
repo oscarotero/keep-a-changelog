@@ -38,7 +38,7 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
 
   changelog.flag = getContent(tokens, "flag");
   changelog.title = getContent(tokens, "h1", true);
-  changelog.description = getContent(tokens, "p");
+  changelog.description = getTextContent(tokens);
 
   //Releases
   let release;
@@ -65,7 +65,7 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
     }
 
     changelog.addRelease(release);
-    release.description = getContent(tokens, "p");
+    release.description = getTextContent(tokens);
 
     let type;
 
@@ -108,10 +108,12 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
 /** Returns the content of a token */
 function getContent(
   tokens: Token[],
-  type: TokenType,
+  type: TokenType | TokenType[],
   required = false,
 ): string {
-  if (!tokens[0] || tokens[0][1] !== type) {
+  const types = Array.isArray(type) ? type : [type];
+
+  if (!tokens[0] || types.indexOf(tokens[0][1]) === -1) {
     if (required) {
       throw new Error(`Required token missing in: "${tokens[0][0]}"`);
     }
@@ -120,6 +122,24 @@ function getContent(
   }
 
   return tokens.shift()![2].join("\n");
+}
+
+/** Return the next text content */
+function getTextContent(tokens: Token[]): string {
+  const lines: string[] = [];
+  const types = ["p", "li"];
+
+  while (tokens[0] && types.indexOf(tokens[0][1]) !== -1) {
+    const token = tokens.shift()!;
+
+    if (token[1] === "li") {
+      lines.push("- " + token[2].join("\n"));
+    } else {
+      lines.push(token[2].join("\n"));
+    }
+  }
+
+  return lines.join("\n");
 }
 
 type TokenType = "h1" | "h2" | "h3" | "li" | "p" | "link" | "flag" | "hr";
