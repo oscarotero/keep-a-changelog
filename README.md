@@ -160,6 +160,11 @@ You can release automatically the latest "Unreleased" version:
 changelog --release
 ```
 
+If your "Unreleased" section has no version, you can specify it as an argument:
+```sh
+changelog --release 2.0.0
+```
+
 And return the latest released version:
 
 ```sh
