@@ -5,5 +5,8 @@
     "changelog": "deno run --allow-write example.ts",
     "build-npm": "deno run -A build_npm.ts 2.3.0",
     "update-deps": "udd build_npm.ts && udd src/deps.ts && udd test/deps.ts"
+  },
+  "fmt": {
+    "exclude": ["test", "npm"]
   }
 }

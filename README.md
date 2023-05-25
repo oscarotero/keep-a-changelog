@@ -161,6 +161,7 @@ changelog --release
 ```
 
 If your "Unreleased" section has no version, you can specify it as an argument:
+
 ```sh
 changelog --release 2.0.0
 ```
@@ -176,11 +177,12 @@ Available options:
 
 | Option             | Description                                                                                                                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--format`           | The output format for the generated markdown. It can be `markdownlint` or `compact`. The default value is `compact`.                                                                                                                                       |
+| `--format`         | The output format for the generated markdown. It can be `markdownlint` or `compact`. The default value is `compact`.                                                                                           |
 | `--file`           | The markdown file of the changelog. The default value is `CHANGELOG.md`.                                                                                                                                       |
 | `--url`            | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository. |
 | `--https`          | Set to false to use `http` instead `https` in the url (`--https=false`).                                                                                                                                       |
 | `--init`           | Init a new empty changelog file.                                                                                                                                                                               |
 | `--latest-release` | Print the latest release version.                                                                                                                                                                              |
-| `--release`        | Updated the latest unreleased version with the current date.                                                                                                                                                   |
+| `--release`        | Updated the latest unreleased version with the current date. Use `--release=X.Y.Z` to set a number if the version doesn't have it.                                                                             |
+| `--create`         | Create a new Unreleased version. Use `--create=X.Y.Z` to specify a version number or just `--create` for a version without number.                                                                             |
 | `--quiet`          | Do not output error messages                                                                                                                                                                                   |
