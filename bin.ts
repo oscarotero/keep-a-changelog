@@ -1,8 +1,8 @@
 #!/usr/bin/env deno
 
-import { join } from "https://deno.land/std@0.173.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.189.0/path/mod.ts";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parse as parseFlag } from "https://deno.land/std@0.173.0/flags/mod.ts";
+import { parse as parseFlag } from "https://deno.land/std@0.189.0/flags/mod.ts";
 import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
 
 const argv = parseFlag(Deno.args, {
@@ -10,11 +10,12 @@ const argv = parseFlag(Deno.args, {
     file: "CHANGELOG.md",
     format: "compact",
     release: null,
+    create: null,
     url: null,
     https: true,
     quiet: false,
   },
-  string: ["file", "format", "release", "url"],
+  string: ["file", "format", "url"],
   boolean: ["https", "init", "latest-release", "quiet"],
 });
 
@@ -69,6 +70,11 @@ try {
       console.error("Not found any valid unreleased version");
       Deno.exit(1);
     }
+  }
+
+  if (argv.create) {
+    const version = typeof argv.create === "string" ? argv.create : undefined;
+    changelog.addRelease(new Release(version));
   }
 
   if (!changelog.url) {

@@ -3,6 +3,11 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.3.0", "2023-05-25")
+      .added("New option `--create`, to create unreleased versions #31.")
+      .fixed("Allow empty values for `--release` option")
+  )
+  .addRelease(
     new Release("2.2.1", "2023-01-25")
       .fixed("Allow list elements in the descriptions of releases and changelogs #30.")
   )

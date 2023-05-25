@@ -1,6 +1,6 @@
-import { build } from "https://deno.land/x/dnt@0.33.0/mod.ts";
-import { dirname, join } from "https://deno.land/std@0.173.0/path/mod.ts";
-import { ensureDir } from "https://deno.land/std@0.173.0/fs/mod.ts";
+import { build } from "https://deno.land/x/dnt@0.36.0/mod.ts";
+import { dirname, join } from "https://deno.land/std@0.189.0/path/mod.ts";
+import { ensureDir } from "https://deno.land/std@0.189.0/fs/mod.ts";
 
 await Deno.remove("npm", { recursive: true }).catch(() => {});
 

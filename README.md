@@ -22,7 +22,7 @@ console.log(changelog.toString());
 ## Usage in Deno
 
 ```js
-import { parser } from "https://deno.land/x/changelog@v2.0.0/mod.ts";
+import { parser } from "https://deno.land/x/changelog@v2.2.1/mod.ts";
 
 //Parse a changelog file
 const changelog = parser(await Deno.readTextFile("CHANGELOG.md"));
@@ -37,7 +37,7 @@ console.log(changelog.toString());
 import {
   Changelog,
   Release,
-} from "https://deno.land/x/changelog@v2.0.0/mod.ts";
+} from "https://deno.land/x/changelog@v2.2.1/mod.ts";
 
 const changelog = new Changelog("My project")
   .addRelease(
