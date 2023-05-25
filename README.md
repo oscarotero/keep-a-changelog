@@ -157,6 +157,11 @@ changelog --init
 You can release automatically the latest "Unreleased" version:
 
 ```sh
+changelog --release
+```
+
+If your "Unreleased" section has no version, you can specify it as an argument:
+```sh
 changelog --release 2.0.0
 ```
 
