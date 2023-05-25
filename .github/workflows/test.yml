@@ -18,4 +18,3 @@ jobs:
       - name: Run tests
         run: |
           deno task test
-          deno task build-test
