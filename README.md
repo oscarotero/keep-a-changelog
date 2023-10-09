@@ -4,7 +4,7 @@
 Node & Deno
 
 Deno package to parse and generate changelogs following the
-[keepachangelog](http://keepachangelog.com/en/1.0.0/) format.
+[keepachangelog](https://keepachangelog.com/) format.
 
 ## Usage in Node
 
@@ -78,10 +78,21 @@ const changelog = new Changelog();
 changelog.tagNameBuilder = (release) => `version-${release.version}`;
 ```
 
+### Custom compare links
+
+By default, compare links are build compliant with GitHub format.
+To change this behavior, set a new `compareLinkBuilder`:
+
+```js
+const changelog = new Changelog();
+changelog.url = "https://bitbucket.org/oscarotero/keep-a-changelog";
+changelog.compareLinkBuilder = (previous, release) => `${this.url}/branches/compare/${release.version}%0D${previous.version}`;
+```
+
 ### Custom Change Types
 
 By default and according to the
-[keepachangelog](http://keepachangelog.com/en/1.0.0/) format, the change types
+[keepachangelog](https://keepachangelog.com/) format, the change types
 are `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
 
 In case you'd like add another type, you need to extend the `Release` class to
