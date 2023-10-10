@@ -52,7 +52,9 @@ export default class Changelog {
       return `${this.url}/compare/${this.tagName(previous)}...${this.head}`;
     }
 
-    return `${this.url}/compare/${this.tagName(previous)}...${this.tagName(release)}`;
+    return `${this.url}/compare/${this.tagName(previous)}...${
+      this.tagName(release)
+    }`;
   }
 
   tagName(release: Release) {

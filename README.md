@@ -80,20 +80,21 @@ changelog.tagNameBuilder = (release) => `version-${release.version}`;
 
 ### Custom compare links
 
-By default, compare links are build compliant with GitHub format.
-To change this behavior, set a new `compareLinkBuilder`:
+By default, compare links are build compliant with GitHub format. To change this
+behavior, set a new `compareLinkBuilder`:
 
 ```js
 const changelog = new Changelog();
 changelog.url = "https://bitbucket.org/oscarotero/keep-a-changelog";
-changelog.compareLinkBuilder = (previous, release) => `${this.url}/branches/compare/${release.version}%0D${previous.version}`;
+changelog.compareLinkBuilder = (previous, release) =>
+  `${this.url}/branches/compare/${release.version}%0D${previous.version}`;
 ```
 
 ### Custom Change Types
 
-By default and according to the
-[keepachangelog](https://keepachangelog.com/) format, the change types
-are `Added`, `Changed`, `Deprecated`, `Removed`, `Fixed`, and `Security`.
+By default and according to the [keepachangelog](https://keepachangelog.com/)
+format, the change types are `Added`, `Changed`, `Deprecated`, `Removed`,
+`Fixed`, and `Security`.
 
 In case you'd like add another type, you need to extend the `Release` class to
 support new types. Additionally, you have to tell the `parser` that it should

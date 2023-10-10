@@ -3,6 +3,11 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.4.0", "2023-10-10")
+      .added("New function `compareLinkBuilder` #33.")
+      .fixed("Updated dependencies"),
+  )
+  .addRelease(
     new Release("2.3.0", "2023-05-25")
       .added("New option `--create`, to create unreleased versions #31.")
       .fixed("Allow empty values for `--release` option")
