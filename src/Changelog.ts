@@ -10,6 +10,7 @@ export default class Changelog {
   url?: string;
   releases: Release[] = [];
   tagNameBuilder?: (release: Release) => string;
+  compareLinkBuilder?: (previous: Release, release: Release) => string;
   format: "compact" | "markdownlint" = "compact";
 
   constructor(title: string, description = "") {
@@ -36,6 +37,22 @@ export default class Changelog {
 
   sortReleases() {
     this.releases.sort((a, b) => a.compare(b));
+  }
+
+  compareLink(previous: Release, release: Release) {
+    if (this.compareLinkBuilder) {
+      return this.compareLinkBuilder(previous, release);
+    }
+
+    if (!previous) {
+      return `${this.url}/releases/tag/${this.tagName(release)}`;
+    }
+
+    if (!release.date || !release.version) {
+      return `${this.url}/compare/${this.tagName(previous)}...${this.head}`;
+    }
+
+    return `${this.url}/compare/${this.tagName(previous)}...${this.tagName(release)}`;
   }
 
   tagName(release: Release) {
@@ -66,8 +83,8 @@ export default class Changelog {
     const description = this.description.trim() ||
       `All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/)
-and this project adheres to [Semantic Versioning](http://semver.org/).`;
+The format is based on [Keep a Changelog](https://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](https://semver.org/).`;
 
     if (description) {
       t.push(description);

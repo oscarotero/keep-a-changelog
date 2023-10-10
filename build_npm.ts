@@ -39,7 +39,7 @@ await build({
     name: "keep-a-changelog",
     version: Deno.args[0],
     description:
-      "Node package to parse and generate changelogs following the [keepachangelog](http://keepachangelog.com/en/1.0.0/) format.",
+      "Node package to parse and generate changelogs following the [keepachangelog](https://keepachangelog.com/) format.",
     homepage: "https://github.com/oscarotero/keep-a-changelog#readme",
     license: "MIT",
     keywords: [

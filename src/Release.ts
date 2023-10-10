@@ -184,33 +184,17 @@ export default class Release {
       previous = changelog.releases[index + offset];
     }
 
-    if (!previous) {
-      if (!this.version || !this.date) {
-        return;
-      }
-
-      return `[${this.version}]: ${changelog.url}/releases/tag/${
-        changelog.tagName(this)
-      }`;
+    if (!previous && (!this.version || !this.date)) {
+      return;
     }
 
-    if (!this.version) {
-      return `[Unreleased]: ${changelog.url}/compare/${
-        changelog.tagName(previous)
-      }...${changelog.head}`;
+    const compareLink = changelog.compareLink(previous, this);
+
+    if (!compareLink) {
+      return;
     }
 
-    if (!this.date) {
-      return `[${this.version}]: ${changelog.url}/compare/${
-        changelog.tagName(previous)
-      }...${changelog.head}`;
-    }
-
-    return `[${this.version}]: ${changelog.url}/compare/${
-      changelog.tagName(
-        previous,
-      )
-    }...${changelog.tagName(this)}`;
+    return `[${this.version || "Unreleased"}]: ${compareLink}`;
   }
 
   getLinks(changelog: Changelog) {
