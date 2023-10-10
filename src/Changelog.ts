@@ -49,10 +49,10 @@ export default class Changelog {
     }
 
     if (!release.date || !release.version) {
-      return `${this.url}/compare/${this.tagName(release)}...${this.head}`;
+      return `${this.url}/compare/${this.tagName(previous)}...${this.head}`;
     }
 
-    return `${this.url}/compare/${this.tagName(release)}...${this.tagName(previous)}`;
+    return `${this.url}/compare/${this.tagName(previous)}...${this.tagName(release)}`;
   }
 
   tagName(release: Release) {
