@@ -1,17 +1,19 @@
-import { Semver } from "./deps.ts";
+import { compare, format, parse } from "./deps.ts";
 import Change from "./Change.ts";
 import Changelog from "./Changelog.ts";
 
+import type { SemVer } from "./deps.ts";
+
 export default class Release {
   changelog?: Changelog;
-  version?: Semver;
+  parsedVersion?: SemVer;
   date?: Date;
   yanked = false;
   description: string;
   changes: Map<string, Change[]>;
 
   constructor(
-    version?: string | Semver,
+    version?: string | SemVer,
     date?: string | Date,
     description = "",
   ) {
@@ -29,12 +31,16 @@ export default class Release {
     ]);
   }
 
+  get version(): string | undefined {
+    return this.parsedVersion ? format(this.parsedVersion) : undefined;
+  }
+
   compare(release: Release) {
-    if (!this.version && release.version) {
+    if (!this.parsedVersion && release.parsedVersion) {
       return -1;
     }
 
-    if (!release.version) {
+    if (!release.parsedVersion) {
       return 1;
     }
 
@@ -46,8 +52,8 @@ export default class Release {
       return 1;
     }
 
-    if (this.version && release.version) {
-      return -this.version.compare(release.version);
+    if (this.parsedVersion && release.parsedVersion) {
+      return -compare(this.parsedVersion, release.parsedVersion);
     }
 
     return 0;
@@ -61,11 +67,11 @@ export default class Release {
     return Array.from(this.changes.values()).every((change) => !change.length);
   }
 
-  setVersion(version?: string | Semver) {
+  setVersion(version?: string | SemVer) {
     if (typeof version === "string") {
-      version = new Semver(version);
+      version = parse(version);
     }
-    this.version = version;
+    this.parsedVersion = version;
 
     //Re-sort the releases of the parent changelog
     if (this.changelog) {
@@ -127,12 +133,13 @@ export default class Release {
     let t: string[] = [];
     const hasCompareLink = this.getCompareLink(changelog) !== undefined;
     const yanked = this.yanked ? " [YANKED]" : "";
+    const { version } = this;
 
-    if (this.version) {
+    if (version) {
       if (hasCompareLink) {
-        t.push(`## [${this.version}] - ${formatDate(this.date)}${yanked}`);
+        t.push(`## [${version}] - ${formatDate(this.date)}${yanked}`);
       } else {
-        t.push(`## ${this.version} - ${formatDate(this.date)}${yanked}`);
+        t.push(`## ${version} - ${formatDate(this.date)}${yanked}`);
       }
     } else {
       if (hasCompareLink) {

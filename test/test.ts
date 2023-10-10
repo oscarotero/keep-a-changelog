@@ -1,7 +1,6 @@
 import { Changelog, parser, Release } from "../mod.ts";
 import customRelease from "./fixture/CustomRelease.ts";
 import { assertEquals } from "./deps.ts";
-import { Semver } from "../src/deps.ts";
 
 const changelogFile = new URL("./changelog.md", import.meta.url).pathname;
 const expectedFile =
@@ -102,17 +101,14 @@ Deno.test("should update the version of a null-version release", function () {
   const release = new Release();
   assertEquals(release.version, undefined);
   release.setVersion("1.2.3");
-  assertEquals(release.version instanceof Semver, true);
-  assertEquals(release.version?.toString(), "1.2.3");
+  assertEquals(release.version, "1.2.3");
 });
 
 Deno.test("should update the version of a versioned release", function () {
   const release = new Release("1.2.2");
-  assertEquals(release.version instanceof Semver, true);
-  assertEquals(release.version?.toString(), "1.2.2");
+  assertEquals(release.version, "1.2.2");
   release.setVersion("1.2.3");
-  assertEquals(release.version instanceof Semver, true);
-  assertEquals(release.version?.toString(), "1.2.3");
+  assertEquals(release.version, "1.2.3");
 });
 
 Deno.test("should sort the parent changelog's releases", function () {

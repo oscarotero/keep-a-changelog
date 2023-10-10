@@ -1,5 +1,6 @@
 import Release from "./Release.ts";
-import { eq, Semver } from "./deps.ts";
+import { eq, parse } from "./deps.ts";
+import type { SemVer } from "./deps.ts";
 
 export default class Changelog {
   flag?: string;
@@ -26,12 +27,15 @@ export default class Changelog {
     return this;
   }
 
-  findRelease(version?: Semver | string) {
+  findRelease(version?: SemVer | string) {
     if (!version) {
       return this.releases.find((release) => !release.version);
     }
+    if (typeof version === "string") {
+      version = parse(version);
+    }
     return this.releases.find((release) =>
-      release.version && eq(release.version, version)
+      release.parsedVersion && eq(release.parsedVersion, version as SemVer)
     );
   }
 

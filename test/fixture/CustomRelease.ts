@@ -1,9 +1,9 @@
 import { Change, Release } from "../../mod.ts";
-import { Semver } from "../../src/deps.ts";
+import type { SemVer } from "../../src/deps.ts";
 
 class CustomRelease extends Release {
   constructor(
-    version?: Semver | string,
+    version?: SemVer | string,
     date?: Date | string,
     description?: string,
   ) {
@@ -16,7 +16,7 @@ class CustomRelease extends Release {
 }
 
 export default function (
-  version?: Semver | string,
+  version?: SemVer | string,
   date?: Date | string,
   description?: string,
 ) {
