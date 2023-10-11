@@ -6,11 +6,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [3.4.1] - 2023-10-10
+## [2.4.1] - 2023-10-10
 ### Fixed
 - Breaking changes after updating `semver` package
 
-## [3.4.0] - 2023-10-10
+## [2.4.0] - 2023-10-10
 ### Added
 - New function `compareLinkBuilder` [#33].
 
@@ -66,8 +66,8 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#31]: https://github.com/oscarotero/keep-a-changelog/issues/31
 [#33]: https://github.com/oscarotero/keep-a-changelog/issues/33
 
-[3.4.1]: https://github.com/oscarotero/keep-a-changelog/compare/v3.4.0...v3.4.1
-[3.4.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.3.0...v3.4.0
+[2.4.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.4.0...v2.4.1
+[2.4.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.1.0...v2.2.0

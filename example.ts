@@ -3,11 +3,11 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
-    new Release("3.4.1", "2023-10-10")
+    new Release("2.4.1", "2023-10-10")
       .fixed("Breaking changes after updating `semver` package"),
   )
   .addRelease(
-    new Release("3.4.0", "2023-10-10")
+    new Release("2.4.0", "2023-10-10")
       .added("New function `compareLinkBuilder` #33.")
       .fixed("Updated dependencies"),
   )
