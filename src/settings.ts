@@ -1,5 +1,26 @@
+/**
+ * Temporary URLPattern shim
+ * @see https://github.com/denoland/dnt/issues/336
+ */
+class URLPatternShim {
+  private readonly pattern: RegExp;
+
+  constructor(pattern: string | RegExp) {
+    if (typeof pattern === "string") {
+      pattern = pattern.replace(/\*/g, ".*");
+      pattern = new RegExp(`^${pattern}$`);
+    }
+
+    this.pattern = pattern;
+  }
+
+  test(url: string): boolean {
+    return this.pattern.test(url);
+  }
+}
+
 export interface Settings {
-  pattern: URLPattern;
+  pattern: URLPatternShim;
   tagLink: (url: string, tag: string, previous?: string) => string;
   head: string;
 }
@@ -10,7 +31,7 @@ export default function getSettingsForURL(url: string): Settings | undefined {
 
 export const settings: Settings[] = [
   {
-    pattern: new URLPattern("https://github.com/*"),
+    pattern: new URLPatternShim("https://github.com/*"),
     head: "HEAD",
     tagLink(url, tag, previous) {
       if (!previous) {
@@ -21,7 +42,7 @@ export const settings: Settings[] = [
     },
   },
   {
-    pattern: new URLPattern("https://gitlab.*/*"),
+    pattern: new URLPatternShim("https://gitlab.*/*"),
     head: "master",
     tagLink(url, tag, previous) {
       if (!previous) {
