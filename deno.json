@@ -3,7 +3,7 @@
   "tasks": {
     "test": "deno test --allow-read test",
     "changelog": "deno run --allow-write example.ts",
-    "build-npm": "deno run -A build_npm.ts 2.4.1",
+    "build-npm": "deno run -A build_npm.ts",
     "update-deps": "udd build_npm.ts && udd src/deps.ts && udd test/deps.ts"
   },
   "fmt": {

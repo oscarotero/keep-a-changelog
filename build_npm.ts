@@ -4,6 +4,12 @@ import { ensureDir } from "https://deno.land/std@0.205.0/fs/mod.ts";
 
 await Deno.remove("npm", { recursive: true }).catch(() => {});
 
+const version = Deno.args[0];
+
+if (!version) {
+  throw new Error("Version not specified");
+}
+
 const testFiles = [
   "changelog.custom.type.md",
   "changelog.expected.md",
@@ -37,7 +43,7 @@ await build({
   outDir: "./npm",
   package: {
     name: "keep-a-changelog",
-    version: Deno.args[0],
+    version,
     description:
       "Node package to parse and generate changelogs following the [keepachangelog](https://keepachangelog.com/) format.",
     homepage: "https://github.com/oscarotero/keep-a-changelog#readme",
