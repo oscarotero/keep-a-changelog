@@ -79,25 +79,6 @@ try {
     changelog.addRelease(new Release(version));
   }
 
-  if (!changelog.url) {
-    if (argv.url) {
-      changelog.url = argv.url;
-    } else {
-      const url = getRemoteUrl(argv.https);
-
-      if (url) {
-        changelog.url = url;
-      } else {
-        console.error(
-          red(
-            'Please, set the repository url with --url="https://github.com/username/repository"',
-          ),
-        );
-        Deno.exit(1);
-      }
-    }
-  }
-
   save(file, changelog);
 } catch (err) {
   console.error(red(err.message));
@@ -108,10 +89,19 @@ try {
 }
 
 function save(file: string, changelog: Changelog, isNew = false) {
-  const url = changelog.url;
+  changelog.url = argv.url || changelog.url || getRemoteUrl(argv.https);
 
-  if (url) {
-    const settings = getSettingsForURL(url);
+  if (!changelog.url) {
+    console.error(
+      red(
+        'Please, set the repository url with --url="https://github.com/username/repository"',
+      ),
+    );
+    changelog.url = "https://example.com";
+  }
+
+  if (changelog.url) {
+    const settings = getSettingsForURL(changelog.url);
 
     if (settings) {
       changelog.head = settings.head;

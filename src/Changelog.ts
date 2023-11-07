@@ -58,13 +58,13 @@ export default class Changelog {
       }
 
       if (!release.date || !release.version) {
-        return this.tagLinkBuilder(url, this.tagName(previous), this.head);
+        return this.tagLinkBuilder(url, this.head, this.tagName(previous));
       }
 
       return this.tagLinkBuilder(
         url,
-        this.tagName(previous),
         this.tagName(release),
+        this.tagName(previous),
       );
     }
 

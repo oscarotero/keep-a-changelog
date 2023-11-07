@@ -10,7 +10,7 @@ export default function getSettingsForURL(url: string): Settings | undefined {
 
 export const settings: Settings[] = [
   {
-    pattern: new URLPattern("https://github.com"),
+    pattern: new URLPattern("https://github.com/*"),
     head: "HEAD",
     tagLink(url, tag, previous) {
       if (!previous) {
@@ -21,7 +21,7 @@ export const settings: Settings[] = [
     },
   },
   {
-    pattern: new URLPattern("https://gitlab.com"),
+    pattern: new URLPattern("https://gitlab.*/*"),
     head: "master",
     tagLink(url, tag, previous) {
       if (!previous) {
