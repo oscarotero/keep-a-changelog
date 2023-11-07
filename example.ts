@@ -3,6 +3,18 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.5.0", "2023-11-07")
+      .added(
+        "Automatic detection of github and gitlab urls and build the links accordingly #35",
+      )
+      .added("New option --head to set the HEAD name #37")
+      .changed(
+        "Deprecated function `compareLinkBuilder`, use `tagLinkBuilder` instead",
+      )
+      .fixed("Trailing slash of the remote url is now removed #36")
+      .fixed("Updated dependencies"),
+  )
+  .addRelease(
     new Release("2.4.1", "2023-10-10")
       .fixed("Breaking changes after updating `semver` package"),
   )
@@ -50,7 +62,6 @@ const changelog = new Changelog("Changelog")
   );
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
-changelog.flag = "deno-fmt-ignore-file";
 
 const file = new URL("./CHANGELOG.md", import.meta.url).pathname;
 

@@ -7,6 +7,6 @@
     "update-deps": "udd build_npm.ts && udd src/deps.ts && udd test/deps.ts"
   },
   "fmt": {
-    "exclude": ["test", "npm"]
+    "exclude": ["test", "npm", "CHANGELOG.md"]
   }
 }

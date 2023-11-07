@@ -1,10 +1,20 @@
-<!-- deno-fmt-ignore-file -->
-
 # Changelog
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
+
+## [2.5.0] - 2023-11-07
+### Added
+- Automatic detection of github and gitlab urls and build the links accordingly [#35]
+- New option --head to set the HEAD name [#37]
+
+### Changed
+- Deprecated function `compareLinkBuilder`, use `tagLinkBuilder` instead
+
+### Fixed
+- Trailing slash of the remote url is now removed [#36]
+- Updated dependencies
 
 ## [2.4.1] - 2023-10-10
 ### Fixed
@@ -65,7 +75,11 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#30]: https://github.com/oscarotero/keep-a-changelog/issues/30
 [#31]: https://github.com/oscarotero/keep-a-changelog/issues/31
 [#33]: https://github.com/oscarotero/keep-a-changelog/issues/33
+[#35]: https://github.com/oscarotero/keep-a-changelog/issues/35
+[#36]: https://github.com/oscarotero/keep-a-changelog/issues/36
+[#37]: https://github.com/oscarotero/keep-a-changelog/issues/37
 
+[2.5.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.4.1...v2.5.0
 [2.4.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.2.1...v2.3.0
