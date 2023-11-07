@@ -139,7 +139,7 @@ It reads the CHANGELOG.md file and override it with the new format:
 Deno:
 
 ```sh
-deno install --allow-read --allow-write -f --name changelog https://deno.land/x/changelog/bin.ts
+deno install --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
 ```
 
 Node:
@@ -182,7 +182,7 @@ And return the latest released version:
 
 ```sh
 changelog --latest-release
-> 0.3.1
+> 2.0.0
 ```
 
 Available options:
@@ -198,3 +198,4 @@ Available options:
 | `--release`        | Updated the latest unreleased version with the current date. Use `--release=X.Y.Z` to set a number if the version doesn't have it.                                                                             |
 | `--create`         | Create a new Unreleased version. Use `--create=X.Y.Z` to specify a version number or just `--create` for a version without number.                                                                             |
 | `--quiet`          | Do not output error messages                                                                                                                                                                                   |
+| `--head`           | Customize the `head` reference                                                                                                                                                                                 |
