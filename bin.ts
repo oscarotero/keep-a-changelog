@@ -30,7 +30,7 @@ try {
 
     changelog.format = argv.format as "compact" | "markdownlint";
 
-    save(file, changelog, true);
+    save(file, changelog, true, argv.head);
     Deno.exit(0);
   }
 
