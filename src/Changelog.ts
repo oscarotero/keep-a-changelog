@@ -11,7 +11,9 @@ export default class Changelog {
   url?: string;
   releases: Release[] = [];
   tagNameBuilder?: (release: Release) => string;
+  /** @deprecated: Use tagLinkBuilder() instead */
   compareLinkBuilder?: (previous: Release, release: Release) => string;
+  tagLinkBuilder?: (url: string, tag: string, previous?: string) => string;
   format: "compact" | "markdownlint" = "compact";
 
   constructor(title: string, description = "") {
@@ -46,6 +48,24 @@ export default class Changelog {
   compareLink(previous: Release, release: Release) {
     if (this.compareLinkBuilder) {
       return this.compareLinkBuilder(previous, release);
+    }
+
+    if (this.tagLinkBuilder) {
+      const url = this.url!;
+
+      if (!previous) {
+        return this.tagLinkBuilder(this.url!, this.tagName(release));
+      }
+
+      if (!release.date || !release.version) {
+        return this.tagLinkBuilder(url, this.tagName(previous), this.head);
+      }
+
+      return this.tagLinkBuilder(
+        url,
+        this.tagName(previous),
+        this.tagName(release),
+      );
     }
 
     if (!previous) {

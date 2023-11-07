@@ -4,6 +4,7 @@ import { join } from "https://deno.land/std@0.189.0/path/mod.ts";
 import { Changelog, parser, Release } from "./mod.ts";
 import { parse as parseFlag } from "https://deno.land/std@0.189.0/flags/mod.ts";
 import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
+import getSettingsForURL from "./src/settings.ts";
 
 const argv = parseFlag(Deno.args, {
   default: {
@@ -14,7 +15,7 @@ const argv = parseFlag(Deno.args, {
     url: null,
     https: true,
     quiet: false,
-    head: null
+    head: null,
   },
   string: ["file", "format", "url", "head"],
   boolean: ["https", "init", "latest-release", "quiet"],
@@ -97,7 +98,7 @@ try {
     }
   }
 
-  save(file, changelog, false, argv.head);
+  save(file, changelog);
 } catch (err) {
   console.error(red(err.message));
 
@@ -106,13 +107,20 @@ try {
   }
 }
 
-function save(file: string, changelog: Changelog, isNew = false, head?) {
+function save(file: string, changelog: Changelog, isNew = false) {
   const url = changelog.url;
 
-  if (head) {
-    changelog.head = head
-  } else if (url && url.includes("gitlab.com")) {
-    changelog.head = "master";
+  if (url) {
+    const settings = getSettingsForURL(url);
+
+    if (settings) {
+      changelog.head = settings.head;
+      changelog.tagLinkBuilder = settings.tagLink;
+    }
+  }
+
+  if (argv.head) {
+    changelog.head = argv.head;
   }
 
   Deno.writeTextFileSync(file, changelog.toString());
