@@ -148,7 +148,8 @@ function getRemoteUrl(https = true) {
       remoteUrl.protocol = "https:";
     }
 
-    return remoteUrl.href;
+    // remove trailing slashes
+    return remoteUrl.href.replace(/\/+$/, "");
   } catch (err) {
     console.error(red(err.message));
     // Ignore
