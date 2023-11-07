@@ -14,8 +14,9 @@ const argv = parseFlag(Deno.args, {
     url: null,
     https: true,
     quiet: false,
+    head: null
   },
-  string: ["file", "format", "url"],
+  string: ["file", "format", "url", "head"],
   boolean: ["https", "init", "latest-release", "quiet"],
 });
 
@@ -96,7 +97,7 @@ try {
     }
   }
 
-  save(file, changelog);
+  save(file, changelog, false, argv.head);
 } catch (err) {
   console.error(red(err.message));
 
@@ -105,10 +106,12 @@ try {
   }
 }
 
-function save(file: string, changelog: Changelog, isNew = false) {
+function save(file: string, changelog: Changelog, isNew = false, head?) {
   const url = changelog.url;
 
-  if (url && url.includes("gitlab.com")) {
+  if (head) {
+    changelog.head = head
+  } else if (url && url.includes("gitlab.com")) {
     changelog.head = "master";
   }
 
