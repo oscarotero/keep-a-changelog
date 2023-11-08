@@ -3,6 +3,10 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.5.1", "2023-11-08")
+      .fixed("Url parser for gitlab links #40"),
+  )
+  .addRelease(
     new Release("2.5.0", "2023-11-07")
       .added(
         "Automatic detection of github and gitlab urls and build the links accordingly #35",
