@@ -134,6 +134,12 @@ const changelog = parser(changelogTextContent, { releaseCreator });
 This library provides the `changelog` command to normalize the changelog format.
 It reads the CHANGELOG.md file and override it with the new format:
 
+### Use the docker image
+
+```sh
+docker run -v $(pwd):/app --init
+```
+
 ### Install the library as script
 
 Deno:
