@@ -15,6 +15,7 @@ const testFiles = [
   "changelog.expected.md",
   "changelog.expected.linted.md",
   "changelog.md",
+  "changelog.gitlab.md",
   "empty.expected.md",
 ];
 
