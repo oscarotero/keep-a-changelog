@@ -1,4 +1,4 @@
-import { assertEquals, assertNotEquals, assertThrows } from "./deps.ts";
+import { assertEquals, assert, assertThrows } from "./deps.ts";
 import { parser } from "../mod.ts";
 import releaseCreator from "./fixture/CustomRelease.ts";
 import getSettingsForURL from "../src/settings.ts";
@@ -23,11 +23,13 @@ Deno.test("parser testing gitlab", function () {
   const changelog = parser(changelogContentGitlab, );
 
   // get settings from url
-  assertNotEquals(changelog.url, undefined)
+  assert(changelog.url)
+
   if(changelog.url) {
     const settings = getSettingsForURL(changelog.url);
-    assertNotEquals(settings, undefined)
-    if(settings) {
+    assert(settings)
+
+    if (settings) {
       changelog.head = settings.head;
       changelog.tagLinkBuilder = settings.tagLink;
     }
