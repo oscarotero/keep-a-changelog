@@ -83,7 +83,7 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
 
   while (link) {
     if (!changelog.url) {
-      const matches = link.match(/^\[.*\]\:\s*(http.*)\/(?:-\/)?compare\/.*$/);
+      const matches = link.match(/^\[.*\]\:\s*(http.*?)\/(?:-\/)?compare\/.*$/);
 
       if (matches) {
         changelog.url = matches[1];
