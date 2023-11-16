@@ -130,6 +130,20 @@ function green(message: string) {
   return "\u001b[" + 32 + "m" + message + "\u001b[" + 39 + "m";
 }
 
+function normalizeUrl(url: string, https: boolean) {
+  // remove .git suffix
+  url = url.replace(".git", "")
+
+  // normalize git@host urls
+  if (url.startsWith("git@")) {
+    url = url.replace(/^git@([^:]+):(.*)$/, (https ? "https" : "http") + "://$1/$2");
+  }
+
+  // remove trailing slashes
+  url = url.replace(/\/+$/, "")
+  return new URL(url)
+}
+
 function getRemoteUrl(https = true) {
   try {
     const file = join(Deno.cwd(), ".git", "config");
@@ -141,16 +155,7 @@ function getRemoteUrl(https = true) {
       return;
     }
 
-    const remoteUrl = new URL(
-      url.replace(/^git@([^:]+):(.*)\.git$/, "https://$1/$2"),
-    );
-
-    if (https) {
-      remoteUrl.protocol = "https:";
-    }
-
-    // remove trailing slashes
-    return remoteUrl.href.replace(/\/+$/, "");
+    return normalizeUrl(url, https).href;
   } catch (err) {
     console.error(red(err.message));
     // Ignore
