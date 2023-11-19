@@ -132,16 +132,19 @@ function green(message: string) {
 
 function normalizeUrl(url: string, https: boolean) {
   // remove .git suffix
-  url = url.replace(".git", "")
+  url = url.replace(/\.git$/, "");
 
   // normalize git@host urls
   if (url.startsWith("git@")) {
-    url = url.replace(/^git@([^:]+):(.*)$/, (https ? "https" : "http") + "://$1/$2");
+    url = url.replace(
+      /^git@([^:]+):(.*)$/,
+      (https ? "https" : "http") + "://$1/$2",
+    );
   }
 
   // remove trailing slashes
-  url = url.replace(/\/+$/, "")
-  return new URL(url)
+  url = url.replace(/\/+$/, "");
+  return new URL(url);
 }
 
 function getRemoteUrl(https = true) {

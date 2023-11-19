@@ -3,6 +3,10 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.5.3", "2023-11-19")
+      .fixed("Improve URL normalization in CLI #42"),
+  )
+  .addRelease(
     new Release("2.5.2", "2023-11-09")
       .fixed("Url regex for gitlab links #41"),
   )
