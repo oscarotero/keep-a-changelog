@@ -37,6 +37,9 @@ try {
 
   const changelog = parser(Deno.readTextFileSync(file));
   changelog.format = argv.format as "compact" | "markdownlint";
+  if (argv["no-v-prefix"]) {
+    changelog.tagNameBuilder = (release) => String(release.version)
+  }
 
   if (argv["latest-release"]) {
     const release = changelog.releases.find((release) =>
