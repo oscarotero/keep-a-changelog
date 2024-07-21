@@ -68,10 +68,9 @@ export default class Release {
   }
 
   setVersion(version?: string | SemVer) {
-    if (typeof version === "string") {
-      version = parse(version);
-    }
-    this.parsedVersion = version;
+    const parsed = typeof version === "string" ? parse(version) : version;
+
+    this.parsedVersion = parsed;
 
     //Re-sort the releases of the parent changelog
     if (this.changelog) {

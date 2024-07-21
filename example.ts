@@ -3,6 +3,13 @@ import { Changelog, Release } from "./mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.6.0", "2024-07-21")
+      .added(
+        "New option `--no-v-prefix` to generate the tag names without prepending `v` #43",
+      )
+      .fixed("Updated dependencies"),
+  )
+  .addRelease(
     new Release("2.5.3", "2023-11-19")
       .fixed("Improve URL normalization in CLI #42"),
   )

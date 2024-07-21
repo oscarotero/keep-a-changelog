@@ -1,9 +1,9 @@
 #!/usr/bin/env deno
 
-import { join } from "https://deno.land/std@0.189.0/path/mod.ts";
+import { join } from "jsr:@std/path@0.224.0";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parse as parseFlag } from "https://deno.land/std@0.189.0/flags/mod.ts";
-import { parse as parseIni } from "https://deno.land/x/ini@v2.1.0/mod.ts";
+import { parse as parseFlag } from "jsr:@std/cli@1.0.0/parse-args";
+import { parse as parseIni } from "jsr:@std/ini@0.225.2";
 import getSettingsForURL from "./src/settings.ts";
 
 const argv = parseFlag(Deno.args, {
@@ -38,7 +38,7 @@ try {
   const changelog = parser(Deno.readTextFileSync(file));
   changelog.format = argv.format as "compact" | "markdownlint";
   if (argv["no-v-prefix"]) {
-    changelog.tagNameBuilder = (release) => String(release.version)
+    changelog.tagNameBuilder = (release) => String(release.version);
   }
 
   if (argv["latest-release"]) {
@@ -155,13 +155,13 @@ function getRemoteUrl(https = true) {
     const file = join(Deno.cwd(), ".git", "config");
     const content = Deno.readTextFileSync(file);
     const data = parseIni(content);
-    const url = data?.['remote "origin"']?.url;
+    const origin = data['remote "origin"'] as { url?: string };
 
-    if (!url) {
+    if (!origin?.url) {
       return;
     }
 
-    return normalizeUrl(url, https).href;
+    return normalizeUrl(origin.url, https).href;
   } catch (err) {
     console.error(red(err.message));
     // Ignore
