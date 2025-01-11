@@ -2,11 +2,11 @@
 
 import { join } from "jsr:@std/path@0.224.0";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parse as parseFlag } from "jsr:@std/cli@1.0.0/parse-args";
+import { parseArgs } from "jsr:@std/cli@1.0.0/parse-args";
 import { parse as parseIni } from "jsr:@std/ini@0.225.2";
 import getSettingsForURL from "./src/settings.ts";
 
-const argv = parseFlag(Deno.args, {
+const argv = parseArgs(Deno.args, {
   default: {
     file: "CHANGELOG.md",
     format: "compact",
@@ -18,12 +18,20 @@ const argv = parseFlag(Deno.args, {
     head: null,
   },
   string: ["file", "format", "url", "head"],
-  boolean: ["https", "init", "latest-release", "quiet"],
+  boolean: ["https", "init", "latest-release", "quiet", "help"],
+  alias: {
+    h: "help",
+  },
 });
 
 const file = join(Deno.cwd(), argv.file);
 
 try {
+  if (argv.help) {
+    showHelp();
+    Deno.exit(0);
+  }
+
   if (argv.init) {
     const changelog = new Changelog("Changelog").addRelease(
       new Release("0.1.0", new Date(), "First version"),
@@ -84,7 +92,7 @@ try {
 
   save(file, changelog);
 } catch (err) {
-  console.error(red(err.message));
+  console.error(red((err as Error).message));
 
   if (!argv.quiet) {
     Deno.exit(1);
@@ -163,7 +171,30 @@ function getRemoteUrl(https = true) {
 
     return normalizeUrl(origin.url, https).href;
   } catch (err) {
-    console.error(red(err.message));
+    console.error(red((err as Error).message));
     // Ignore
   }
+}
+
+function showHelp() {
+  console.log(`keep-a-changelog
+
+Usage: keep-a-changelog [options]
+
+Options:
+  --file, -f          Changelog file (default: CHANGELOG.md)
+  --format            Output format (default: compact)
+  --url               Repository URL
+
+  --init              Initialize a new changelog file
+  --latest-release    Print the latest release version
+
+  --release           Set the date of the specified release
+  --create            Create a new release
+
+  --no-v-prefix       Do not add a "v" prefix to the version
+  --head              Set the HEAD link
+  --quiet             Do not print errors
+  --help, -h          Show this help message
+`);
 }

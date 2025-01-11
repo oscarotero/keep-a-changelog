@@ -27,7 +27,7 @@ export default function parser(markdown: string, options?: Options): Changelog {
     return processTokens(tokens, opts);
   } catch (error) {
     throw new Error(
-      `Parse error in the line ${tokens[0][0]}: ${error.message}`,
+      `Parse error in the line ${tokens[0][0]}: ${(error as Error).message}`,
     );
   }
 }
