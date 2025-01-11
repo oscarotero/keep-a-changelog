@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.5.4] - Unreleased
+### Added
+- `--help, -h` flag [#45].
+
 ## [2.5.3] - 2023-11-19
 ### Fixed
 - Improve URL normalization in CLI [#42]
@@ -93,7 +97,9 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#40]: https://github.com/oscarotero/keep-a-changelog/issues/40
 [#41]: https://github.com/oscarotero/keep-a-changelog/issues/41
 [#42]: https://github.com/oscarotero/keep-a-changelog/issues/42
+[#45]: https://github.com/oscarotero/keep-a-changelog/issues/45
 
+[2.5.4]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...HEAD
 [2.5.3]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.0...v2.5.1
