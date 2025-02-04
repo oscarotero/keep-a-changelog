@@ -87,6 +87,16 @@ try {
 
   if (argv.create) {
     const version = typeof argv.create === "string" ? argv.create : undefined;
+
+    const release = changelog.releases.find((release) => {
+      return release.version === version
+    });
+
+    if (release) {
+      console.warn("Release already exists.");
+      Deno.exit(0);
+    }
+
     changelog.addRelease(new Release(version));
   }
 
