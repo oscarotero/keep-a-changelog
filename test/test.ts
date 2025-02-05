@@ -1,4 +1,4 @@
-import { Changelog, parser, Release } from "../mod.ts";
+import { Change, Changelog, parser, Release } from "../mod.ts";
 import customRelease from "./fixture/CustomRelease.ts";
 import { assertEquals } from "./deps.ts";
 
@@ -142,6 +142,34 @@ Deno.test("should update the date of a dated release", function () {
   assertEquals(release.date?.getUTCFullYear(), 2019);
   assertEquals(release.date?.getUTCMonth(), 1);
   assertEquals(release.date?.getUTCDate(), 2);
+});
+
+Deno.test("should combine changes with other release", function () {
+  const releaseA = new Release();
+  releaseA.addChange("added", "foo");
+  const releaseB = new Release();
+  releaseB.addChange("added", "bar");
+
+  const expectedResult = new Map<string, Change[]>();
+  expectedResult.set("added", [
+      new Change("foo"),
+      new Change("bar")
+    ]
+  );
+  expectedResult.set("changed", []);
+  expectedResult.set("deprecated", []);
+  expectedResult.set("removed", []);
+  expectedResult.set("fixed", []);
+  expectedResult.set("security", []);
+
+  releaseA.combineChanges(releaseB.changes);
+
+  assertEquals(releaseA.changes.get("added"), expectedResult.get("added"));
+  assertEquals(releaseA.changes.get("changed"), expectedResult.get("changed"));
+  assertEquals(releaseA.changes.get("deprecated"), expectedResult.get("deprecated"));
+  assertEquals(releaseA.changes.get("removed"), expectedResult.get("removed"));
+  assertEquals(releaseA.changes.get("fixed"), expectedResult.get("fixed"));
+  assertEquals(releaseA.changes.get("security"), expectedResult.get("security"));
 });
 
 Deno.test("adds a change with a new method maintenance()", function () {
