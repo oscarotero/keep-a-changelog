@@ -94,10 +94,9 @@ try {
 
     if (release) {
       console.warn("Release already exists.");
-      Deno.exit(0);
+    } else {
+      changelog.addRelease(new Release(version));
     }
-
-    changelog.addRelease(new Release(version));
   }
 
   save(file, changelog);
