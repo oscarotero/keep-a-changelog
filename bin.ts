@@ -16,8 +16,9 @@ const argv = parseArgs(Deno.args, {
     https: true,
     quiet: false,
     head: null,
+    "bullet-style": "-",
   },
-  string: ["file", "format", "url", "head"],
+  string: ["file", "format", "url", "head", "bullet-style"],
   boolean: ["https", "init", "latest-release", "quiet", "help"],
   alias: {
     h: "help",
@@ -38,6 +39,7 @@ try {
     );
 
     changelog.format = argv.format as "compact" | "markdownlint";
+    changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
 
     save(file, changelog, true);
     Deno.exit(0);
@@ -45,6 +47,7 @@ try {
 
   const changelog = parser(Deno.readTextFileSync(file));
   changelog.format = argv.format as "compact" | "markdownlint";
+  changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
   if (argv["no-v-prefix"]) {
     changelog.tagNameBuilder = (release) => String(release.version);
   }
@@ -184,6 +187,7 @@ Usage: keep-a-changelog [options]
 Options:
   --file, -f          Changelog file (default: CHANGELOG.md)
   --format            Output format (default: compact)
+  --bullet-style      Bullet point style (default: -)
   --url               Repository URL
 
   --init              Initialize a new changelog file

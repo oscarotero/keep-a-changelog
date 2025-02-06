@@ -15,6 +15,7 @@ export default class Changelog {
   compareLinkBuilder?: (previous: Release, release: Release) => string;
   tagLinkBuilder?: (url: string, tag: string, previous?: string) => string;
   format: "compact" | "markdownlint" = "compact";
+  bulletStyle: "-" | "*" | "+" = "-";
 
   constructor(title: string, description = "") {
     this.title = title;
