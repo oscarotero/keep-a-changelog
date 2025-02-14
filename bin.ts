@@ -90,7 +90,16 @@ try {
 
   if (argv.create) {
     const version = typeof argv.create === "string" ? argv.create : undefined;
-    changelog.addRelease(new Release(version));
+
+    const release = changelog.releases.find((release) => {
+      return release.version === version
+    });
+
+    if (release) {
+      console.warn("Release already exists.");
+    } else {
+      changelog.addRelease(new Release(version));
+    }
   }
 
   save(file, changelog);
