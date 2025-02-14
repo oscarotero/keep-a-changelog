@@ -11,15 +11,21 @@ export interface Options {
     date?: string,
     description?: string,
   ) => Release;
+  /**
+   * If false, releases will not be sorted automatically.
+   * Default is true.
+   */
+  autoSortReleases: boolean;
 }
 
 const defaultOptions: Options = {
   releaseCreator: (version, date, description) =>
     new Release(version, date, description),
+  autoSortReleases: true,
 };
 
 /** Parse a markdown string */
-export default function parser(markdown: string, options?: Options): Changelog {
+export default function parser(markdown: string, options?: Partial<Options>): Changelog {
   const opts = Object.assign({}, defaultOptions, options);
   const tokens = tokenize(markdown);
 
@@ -39,6 +45,7 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
   changelog.flag = getContent(tokens, "flag");
   changelog.title = getContent(tokens, "h1", true);
   changelog.description = getTextContent(tokens);
+  changelog.autoSortReleases = opts.autoSortReleases;
 
   //Releases
   let release;

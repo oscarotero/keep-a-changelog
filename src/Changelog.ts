@@ -16,6 +16,7 @@ export default class Changelog {
   tagLinkBuilder?: (url: string, tag: string, previous?: string, head?: string) => string;
   format: "compact" | "markdownlint" = "compact";
   bulletStyle: "-" | "*" | "+" = "-";
+  autoSortReleases = true;
 
   constructor(title: string, description = "") {
     this.title = title;
@@ -41,8 +42,10 @@ export default class Changelog {
     );
   }
 
-  sortReleases() {
-    this.releases.sort((a, b) => a.compare(b));
+  sortReleases(force?: boolean) {
+    if (this.autoSortReleases || force) {
+      this.releases.sort((a, b) => a.compare(b));
+    }
   }
 
   compareLink(previous: Release, release: Release) {

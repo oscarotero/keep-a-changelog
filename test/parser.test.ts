@@ -6,9 +6,11 @@ import getSettingsForURL from "../src/settings.ts";
 const file = new URL("./changelog.custom.type.md", import.meta.url).pathname;
 const fileGitlab = new URL("./changelog.gitlab.md", import.meta.url).pathname;
 const fileAzdo = new URL("./changelog.azdo.md", import.meta.url).pathname;
+const fileSort = new URL("./changelog.sort.md", import.meta.url).pathname;
 const changelogContent = Deno.readTextFileSync(file);
 const changelogContentGitlab = Deno.readTextFileSync(fileGitlab);
 const changelogContentAzdo = Deno.readTextFileSync(fileAzdo);
+const changelogContentSort = Deno.readTextFileSync(fileSort);
 
 Deno.test("parser testing", function () {
   // is unable to parse changelog with unknown types
@@ -18,6 +20,26 @@ Deno.test("parser testing", function () {
   const changelog = parser(changelogContent, { releaseCreator });
 
   assertEquals(changelog.toString().trim(), changelogContent.trim());
+});
+
+Deno.test("parser testing auto sorting", function () {
+  const changelog = parser(changelogContentSort, );
+
+  assertEquals(changelog.releases[0].version, "2.0.0");
+});
+
+Deno.test("parser testing manual sorting", function () {
+  const changelog = parser(changelogContentSort, { autoSortReleases: false });
+
+  changelog.sortReleases(true);
+
+  assertEquals(changelog.releases[0].version, "2.0.0");
+});
+
+Deno.test("parser testing disabled auto sorting", function () {
+  const changelog = parser(changelogContentSort, { autoSortReleases: false });
+
+  assertEquals(changelog.releases[0].version, "1.0.1");
 });
 
 Deno.test("parser testing gitlab", function () {
