@@ -8,7 +8,7 @@ const changelog = new Changelog("Changelog")
         "New option `--no-v-prefix` to generate the tag names without prepending `v` #43",
       )
       .added(
-        "New option `--sortReleases` to enable or disable the sorting of releases #44",
+        "New option `--sortReleases` to enable or disable the sorting of releases #51",
       )
       .fixed("Updated dependencies"),
   )
