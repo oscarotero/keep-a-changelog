@@ -17,7 +17,7 @@ const argv = parseArgs(Deno.args, {
     quiet: false,
     head: null,
     "bullet-style": "-",
-    sortReleases: true
+    sortReleases: true,
   },
   string: ["file", "format", "url", "head", "bullet-style"],
   boolean: [
