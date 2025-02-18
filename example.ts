@@ -10,6 +10,7 @@ const changelog = new Changelog("Changelog")
       .added(
         "New option `--sortReleases` to enable or disable the sorting of releases #51",
       )
+      .added("`--help, -h` flag [#45].")
       .fixed("Updated dependencies"),
   )
   .addRelease(
