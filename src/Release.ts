@@ -163,7 +163,9 @@ export default class Release {
         if (changelog?.format === "markdownlint") {
           t.push("");
         }
-        t = t.concat(changes.map((change) => change.toString(changelog?.bulletStyle)));
+        t = t.concat(
+          changes.map((change) => change.toString(changelog?.bulletStyle)),
+        );
         t.push("");
       }
     });

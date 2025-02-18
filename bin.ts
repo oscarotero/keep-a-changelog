@@ -19,7 +19,14 @@ const argv = parseArgs(Deno.args, {
     "bullet-style": "-",
   },
   string: ["file", "format", "url", "head", "bullet-style"],
-  boolean: ["https", "init", "latest-release", "quiet", "help"],
+  boolean: [
+    "https",
+    "init",
+    "latest-release",
+    "quiet",
+    "autoSortReleases",
+    "help",
+  ],
   alias: {
     h: "help",
   },
@@ -39,7 +46,7 @@ try {
     );
 
     changelog.format = argv.format as "compact" | "markdownlint";
-    changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+    changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
 
     save(file, changelog, true);
     Deno.exit(0);
@@ -47,7 +54,7 @@ try {
 
   const changelog = parser(Deno.readTextFileSync(file));
   changelog.format = argv.format as "compact" | "markdownlint";
-  changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+  changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
   if (argv["no-v-prefix"]) {
     changelog.tagNameBuilder = (release) => String(release.version);
   }

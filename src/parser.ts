@@ -25,7 +25,10 @@ const defaultOptions: Options = {
 };
 
 /** Parse a markdown string */
-export default function parser(markdown: string, options?: Partial<Options>): Changelog {
+export default function parser(
+  markdown: string,
+  options?: Partial<Options>,
+): Changelog {
   const opts = Object.assign({}, defaultOptions, options);
   const tokens = tokenize(markdown);
 
@@ -90,7 +93,9 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
 
   while (link) {
     if (!changelog.url) {
-      const matches = link.match(/^\[.*\]\:\s*(http.*?)\/(?:-\/)?(branchCompare|compare)(\/|\?).*$/);
+      const matches = link.match(
+        /^\[.*\]\:\s*(http.*?)\/(?:-\/)?(branchCompare|compare)(\/|\?).*$/,
+      );
 
       if (matches) {
         changelog.url = matches[1];
