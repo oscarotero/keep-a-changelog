@@ -25,7 +25,9 @@ export default class Changelog {
 
   addRelease(release: Release) {
     this.releases.push(release);
-    this.sortReleases();
+    if(this.autoSortReleases) {
+      this.sortReleases();
+    }
     release.changelog = this;
 
     return this;
@@ -42,10 +44,8 @@ export default class Changelog {
     );
   }
 
-  sortReleases(force?: boolean) {
-    if (this.autoSortReleases || force) {
+  sortReleases() {
       this.releases.sort((a, b) => a.compare(b));
-    }
   }
 
   compareLink(previous: Release, release: Release) {

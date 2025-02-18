@@ -31,7 +31,7 @@ Deno.test("parser testing auto sorting", function () {
 Deno.test("parser testing manual sorting", function () {
   const changelog = parser(changelogContentSort, { autoSortReleases: false });
 
-  changelog.sortReleases(true);
+  changelog.sortReleases();
 
   assertEquals(changelog.releases[0].version, "2.0.0");
 });
