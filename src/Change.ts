@@ -26,9 +26,9 @@ export default class Change {
     this.description = Change.extractIssues(description, this.issues);
   }
 
-  toString() {
+  toString(bulletStyle = "-") {
     let t = this.title.split("\n").map((line) => `  ${line}`.trimEnd());
-    t[0] = "-" + t[0].substr(1);
+    t[0] = bulletStyle + t[0].substr(1);
 
     if (this.description) {
       t.push("");

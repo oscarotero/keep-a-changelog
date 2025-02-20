@@ -21,7 +21,7 @@ class URLPatternShim {
 
 export interface Settings {
   pattern: URLPatternShim;
-  tagLink: (url: string, tag: string, previous?: string) => string;
+  tagLink: (url: string, tag: string, previous?: string, head?: string) => string;
   head: string;
 }
 
@@ -50,6 +50,23 @@ export const settings: Settings[] = [
       }
 
       return `${url}/-/compare/${previous}...${tag}`;
+    },
+  },
+  {
+    pattern: new URLPatternShim("https://dev.azure.com/*"),
+    head: "master",
+    tagLink(url, tag, previous, head) {
+      if (!previous) {
+        return `${url}?version=GT${tag}`;
+      }
+
+      let tagPrefix = "GT";
+
+      if (tag === head) {
+        tagPrefix = "GB";
+      }
+
+      return `${url}/branchCompare?baseVersion=GT${previous}&targetVersion=${tagPrefix}${tag}`;
     },
   },
 ];

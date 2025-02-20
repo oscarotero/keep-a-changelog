@@ -13,8 +13,9 @@ export default class Changelog {
   tagNameBuilder?: (release: Release) => string;
   /** @deprecated: Use tagLinkBuilder() instead */
   compareLinkBuilder?: (previous: Release, release: Release) => string;
-  tagLinkBuilder?: (url: string, tag: string, previous?: string) => string;
+  tagLinkBuilder?: (url: string, tag: string, previous?: string, head?: string) => string;
   format: "compact" | "markdownlint" = "compact";
+  bulletStyle: "-" | "*" | "+" = "-";
 
   constructor(title: string, description = "") {
     this.title = title;
@@ -53,17 +54,18 @@ export default class Changelog {
       const url = this.url!;
 
       if (!previous) {
-        return this.tagLinkBuilder(this.url!, this.tagName(release));
+        return this.tagLinkBuilder(this.url!, this.tagName(release), undefined, this.head);
       }
 
       if (!release.date || !release.version) {
-        return this.tagLinkBuilder(url, this.head, this.tagName(previous));
+        return this.tagLinkBuilder(url, this.head, this.tagName(previous), this.head);
       }
 
       return this.tagLinkBuilder(
         url,
         this.tagName(release),
         this.tagName(previous),
+        this.head,
       );
     }
 

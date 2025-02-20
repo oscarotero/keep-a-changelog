@@ -67,6 +67,16 @@ const changelog = new Changelog();
 changelog.format = "markdownlint";
 ```
 
+### Custom bullet style
+
+By default, the bullet style of the markdown is "-". You can change it to use
+other styles of bullet points:
+
+```js
+const changelog = new Changelog();
+changelog.bulletStyle = "*";
+```
+
 ### Custom tag names
 
 By default, the tag names are `v` + version number. For example, the tag for the
@@ -190,6 +200,7 @@ Available options:
 | Option             | Description                                                                                                                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `--format`         | The output format for the generated markdown. It can be `markdownlint` or `compact`. The default value is `compact`.                                                                                           |
+| `--bullet-style`   | The Markdown bullet style to use. It can be `-`, `*+*`, `+`. The default value is `-`.                                                                                                                         |
 | `--file`           | The markdown file of the changelog. The default value is `CHANGELOG.md`.                                                                                                                                       |
 | `--url`            | The base url used to build the diff urls of the different releases. It is taken from the existing diff urls in the markdown. If no urls are found, try to catch it using the url of the git remote repository. |
 | `--https`          | Set to false to use `http` instead `https` in the url (`--https=false`).                                                                                                                                       |

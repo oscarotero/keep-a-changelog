@@ -93,3 +93,9 @@ Deno.test("should extract issues which are inside parentheses with brackets", fu
   assertEquals(text, "some change - ([#777])");
   assert(issues.includes("777"));
 });
+
+Deno.test("should use given bullet style", function () {
+  const change = new Change("some change");
+  const result = change.toString("*");
+  assertEquals(result, "* some change");
+});
