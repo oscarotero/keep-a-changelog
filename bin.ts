@@ -16,10 +16,11 @@ const argv = parseArgs(Deno.args, {
     https: true,
     quiet: false,
     head: null,
+    combine: false,
     "bullet-style": "-",
   },
   string: ["file", "format", "url", "head", "bullet-style"],
-  boolean: ["https", "init", "latest-release", "quiet", "help"],
+  boolean: ["https", "init", "latest-release", "quiet", "help", "combine"],
   alias: {
     h: "help",
   },
@@ -86,6 +87,23 @@ try {
       console.error("Not found any valid unreleased version");
       Deno.exit(1);
     }
+  }
+
+  if (argv.combine) {
+    const combinedReleases = changelog.releases.reduce((acc, release) => {
+      if (release.version) {
+        if (acc[release.version]) {
+          acc[release.version].combineChanges(release.changes);
+        } else {
+          acc[release.version] = release;
+        }
+      }
+      return acc;
+    }, {} as Record<string, typeof changelog.releases[0]>);
+
+    changelog.releases = Object.values(combinedReleases);
+
+    console.info(combinedReleases);
   }
 
   if (argv.create) {
@@ -203,6 +221,7 @@ Options:
   --latest-release    Print the latest release version
 
   --release           Set the date of the specified release
+  --combine           Combine changes from releases with the same version
   --create            Create a new release
 
   --no-v-prefix       Do not add a "v" prefix to the version

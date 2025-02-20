@@ -59,6 +59,18 @@ export default class Release {
     return 0;
   }
 
+  combineChanges(changes: Map<string, Change[]>) {
+    changes.forEach((changes, type) => {
+      if (!this.changes.has(type)) {
+        this.changes.set(type, []);
+      }
+
+      this.changes.get(type)!.push(...changes);
+    });
+
+    return this;
+  }
+
   isEmpty() {
     if (this.description.trim()) {
       return false;
