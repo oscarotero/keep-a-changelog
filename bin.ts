@@ -17,7 +17,6 @@ const argv = parseArgs(Deno.args, {
     quiet: false,
     head: null,
     "bullet-style": "-",
-    sortReleases: true,
   },
   string: ["file", "format", "url", "head", "bullet-style"],
   boolean: [
@@ -25,7 +24,6 @@ const argv = parseArgs(Deno.args, {
     "init",
     "latest-release",
     "quiet",
-    "sortReleases",
     "help",
   ],
   alias: {
@@ -54,7 +52,7 @@ try {
   }
 
   const changelog = parser(Deno.readTextFileSync(file), {
-    autoSortReleases: argv.sortReleases,
+    autoSortReleases: argv["no-sort-releases"] === undefined ? true : false,
   });
   changelog.format = argv.format as "compact" | "markdownlint";
   changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
@@ -206,9 +204,8 @@ Options:
   --release           Set the date of the specified release
   --create            Create a new release
 
-  --sortReleases      Sort releases (default: true)
-
   --no-v-prefix       Do not add a "v" prefix to the version
+  --no-sort-releases  Do not sort releases
   --head              Set the HEAD link
   --quiet             Do not print errors
   --help, -h          Show this help message

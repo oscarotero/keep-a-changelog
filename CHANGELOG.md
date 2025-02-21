@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## [2.6.0] - 2024-07-21
 ### Added
 - New option `--no-v-prefix` to generate the tag names without prepending `v` [#43]
-- New option `--sortReleases` to enable or disable the sorting of releases [#51]
+- New option `--no-sort-releases` to disable sorting of releases [#51]
 - `--help, -h` flag [#45].
 
 ### Fixed
