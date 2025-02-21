@@ -16,6 +16,7 @@ const argv = parseArgs(Deno.args, {
     https: true,
     quiet: false,
     head: null,
+    combine: false,
     "bullet-style": "-",
   },
   string: ["file", "format", "url", "head", "bullet-style"],
@@ -25,6 +26,7 @@ const argv = parseArgs(Deno.args, {
     "latest-release",
     "quiet",
     "help",
+    "combine"
   ],
   alias: {
     h: "help",
@@ -96,9 +98,35 @@ try {
     }
   }
 
+  if (argv.combine) {
+    const combinedReleases = changelog.releases.reduce((acc, release) => {
+      if (release.version) {
+        if (acc[release.version]) {
+          acc[release.version].combineChanges(release.changes);
+        } else {
+          acc[release.version] = release;
+        }
+      }
+      return acc;
+    }, {} as Record<string, typeof changelog.releases[0]>);
+
+    changelog.releases = Object.values(combinedReleases);
+
+    console.info(combinedReleases);
+  }
+
   if (argv.create) {
     const version = typeof argv.create === "string" ? argv.create : undefined;
-    changelog.addRelease(new Release(version));
+
+    const release = changelog.releases.find((release) => {
+      return release.version === version
+    });
+
+    if (release) {
+      console.warn("Release already exists.");
+    } else {
+      changelog.addRelease(new Release(version));
+    }
   }
 
   save(file, changelog);
@@ -202,6 +230,7 @@ Options:
   --latest-release    Print the latest release version
 
   --release           Set the date of the specified release
+  --combine           Combine changes from releases with the same version
   --create            Create a new release
 
   --no-v-prefix       Do not add a "v" prefix to the version
