@@ -111,8 +111,6 @@ try {
     }, {} as Record<string, typeof changelog.releases[0]>);
 
     changelog.releases = Object.values(combinedReleases);
-
-    console.info(combinedReleases);
   }
 
   if (argv.create) {
