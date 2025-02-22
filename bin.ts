@@ -20,7 +20,14 @@ const argv = parseArgs(Deno.args, {
     "bullet-style": "-",
   },
   string: ["file", "format", "url", "head", "bullet-style"],
-  boolean: ["https", "init", "latest-release", "quiet", "help", "combine"],
+  boolean: [
+    "https",
+    "init",
+    "latest-release",
+    "quiet",
+    "help",
+    "combine"
+  ],
   alias: {
     h: "help",
   },
@@ -40,15 +47,17 @@ try {
     );
 
     changelog.format = argv.format as "compact" | "markdownlint";
-    changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+    changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
 
     save(file, changelog, true);
     Deno.exit(0);
   }
 
-  const changelog = parser(Deno.readTextFileSync(file));
+  const changelog = parser(Deno.readTextFileSync(file), {
+    autoSortReleases: argv["no-sort-releases"] === undefined ? true : false,
+  });
   changelog.format = argv.format as "compact" | "markdownlint";
-  changelog.bulletStyle = argv['bullet-style'] as "-" | "*" | "+";
+  changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
   if (argv["no-v-prefix"]) {
     changelog.tagNameBuilder = (release) => String(release.version);
   }
@@ -223,6 +232,7 @@ Options:
   --create            Create a new release
 
   --no-v-prefix       Do not add a "v" prefix to the version
+  --no-sort-releases  Do not sort releases
   --head              Set the HEAD link
   --quiet             Do not print errors
   --help, -h          Show this help message

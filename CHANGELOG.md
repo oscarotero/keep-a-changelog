@@ -4,9 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [2.5.4] - Unreleased
+## [2.6.0] - 2024-07-21
 ### Added
+- New option `--no-v-prefix` to generate the tag names without prepending `v` [#43]
+- New option `--no-sort-releases` to disable sorting of releases [#51]
 - `--help, -h` flag [#45].
+
+### Fixed
+- Updated dependencies
 
 ## [2.5.3] - 2023-11-19
 ### Fixed
@@ -97,9 +102,11 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#40]: https://github.com/oscarotero/keep-a-changelog/issues/40
 [#41]: https://github.com/oscarotero/keep-a-changelog/issues/41
 [#42]: https://github.com/oscarotero/keep-a-changelog/issues/42
+[#43]: https://github.com/oscarotero/keep-a-changelog/issues/43
 [#45]: https://github.com/oscarotero/keep-a-changelog/issues/45
+[#51]: https://github.com/oscarotero/keep-a-changelog/issues/51
 
-[2.5.4]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...HEAD
+[2.6.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...v2.6.0
 [2.5.3]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.1...v2.5.2
 [2.5.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.0...v2.5.1

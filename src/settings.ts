@@ -21,7 +21,12 @@ class URLPatternShim {
 
 export interface Settings {
   pattern: URLPatternShim;
-  tagLink: (url: string, tag: string, previous?: string, head?: string) => string;
+  tagLink: (
+    url: string,
+    tag: string,
+    previous?: string,
+    head?: string,
+  ) => string;
   head: string;
 }
 

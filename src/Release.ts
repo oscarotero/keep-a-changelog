@@ -85,7 +85,7 @@ export default class Release {
     this.parsedVersion = parsed;
 
     //Re-sort the releases of the parent changelog
-    if (this.changelog) {
+    if (this.changelog && this.changelog.autoSortReleases) {
       this.changelog.sortReleases();
     }
   }
@@ -175,7 +175,9 @@ export default class Release {
         if (changelog?.format === "markdownlint") {
           t.push("");
         }
-        t = t.concat(changes.map((change) => change.toString(changelog?.bulletStyle)));
+        t = t.concat(
+          changes.map((change) => change.toString(changelog?.bulletStyle)),
+        );
         t.push("");
       }
     });
