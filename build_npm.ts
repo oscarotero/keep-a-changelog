@@ -1,6 +1,6 @@
-import { build } from "jsr:@deno/dnt@0.41.2";
+import { build } from "https://deno.land/x/dnt@0.40.0/mod.ts";
 import { dirname, join } from "jsr:@std/path@1.0.8";
-import { ensureDir } from "jsr:@std/fs@1.0.9";
+import { ensureDir } from "jsr:@std/fs@1.0.13";
 
 await Deno.remove("npm", { recursive: true }).catch(() => {});
 
@@ -11,17 +11,19 @@ if (!version) {
 }
 
 const testFiles = [
+  "changelog.azdo.md",
   "changelog.custom.type.md",
-  "changelog.expected.md",
   "changelog.expected.linted.md",
-  "changelog.md",
+  "changelog.expected.md",
   "changelog.gitlab.md",
+  "changelog.sort.md",
+  "changelog.md",
   "empty.expected.md",
 ];
 
 for (const file of testFiles) {
-  await copyFile(`test/${file}`, `esm/test/${file}`);
-  await copyFile(`test/${file}`, `script/test/${file}`);
+  await copyFile(`test/${file}`, `esm/keep-a-changelog/test/${file}`);
+  await copyFile(`test/${file}`, `script/keep-a-changelog/test/${file}`);
 }
 
 await copyFile("LICENSE");

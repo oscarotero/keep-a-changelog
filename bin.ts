@@ -26,7 +26,9 @@ const argv = parseArgs(Deno.args, {
     "latest-release",
     "quiet",
     "help",
-    "combine"
+    "combine",
+    "no-v-prefix",
+    "no-sort-releases",
   ],
   alias: {
     h: "help",
@@ -54,7 +56,7 @@ try {
   }
 
   const changelog = parser(Deno.readTextFileSync(file), {
-    autoSortReleases: argv["no-sort-releases"] === undefined ? true : false,
+    autoSortReleases: !argv["no-sort-releases"],
   });
   changelog.format = argv.format as "compact" | "markdownlint";
   changelog.bulletStyle = argv["bullet-style"] as "-" | "*" | "+";
@@ -117,7 +119,7 @@ try {
     const version = typeof argv.create === "string" ? argv.create : undefined;
 
     const release = changelog.releases.find((release) => {
-      return release.version === version
+      return release.version === version;
     });
 
     if (release) {

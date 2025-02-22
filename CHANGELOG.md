@@ -4,14 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [2.6.0] - 2024-07-21
+## [2.6.0] - 2025-02-22
 ### Added
 - New option `--no-v-prefix` to generate the tag names without prepending `v` [#43]
 - New option `--no-sort-releases` to disable sorting of releases [#51]
+- New option `--bullet-style` for customizing the bullet point character used in unordered lists [#48]
+- Add Azure DevOps URL support [#49]
+- New option `--combine` to combine changes with the same version [#50]
 - `--help, -h` flag [#45].
 
 ### Fixed
 - Updated dependencies
+- Skip release creation if it already exists [#47]
 
 ## [2.5.3] - 2023-11-19
 ### Fixed
@@ -104,6 +108,10 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#42]: https://github.com/oscarotero/keep-a-changelog/issues/42
 [#43]: https://github.com/oscarotero/keep-a-changelog/issues/43
 [#45]: https://github.com/oscarotero/keep-a-changelog/issues/45
+[#47]: https://github.com/oscarotero/keep-a-changelog/issues/47
+[#48]: https://github.com/oscarotero/keep-a-changelog/issues/48
+[#49]: https://github.com/oscarotero/keep-a-changelog/issues/49
+[#50]: https://github.com/oscarotero/keep-a-changelog/issues/50
 [#51]: https://github.com/oscarotero/keep-a-changelog/issues/51
 
 [2.6.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...v2.6.0

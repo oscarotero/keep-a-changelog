@@ -200,4 +200,3 @@ See available options:
 ```sh
 changelog --help
 ```
-
