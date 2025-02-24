@@ -3,7 +3,7 @@ export default class Change {
   description: string;
   issues: string[] = [];
 
-  static extractIssues(text: string, issues: string[]) {
+  static extractIssues(text: string, issues: string[]): string {
     return text
       .replace(/(^|[^\\])\[#(\d+)\](?=[^\(]|$)/g, (_, start, index) => {
         if (!issues.includes(index)) {
@@ -26,7 +26,7 @@ export default class Change {
     this.description = Change.extractIssues(description, this.issues);
   }
 
-  toString(bulletStyle = "-") {
+  toString(bulletStyle = "-"): string {
     let t = this.title.split("\n").map((line) => `  ${line}`.trimEnd());
     t[0] = bulletStyle + t[0].substr(1);
 

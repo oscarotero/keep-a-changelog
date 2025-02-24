@@ -1,6 +1,6 @@
 import { compare, format, parse } from "./deps.ts";
 import Change from "./Change.ts";
-import Changelog from "./Changelog.ts";
+import type Changelog from "./Changelog.ts";
 
 import type { SemVer } from "./deps.ts";
 
@@ -35,7 +35,7 @@ export default class Release {
     return this.parsedVersion ? format(this.parsedVersion) : undefined;
   }
 
-  compare(release: Release) {
+  compare(release: Release): number {
     if (!this.parsedVersion && release.parsedVersion) {
       return -1;
     }
@@ -59,7 +59,7 @@ export default class Release {
     return 0;
   }
 
-  combineChanges(changes: Map<string, Change[]>) {
+  combineChanges(changes: Map<string, Change[]>): this {
     changes.forEach((changes, type) => {
       if (!this.changes.has(type)) {
         this.changes.set(type, []);
@@ -71,7 +71,7 @@ export default class Release {
     return this;
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     if (this.description.trim()) {
       return false;
     }
@@ -79,7 +79,7 @@ export default class Release {
     return Array.from(this.changes.values()).every((change) => !change.length);
   }
 
-  setVersion(version?: string | SemVer) {
+  setVersion(version?: string | SemVer): void {
     const parsed = typeof version === "string" ? parse(version) : version;
 
     this.parsedVersion = parsed;
@@ -90,19 +90,19 @@ export default class Release {
     }
   }
 
-  setDate(date?: Date | string) {
+  setDate(date?: Date | string): void {
     if (typeof date === "string") {
       date = new Date(date);
     }
     this.date = date;
   }
 
-  setYanked(yanked = true) {
+  setYanked(yanked = true): this {
     this.yanked = yanked;
     return this;
   }
 
-  addChange(type: string, change: Change | string) {
+  addChange(type: string, change: Change | string): this {
     if (!(change instanceof Change)) {
       change = new Change(change);
     }
@@ -116,31 +116,31 @@ export default class Release {
     return this;
   }
 
-  added(change: Change | string) {
+  added(change: Change | string): this {
     return this.addChange("added", change);
   }
 
-  changed(change: Change | string) {
+  changed(change: Change | string): this {
     return this.addChange("changed", change);
   }
 
-  deprecated(change: Change | string) {
+  deprecated(change: Change | string): this {
     return this.addChange("deprecated", change);
   }
 
-  removed(change: Change | string) {
+  removed(change: Change | string): this {
     return this.addChange("removed", change);
   }
 
-  fixed(change: Change | string) {
+  fixed(change: Change | string): this {
     return this.addChange("fixed", change);
   }
 
-  security(change: Change | string) {
+  security(change: Change | string): this {
     return this.addChange("security", change);
   }
 
-  toString(changelog?: Changelog) {
+  toString(changelog?: Changelog): string {
     let t: string[] = [];
     const hasCompareLink = this.getCompareLink(changelog) !== undefined;
     const yanked = this.yanked ? " [YANKED]" : "";
@@ -185,7 +185,7 @@ export default class Release {
     return t.join("\n").trim();
   }
 
-  getCompareLink(changelog?: Changelog) {
+  getCompareLink(changelog?: Changelog): string | undefined {
     if (!changelog?.url) {
       return;
     }
@@ -217,7 +217,7 @@ export default class Release {
     return `[${this.version || "Unreleased"}]: ${compareLink}`;
   }
 
-  getLinks(changelog: Changelog) {
+  getLinks(changelog: Changelog): string[] {
     const links: string[] = [];
 
     if (!changelog.url) {

@@ -1,5 +1,5 @@
-import Release from "./Release.ts";
 import { equals, parse } from "./deps.ts";
+import type Release from "./Release.ts";
 import type { SemVer } from "./deps.ts";
 
 export default class Changelog {
@@ -28,7 +28,7 @@ export default class Changelog {
     this.description = description;
   }
 
-  addRelease(release: Release) {
+  addRelease(release: Release): this {
     this.releases.push(release);
     if (this.autoSortReleases) {
       this.sortReleases();
@@ -38,7 +38,7 @@ export default class Changelog {
     return this;
   }
 
-  findRelease(version?: SemVer | string) {
+  findRelease(version?: SemVer | string): Release | undefined {
     if (!version) {
       return this.releases.find((release) => !release.version);
     }
@@ -49,11 +49,11 @@ export default class Changelog {
     );
   }
 
-  sortReleases() {
+  sortReleases(): void {
     this.releases.sort((a, b) => a.compare(b));
   }
 
-  compareLink(previous: Release, release: Release) {
+  compareLink(previous: Release, release: Release): string {
     if (this.compareLinkBuilder) {
       return this.compareLinkBuilder(previous, release);
     }
@@ -100,7 +100,7 @@ export default class Changelog {
     }`;
   }
 
-  tagName(release: Release) {
+  tagName(release: Release): string {
     if (this.tagNameBuilder) {
       return this.tagNameBuilder(release);
     }
@@ -108,7 +108,7 @@ export default class Changelog {
     return `v${release.version}`;
   }
 
-  toString() {
+  toString(): string {
     const t = [];
 
     if (this.flag) {
