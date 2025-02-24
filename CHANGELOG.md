@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.6.1] - 2025-02-24
+### Fixed
+- NPM publishing [#55], [#56].
+
 ## [2.6.0] - 2025-02-22
 ### Added
 - New option `--no-v-prefix` to generate the tag names without prepending `v` [#43]
@@ -113,7 +117,10 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#49]: https://github.com/oscarotero/keep-a-changelog/issues/49
 [#50]: https://github.com/oscarotero/keep-a-changelog/issues/50
 [#51]: https://github.com/oscarotero/keep-a-changelog/issues/51
+[#55]: https://github.com/oscarotero/keep-a-changelog/issues/55
+[#56]: https://github.com/oscarotero/keep-a-changelog/issues/56
 
+[2.6.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.0...v2.6.1
 [2.6.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.3...v2.6.0
 [2.5.3]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.2...v2.5.3
 [2.5.2]: https://github.com/oscarotero/keep-a-changelog/compare/v2.5.1...v2.5.2

@@ -1,5 +1,3 @@
-#!/usr/bin/env deno
-
 import { join } from "jsr:@std/path@1.0.8";
 import { Changelog, parser, Release } from "./mod.ts";
 import { parseArgs } from "jsr:@std/cli@1.0.13/parse-args";

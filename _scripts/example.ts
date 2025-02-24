@@ -3,6 +3,10 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.6.1", "2025-02-24")
+      .fixed("NPM publishing #55, #56.")
+  )
+  .addRelease(
     new Release("2.6.0", "2025-02-22")
       .added(
         "New option `--no-v-prefix` to generate the tag names without prepending `v` #43",
