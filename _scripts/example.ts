@@ -1,5 +1,5 @@
 // deno run --allow-write example.ts
-import { Changelog, Release } from "./mod.ts";
+import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
@@ -94,6 +94,6 @@ const changelog = new Changelog("Changelog")
 
 changelog.url = "https://github.com/oscarotero/keep-a-changelog";
 
-const file = new URL("./CHANGELOG.md", import.meta.url).pathname;
+const file = new URL("../CHANGELOG.md", import.meta.url).pathname;
 
 Deno.writeTextFileSync(file, changelog.toString());

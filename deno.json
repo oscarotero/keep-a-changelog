@@ -2,8 +2,9 @@
   "lock": false,
   "tasks": {
     "test": "deno test --allow-read test",
-    "changelog": "deno run --allow-write example.ts",
-    "build-npm": "deno run -A build_npm.ts",
+    "changelog": "deno run --allow-write _scripts/example.ts",
+    "build-npm": "deno run -A _scripts/build_npm.ts",
+    "build-jsr": "deno run -A https://deno.land/x/jsrx@v0.1.1/mod.ts --name=@changelog/changelog",
     "update-deps": "deno run -A --quiet 'https://deno.land/x/nudd@v0.2.9/cli.ts' update bin.ts build_npm.ts src/deps.ts test/deps.ts deno.json"
   },
   "fmt": {

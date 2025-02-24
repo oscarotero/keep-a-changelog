@@ -2,7 +2,7 @@ import { build } from "jsr:@deno/dnt@0.41.3";
 import { dirname, join } from "jsr:@std/path@1.0.8";
 import { ensureDir } from "jsr:@std/fs@1.0.13";
 
-await Deno.remove("npm", { recursive: true }).catch(() => {});
+await Deno.remove("_npm", { recursive: true }).catch(() => {});
 
 const version = Deno.args[0];
 
@@ -44,7 +44,7 @@ await build({
     },
   ],
   compilerOptions: { target: "ES2022" },
-  outDir: "./npm",
+  outDir: "./_npm",
   package: {
     name: "keep-a-changelog",
     version,
@@ -69,7 +69,7 @@ await build({
 });
 
 async function copyFile(from: string, to = from) {
-  to = join("npm", to);
+  to = join("_npm", to);
   await ensureDir(dirname(to));
   await Deno.copyFile(from, to);
 }
