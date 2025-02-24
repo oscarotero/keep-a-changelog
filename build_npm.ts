@@ -1,4 +1,4 @@
-import { build } from "https://deno.land/x/dnt@0.40.0/mod.ts";
+import { build } from "jsr:@deno/dnt@0.41.3";
 import { dirname, join } from "jsr:@std/path@1.0.8";
 import { ensureDir } from "jsr:@std/fs@1.0.13";
 
@@ -22,8 +22,8 @@ const testFiles = [
 ];
 
 for (const file of testFiles) {
-  await copyFile(`test/${file}`, `esm/keep-a-changelog/test/${file}`);
-  await copyFile(`test/${file}`, `script/keep-a-changelog/test/${file}`);
+  await copyFile(`test/${file}`, `esm/test/${file}`);
+  await copyFile(`test/${file}`, `script/test/${file}`);
 }
 
 await copyFile("LICENSE");
@@ -40,9 +40,10 @@ await build({
     {
       kind: "bin",
       name: "changelog",
-      path: "bin.ts",
+      path: "./bin.ts",
     },
   ],
+  compilerOptions: { target: "ES2022" },
   outDir: "./npm",
   package: {
     name: "keep-a-changelog",

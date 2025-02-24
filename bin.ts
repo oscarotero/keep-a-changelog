@@ -1,8 +1,8 @@
 #!/usr/bin/env deno
 
-import { join } from "jsr:@std/path@0.224.0";
+import { join } from "jsr:@std/path@1.0.8";
 import { Changelog, parser, Release } from "./mod.ts";
-import { parseArgs } from "jsr:@std/cli@1.0.0/parse-args";
+import { parseArgs } from "jsr:@std/cli@1.0.13/parse-args";
 import { parse as parseIni } from "jsr:@std/ini@0.225.2";
 import getSettingsForURL from "./src/settings.ts";
 

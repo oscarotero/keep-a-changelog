@@ -4,7 +4,7 @@
     "test": "deno test --allow-read test",
     "changelog": "deno run --allow-write example.ts",
     "build-npm": "deno run -A build_npm.ts",
-    "update-deps": "deno run -A --quiet 'https://deno.land/x/nudd@v0.2.9/cli.ts' update build_npm.ts src/deps.ts test/deps.ts deno.json"
+    "update-deps": "deno run -A --quiet 'https://deno.land/x/nudd@v0.2.9/cli.ts' update bin.ts build_npm.ts src/deps.ts test/deps.ts deno.json"
   },
   "fmt": {
     "exclude": [
