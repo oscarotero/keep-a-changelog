@@ -149,7 +149,7 @@ It reads the CHANGELOG.md file and override it with the new format:
 Deno:
 
 ```sh
-deno install --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
+deno install --global --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
 ```
 
 Node:
