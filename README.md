@@ -188,11 +188,20 @@ If your "Unreleased" section has no version, you can specify it as an argument:
 changelog --release 2.0.0
 ```
 
-And return the latest released version:
+Print the latest released version:
 
 ```sh
 changelog --latest-release
 > 2.0.0
+```
+
+Print the latest release:
+
+```text
+changelog --latest-release-full
+## 2.6.1 - 2025-02-24
+### Fixed
+- NPM publishing [#55], [#56].
 ```
 
 See available options:
