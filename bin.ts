@@ -22,6 +22,7 @@ const argv = parseArgs(Deno.args, {
     "https",
     "init",
     "latest-release",
+    "latest-release-full",
     "quiet",
     "help",
     "combine",
@@ -231,22 +232,23 @@ function showHelp() {
 Usage: keep-a-changelog [options]
 
 Options:
-  --file, -f          Changelog file (default: CHANGELOG.md)
-  --format            Output format (default: compact)
-  --bullet-style      Bullet point style (default: -)
-  --url               Repository URL
+  --file, -f                Changelog file (default: CHANGELOG.md)
+  --format                  Output format (default: compact)
+  --bullet-style            Bullet point style (default: -)
+  --url                     Repository URL
 
-  --init              Initialize a new changelog file
-  --latest-release    Print the latest release version
+  --init                    Initialize a new changelog file
+  --latest-release          Print the latest release version
+  --latest-release-full     Print the latest release
 
-  --release           Set the date of the specified release
-  --combine           Combine changes from releases with the same version
-  --create            Create a new release
+  --release                 Set the date of the specified release
+  --combine                 Combine changes from releases with the same version
+  --create                  Create a new release
 
-  --no-v-prefix       Do not add a "v" prefix to the version
-  --no-sort-releases  Do not sort releases
-  --head              Set the HEAD link
-  --quiet             Do not print errors
-  --help, -h          Show this help message
+  --no-v-prefix             Do not add a "v" prefix to the version
+  --no-sort-releases        Do not sort releases
+  --head                    Set the HEAD link
+  --quiet                   Do not print errors
+  --help, -h                Show this help message
 `);
 }
