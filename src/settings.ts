@@ -47,6 +47,17 @@ export const settings: Settings[] = [
     },
   },
   {
+    pattern: new URLPatternShim("https://bitbucket.org/*"),
+    head: "master", // or main?
+    tagLink(url, tag, previous) {
+      if (!previous) {
+        return `${url}/src/${tag}`;
+      }
+
+      return `${url}/branches/compare/${tag}%0D${previous}`;
+    },
+  },
+  {
     pattern: new URLPatternShim("https://gitlab.*/*"),
     head: "master",
     tagLink(url, tag, previous) {
