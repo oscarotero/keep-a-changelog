@@ -94,7 +94,7 @@ function processTokens(tokens: Token[], opts: Options): Changelog {
   while (link) {
     if (!changelog.url) {
       const matches = link.match(
-        /^\[.*\]\:\s*(http.*?)\/(?:-\/)?(branchCompare|compare)(\/|\?).*$/,
+        /^\[.*\]\:\s*(http.*?)\/(?:-\/)?(branches\/compare|branchCompare|compare)(\/|\?).*$/,
       );
 
       if (matches) {
