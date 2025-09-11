@@ -3,14 +3,17 @@ import { parser } from "../mod.ts";
 import releaseCreator from "./fixture/CustomRelease.ts";
 import getSettingsForURL from "../src/settings.ts";
 
+https:\/\/bitbucket.org\/[^\/]+\/[^\/]+\/branches\/compare
 const file = new URL("./changelog.custom.type.md", import.meta.url).pathname;
 const fileGitlab = new URL("./changelog.gitlab.md", import.meta.url).pathname;
 const fileAzdo = new URL("./changelog.azdo.md", import.meta.url).pathname;
 const fileSort = new URL("./changelog.sort.md", import.meta.url).pathname;
+const fileBitbucket = new URL("./changelog.bitbucket.md", import.meta.url).pathname;
 const changelogContent = Deno.readTextFileSync(file);
 const changelogContentGitlab = Deno.readTextFileSync(fileGitlab);
 const changelogContentAzdo = Deno.readTextFileSync(fileAzdo);
 const changelogContentSort = Deno.readTextFileSync(fileSort);
+const changelogContentBitbucket = Deno.readTextFileSync(fileBitbucket);
 
 Deno.test("parser testing", function () {
   // is unable to parse changelog with unknown types
@@ -80,4 +83,24 @@ Deno.test("parser testing Azure DevOps", function () {
   }
 
   assertEquals(changelog.toString().trim(), changelogContentAzdo.trim());
+});
+
+Deno.test("parser testing BitBucket", function () {
+  // parses a changelog with Azure BitBucket links
+  const changelog = parser(changelogContentBitbucket, );
+
+  // get settings from url
+  assert(changelog.url, "URL is not defined");
+
+  if(changelog.url) {
+    const settings = getSettingsForURL(changelog.url);
+    assert(settings)
+
+    if (settings) {
+      changelog.head = settings.head;
+      changelog.tagLinkBuilder = settings.tagLink;
+    }
+  }
+
+  assertEquals(changelog.toString().trim(), changelogContentBitbucket.trim());
 });
