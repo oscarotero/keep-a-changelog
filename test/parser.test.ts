@@ -3,7 +3,6 @@ import { parser } from "../mod.ts";
 import releaseCreator from "./fixture/CustomRelease.ts";
 import getSettingsForURL from "../src/settings.ts";
 
-https:\/\/bitbucket.org\/[^\/]+\/[^\/]+\/branches\/compare
 const file = new URL("./changelog.custom.type.md", import.meta.url).pathname;
 const fileGitlab = new URL("./changelog.gitlab.md", import.meta.url).pathname;
 const fileAzdo = new URL("./changelog.azdo.md", import.meta.url).pathname;
