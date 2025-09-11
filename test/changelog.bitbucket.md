@@ -15,10 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - This is just a test changelog
 
-[Unreleased]: https://bitbucket.org/organization/repo-name/branches/compare/master%0D0.0.2
-[0.0.2]: https://bitbucket.org/organization/repo-name/branches/compare/0.0.2%0D0.0.1
-[0.0.1]: https://bitbucket.org/organization/repo-name/src/0.0.1
-
+[Unreleased]: https://bitbucket.org/organization/repo-name/branches/compare/master%0Dv0.0.2
+[0.0.2]: https://bitbucket.org/organization/repo-name/branches/compare/v0.0.2%0Dv0.0.1
+[0.0.1]: https://bitbucket.org/organization/repo-name/src/v0.0.1
 
 ---
 
