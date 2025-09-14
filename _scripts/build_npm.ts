@@ -12,6 +12,7 @@ if (!version) {
 
 const testFiles = [
   "changelog.azdo.md",
+  "changelog.bitbucket.md",
   "changelog.custom.type.md",
   "changelog.expected.linted.md",
   "changelog.expected.md",
