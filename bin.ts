@@ -76,16 +76,16 @@ try {
   }
 
   if (argv["latest-release-full"]) {
-      const release = changelog.releases.find((release) =>
-        release.date && release.version
-      );
+    const release = changelog.releases.find((release) =>
+      release.date && release.version
+    );
 
-      if (release) {
-        console.log(release.toString());
-      }
-
-      Deno.exit(0);
+    if (release) {
+      console.log(release.toString());
     }
+
+    Deno.exit(0);
+  }
 
   if (argv.release) {
     const release = changelog.releases.find((release) => {

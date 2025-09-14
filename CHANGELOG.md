@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [2.7.1] - 2025-09-14
+### Fixed
+- BitBucket URLs improperly parsed [#62]
+
 ## [2.7.0] - 2025-09-07
 ### Added
 - Support for BitBucket URLs [#61]
@@ -129,7 +133,9 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#56]: https://github.com/oscarotero/keep-a-changelog/issues/56
 [#59]: https://github.com/oscarotero/keep-a-changelog/issues/59
 [#61]: https://github.com/oscarotero/keep-a-changelog/issues/61
+[#62]: https://github.com/oscarotero/keep-a-changelog/issues/62
 
+[2.7.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.2...v2.7.0
 [2.6.2]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.1...v2.6.2
 [2.6.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.0...v2.6.1

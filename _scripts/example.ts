@@ -3,16 +3,22 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("2.7.1", "2025-09-14")
+      .fixed("BitBucket URLs improperly parsed #62"),
+  )
+  .addRelease(
     new Release("2.7.0", "2025-09-07")
-      .added("Support for BitBucket URLs #61")
+      .added("Support for BitBucket URLs #61"),
   )
   .addRelease(
     new Release("2.6.2", "2025-03-23")
-      .added("New option `--latest-release-full` to print the full release #59")
+      .added(
+        "New option `--latest-release-full` to print the full release #59",
+      ),
   )
   .addRelease(
     new Release("2.6.1", "2025-02-24")
-      .fixed("NPM publishing #55, #56.")
+      .fixed("NPM publishing #55, #56."),
   )
   .addRelease(
     new Release("2.6.0", "2025-02-22")
