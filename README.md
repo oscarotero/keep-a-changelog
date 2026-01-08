@@ -176,6 +176,18 @@ To generate an empty new CHANGELOG.md file:
 changelog --init
 ```
 
+Create a new "Unreleased" version:
+
+```sh
+changelog --create 1.0.0
+```
+
+Create a new "major", "minor" or "patch" version:
+
+```sh
+changelog --create minor
+```
+
 You can release automatically the latest "Unreleased" version:
 
 ```sh

@@ -269,7 +269,7 @@ Options:
 
   --release                 Set the date of the specified release
   --combine                 Combine changes from releases with the same version
-  --create                  Create a new release
+  --create                  Create a new release. Optionally accepts a version number or 'patch', 'minor' or 'major'
 
   --no-v-prefix             Do not add a "v" prefix to the version
   --no-sort-releases        Do not sort releases
