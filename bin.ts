@@ -127,11 +127,37 @@ try {
   }
 
   if (argv.create) {
-    const version = typeof argv.create === "string" ? argv.create : undefined;
+    let version = typeof argv.create === "string" ? argv.create : undefined;
 
-    const release = changelog.releases.find((release) => {
-      return release.version === version;
-    });
+    if (version === "major" || version === "minor" || version === "patch") {
+      const latestRelease = changelog.releases.find((release) =>
+        release.parsedVersion
+      );
+
+      if (!latestRelease) {
+        console.error("No releases found to bump version from.");
+        Deno.exit(1);
+      }
+
+      let { major, minor, patch } = latestRelease.parsedVersion!;
+
+      if (version === "major") {
+        major += 1;
+        minor = 0;
+        patch = 0;
+      } else if (version === "minor") {
+        minor += 1;
+        patch = 0;
+      } else if (version === "patch") {
+        patch += 1;
+      }
+
+      version = `${major}.${minor}.${patch}`;
+    }
+
+    const release = changelog.releases.find((release) =>
+      release.version === version
+    );
 
     if (release) {
       console.warn("Release already exists.");
