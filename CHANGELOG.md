@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [2.8.0] - 2026-01-08
 ### Added
-- `--create` option accepts 'minor' and 'major' values
+- `--create` option accepts 'minor', 'major' and 'patch' values
 
 ## [2.7.1] - 2025-09-14
 ### Fixed

@@ -4,7 +4,7 @@ import { Changelog, Release } from "../mod.ts";
 const changelog = new Changelog("Changelog")
   .addRelease(
     new Release("2.8.0", "2026-01-08")
-      .added("`--create` option accepts 'minor' and 'major' values"),
+      .added("`--create` option accepts 'minor', 'major' and 'patch' values"),
   )
   .addRelease(
     new Release("2.7.1", "2025-09-14")
