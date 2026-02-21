@@ -1,7 +1,13 @@
-// deno run --allow-write _scripts/example.ts
 import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
+  .addRelease(
+    new Release("3.0.0", "2026-02-21")
+      .changed("Use Node APIs instead of Deno for better compatibility.")
+      .changed("--create option requires a value.")
+      .removed("JSR package because it's already published on NPM which is compatible with JSR.")
+      .removed("Unmaintained Deno shim dependency. The build to Node is done with a custom script."),
+  )
   .addRelease(
     new Release("2.8.0", "2026-01-08")
       .added("`--create` option accepts 'minor', 'major' and 'patch' values"),

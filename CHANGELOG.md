@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.0] - 2026-02-21
+### Changed
+- Use Node APIs instead of Deno for better compatibility.
+- --create option requires a value.
+
+### Removed
+- JSR package because it's already published on NPM which is compatible with JSR.
+- Unmaintained Deno shim dependency. The build to Node is done with a custom script.
+
 ## [2.8.0] - 2026-01-08
 ### Added
 - `--create` option accepts 'minor', 'major' and 'patch' values
@@ -139,6 +148,7 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#61]: https://github.com/oscarotero/keep-a-changelog/issues/61
 [#62]: https://github.com/oscarotero/keep-a-changelog/issues/62
 
+[3.0.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.8.0...v3.0.0
 [2.8.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.7.1...v2.8.0
 [2.7.1]: https://github.com/oscarotero/keep-a-changelog/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/oscarotero/keep-a-changelog/compare/v2.6.2...v2.7.0
