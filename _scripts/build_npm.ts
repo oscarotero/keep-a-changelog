@@ -1,4 +1,4 @@
-import { copy, walk } from "jsr:@std/fs@1.0.19";
+import { copy, walk } from "jsr:@std/fs@1.0.23";
 
 const version = Deno.args[0];
 
@@ -74,7 +74,7 @@ exports = Object.fromEntries(
 );
 
 await new Deno.Command("deno", {
-  args: ["run", "-A", "npm:typescript/tsc", "-p", "."],
+  args: ["run", "-A", "npm:typescript@5.9.3/tsc", "-p", "."],
   cwd: "./_npm",
 }).output();
 
