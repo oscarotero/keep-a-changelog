@@ -17,9 +17,5 @@
       "npm",
       "CHANGELOG.md"
     ]
-  },
-  "imports": {
-    "ini": "npm:ini@6.0.0",
-    "semver": "npm:semver@7.7.4"
   }
 }

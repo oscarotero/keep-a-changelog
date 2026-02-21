@@ -80,10 +80,19 @@ await new Deno.Command("deno", {
 
 await Deno.remove("_npm/tsconfig.json");
 
-// Replace .ts extensions with .js in the imports of JavaScript files
+const dependencies = {
+  ini: "6.0.0",
+  semver: "7.7.4",
+};
+
+// Fix imports
 for await (const { path } of walk("_npm", { exts: [".js"] })) {
-  const code = await Deno.readTextFile(path);
-  Deno.writeTextFile(path, code.replaceAll(/\.ts";/g, '.js";'));
+  let code = await Deno.readTextFile(path);
+  code = code.replaceAll(/\.ts";/g, '.js";');
+  for (const [name, version] of Object.entries(dependencies)) {
+    code = code.replaceAll(`npm:${name}@${version}`, name);
+  }
+  Deno.writeTextFile(path, code);
 }
 
 // Replace .ts extensions with .d.ts in the imports of TypeScript files
@@ -96,19 +105,6 @@ for await (const { path } of walk("_npm", { exts: [".ts"] })) {
 for await (const { path } of walk("_npm", { exts: [".ts"] })) {
   if (path.endsWith(".d.ts")) continue; // Keep declaration files
   await Deno.remove(path);
-}
-
-const { default: denoJson } = await import("../deno.json", {
-  with: { type: "json" },
-});
-const dependencies: Record<string, string> = {};
-
-for (const dep of Object.values(denoJson.imports)) {
-  const match = dep.match(/^npm:(.+)@(.+)$/);
-
-  if (match) {
-    dependencies[match[1]] = match[2];
-  }
 }
 
 // Create a package.json file to publish on npm

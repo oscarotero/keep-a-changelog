@@ -2,7 +2,7 @@ import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { cwd, exit } from "node:process";
 import { readFileSync, writeFileSync } from "node:fs";
-import { parse as parseIni } from "ini";
+import { parse as parseIni } from "npm:ini@6.0.0";
 import { Changelog, parser, Release } from "./mod.ts";
 import getSettingsForURL from "./src/settings.ts";
 
