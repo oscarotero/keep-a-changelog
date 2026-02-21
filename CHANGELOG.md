@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Changed
 - Use Node APIs instead of Deno for better compatibility.
 - --create option requires a value.
+- The default branch is now main instead of master
 
 ### Removed
 - JSR package because it's already published on NPM which is compatible with JSR.
