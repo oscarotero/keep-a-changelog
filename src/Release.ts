@@ -1,4 +1,4 @@
-import { compare, format, parse } from "./deps.ts";
+import { compare, parse } from "./deps.ts";
 import Change from "./Change.ts";
 import type Changelog from "./Changelog.ts";
 
@@ -32,7 +32,7 @@ export default class Release {
   }
 
   get version(): string | undefined {
-    return this.parsedVersion ? format(this.parsedVersion) : undefined;
+    return this.parsedVersion?.format();
   }
 
   compare(release: Release): number {
