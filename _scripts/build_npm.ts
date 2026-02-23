@@ -132,6 +132,9 @@ await Deno.writeTextFile(
       bugs: {
         url: "https://github.com/oscarotero/keep-a-changelog/issues",
       },
+      bin: {
+        changelog: "./bin.js",
+      },
       dependencies,
       exports,
     },

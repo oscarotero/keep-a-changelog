@@ -3,7 +3,7 @@ import { Changelog, Release } from "../mod.ts";
 const changelog = new Changelog("Changelog")
   .addRelease(
     new Release("3.0.1", "2026-02-21")
-      .fixed("NPM imports in the Deno version.")
+      .fixed("NPM imports in the Deno version."),
   )
   .addRelease(
     new Release("3.0.0", "2026-02-21")
