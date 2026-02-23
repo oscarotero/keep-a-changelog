@@ -147,6 +147,9 @@ Deno.copyFileSync("LICENSE", "_npm/LICENSE");
 Deno.copyFileSync("README.md", "_npm/README.md");
 Deno.copyFileSync("CHANGELOG.md", "_npm/CHANGELOG.md");
 
+// Make bin.js executable
+await Deno.chmod("_npm/bin.js", 0o755);
+
 // Run Deno to format the code
 await new Deno.Command("deno", {
   args: ["fmt", "--unstable-components", "."],
