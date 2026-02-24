@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { cwd, exit } from "node:process";
