@@ -85,10 +85,15 @@ const dependencies = {
   semver: "7.7.4",
 };
 
-// Fix imports
+// Fix imports and hashbang
 for await (const { path } of walk("_npm", { exts: [".js"] })) {
   let code = await Deno.readTextFile(path);
-  code = code.replaceAll(/\.ts";/g, '.js";');
+  code = code
+    .replaceAll(/\.ts";/g, '.js";')
+    .replace(
+      "#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env",
+      "#!/usr/bin/env node",
+    );
   for (const [name, version] of Object.entries(dependencies)) {
     code = code.replaceAll(`npm:${name}@${version}`, name);
   }

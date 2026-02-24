@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env
+
 import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { cwd, exit } from "node:process";
