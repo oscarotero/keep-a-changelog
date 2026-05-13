@@ -2,6 +2,10 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.0.3", "2026-05-13")
+      .fixed("Node types #67"),
+  )
+  .addRelease(
     new Release("3.0.2", "2026-02-24")
       .fixed("NPX executable #64"),
   )
