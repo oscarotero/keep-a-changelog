@@ -102,7 +102,12 @@ for await (const { path } of walk("_npm", { exts: [".js"] })) {
 
 // Replace .ts extensions with .d.ts in the imports of TypeScript files
 for await (const { path } of walk("_npm", { exts: [".ts"] })) {
-  const code = Deno.readTextFileSync(path).replaceAll(/\.ts";/g, '.d.ts";');
+  let code = Deno.readTextFileSync(path)
+    .replaceAll(/\.ts";/g, '.d.ts";')
+
+  for (const [name, version] of Object.entries(dependencies)) {
+    code = code.replaceAll(`npm:${name}@${version}`, name);
+  }
   Deno.writeTextFile(path, code);
 }
 
