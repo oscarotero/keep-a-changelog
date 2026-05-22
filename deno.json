@@ -2,7 +2,7 @@
   "lock": false,
   "tasks": {
     "test": "deno test --allow-read test",
-    "changelog": "deno run --allow-write _scripts/example.ts",
+    "changelog": "deno run --allow-write --allow-env _scripts/example.ts",
     "build-npm": "deno run -A _scripts/build_npm.ts",
     "update-deps": "deno run -A --quiet 'https://deno.land/x/nudd@v0.2.11/cli.ts' update '_scripts/build_npm.ts' 'test/deps.ts' 'deno.json'"
   },

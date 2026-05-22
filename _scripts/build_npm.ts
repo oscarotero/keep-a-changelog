@@ -46,10 +46,9 @@ await Deno.writeTextFile(
 
 // Generate exports for the package.json file
 interface ExportedFile {
-  import: {
-    types: string;
-    default: string;
-  };
+  types: string;
+  import: string;
+  default: string;
 }
 
 let exports: Record<string, string | ExportedFile> = {};
@@ -59,10 +58,9 @@ for await (const { path } of walk("_npm", { exts: [".ts"] })) {
   const file = `./${filename}.js`;
   const types = `./types/${filename}.d.ts`;
   exports[file] = {
-    import: {
-      types,
-      default: file,
-    },
+    types,
+    import: file,
+    default: file,
   };
 }
 
