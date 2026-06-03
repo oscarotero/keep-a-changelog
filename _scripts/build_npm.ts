@@ -102,7 +102,7 @@ for await (const { path } of walk("_npm", { exts: [".js"] })) {
 for await (const { path } of walk("_npm", { exts: [".ts"] })) {
   let code = Deno.readTextFileSync(path)
     .replaceAll(/\.ts";/g, '.d.ts";')
-    .replaceAll(/import ([A-Z]|p)/g, 'import type $1')
+    .replaceAll(/import ([A-Z])/g, 'import type $1')
 
   for (const [name, version] of Object.entries(dependencies)) {
     code = code.replaceAll(`npm:${name}@${version}`, name);
