@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.0.5] - 2026-06-03
+### Fixed
+- Generate the NPM package with 'deno pack' [#67]
+
 ## [3.0.4] - 2026-05-22
 ### Fixed
 - Node types (again) [#67]
@@ -167,6 +171,7 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#64]: https://github.com/oscarotero/keep-a-changelog/issues/64
 [#67]: https://github.com/oscarotero/keep-a-changelog/issues/67
 
+[3.0.5]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.3...v3.0.4
 [3.0.3]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.2...v3.0.3
 [3.0.2]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.1...v3.0.2
