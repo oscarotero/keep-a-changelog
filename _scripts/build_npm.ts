@@ -1,5 +1,3 @@
-import { copy, walk } from "jsr:@std/fs@1.0.23";
-
 const version = Deno.args[0];
 
 if (!version) {
@@ -9,160 +7,89 @@ if (!version) {
 
 // Remove the previous code
 try {
-  await Deno.remove("./_npm", { recursive: true });
+  await Deno.remove("./package", { recursive: true });
 } catch {
   // Ignore if the directory does not exist
 }
-await Deno.mkdir("./_npm");
 
-// Copy the files
-const paths: string[] = [
-  "src",
-  "bin.ts",
-  "mod.ts",
-];
-
-for (const path of paths) {
-  await copy(path, `./_npm/${path}`);
-}
-
-// Run tsc to compile Typescript files
-await Deno.writeTextFile(
-  "_npm/tsconfig.json",
-  JSON.stringify(
-    {
-      compilerOptions: {
-        declaration: true,
-        declarationDir: "./types",
-        target: "es2022",
-        allowImportingTsExtensions: true,
-        moduleResolution: "NodeNext",
-      },
-    },
-    null,
-    2,
-  ),
-);
-
-// Generate exports for the package.json file
-interface ExportedFile {
-  types: string;
-  import: string;
-  default: string;
-}
-
-let exports: Record<string, string | ExportedFile> = {};
-
-for await (const { path } of walk("_npm", { exts: [".ts"] })) {
-  const filename = path.replace(/^_npm\//, "").replace(/\.ts$/, "");
-  const file = `./${filename}.js`;
-  const types = `./types/${filename}.d.ts`;
-  exports[file] = {
-    types,
-    import: file,
-    default: file,
-  };
-}
-
-exports["."] = exports["./mod.js"];
-
-// Sort the exports by key
-exports = Object.fromEntries(
-  Object.entries(exports).sort(([a], [b]) => a.localeCompare(b)),
-);
-
-await new Deno.Command("deno", {
-  args: ["run", "-A", "npm:typescript@5.9.3/tsc", "-p", "."],
-  cwd: "./_npm",
-}).output();
-
-await Deno.remove("_npm/tsconfig.json");
-
-const dependencies = {
-  ini: "6.0.0",
-  semver: "7.7.4",
+const exports: Record<string, string> = {
+  ".": "./mod.ts",
+  "./mod.ts": "./mod.ts",
+  "./bin.ts": "./bin.ts",
 };
 
-// Fix imports and hashbang
-for await (const { path } of walk("_npm", { exts: [".js"] })) {
-  let code = await Deno.readTextFile(path);
-  code = code
-    .replaceAll(/\.ts";/g, '.js";')
-    .replace(
-      "#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env",
-      "#!/usr/bin/env node",
-    );
-  for (const [name, version] of Object.entries(dependencies)) {
-    code = code.replaceAll(`npm:${name}@${version}`, name);
-  }
-  Deno.writeTextFile(path, code);
+for (const { name } of Deno.readDirSync("./src")) {
+  const specifier = `./src/${name}`;
+  exports[specifier] = specifier;
 }
 
-// Replace .ts extensions with .d.ts in the imports of TypeScript files
-for await (const { path } of walk("_npm", { exts: [".ts"] })) {
-  let code = Deno.readTextFileSync(path)
-    .replaceAll(/\.ts";/g, '.d.ts";')
-    .replaceAll(/import ([A-Z])/g, 'import type $1')
+const denoInfo = {
+  name: "@scope/keep-a-changelog",
+  version,
+  exports,
+};
 
-  for (const [name, version] of Object.entries(dependencies)) {
-    code = code.replaceAll(`npm:${name}@${version}`, name);
-  }
-  Deno.writeTextFile(path, code);
-}
+Deno.writeTextFileSync("deno-npm.json", JSON.stringify(denoInfo));
 
-// Remove the TypeScript files
-for await (const { path } of walk("_npm", { exts: [".ts"] })) {
-  if (path.endsWith(".d.ts")) continue; // Keep declaration files
-  await Deno.remove(path);
-}
-
-// Create a package.json file to publish on npm
-await Deno.writeTextFile(
-  "_npm/package.json",
-  JSON.stringify(
-    {
-      name: "keep-a-changelog",
-      version,
-      description:
-        "Parse and generate changelogs following the [keepachangelog](https://keepachangelog.com/) format.",
-      type: "module",
-      repository: {
-        "type": "git",
-        "url": "git+https://github.com/oscarotero/keep-a-changelog.git",
-      },
-      keywords: [
-        "changelog",
-        "keepachangelog",
-        "parser",
-      ],
-      author: "Oscar Otero <oom@oscarotero.com>",
-      homepage: "https://github.com/oscarotero/keep-a-changelog#readme",
-      license: "MIT",
-      bugs: {
-        url: "https://github.com/oscarotero/keep-a-changelog/issues",
-      },
-      bin: {
-        changelog: "./bin.js",
-      },
-      dependencies,
-      exports,
-    },
-    null,
-    2,
-  ),
+run(
+  Deno.execPath(),
+  "pack",
+  "--config",
+  "deno-npm.json",
+  "--allow-dirty",
+  "--output",
+  "_npm.tgz",
 );
 
-Deno.copyFileSync("LICENSE", "_npm/LICENSE");
-Deno.copyFileSync("README.md", "_npm/README.md");
-Deno.copyFileSync("CHANGELOG.md", "_npm/CHANGELOG.md");
+Deno.remove("deno-npm.json");
 
-// Make bin.js executable
-await Deno.chmod("_npm/bin.js", 0o755);
+run("tar", "-xvf", "_npm.tgz");
 
-// Run Deno to format the code
-await new Deno.Command("deno", {
-  args: ["fmt", "--unstable-components", "."],
-  cwd: "./_npm",
-}).output();
+Deno.remove("_npm.tgz");
 
-console.log("Browser/NPM build completed successfully.");
+const info = JSON.parse(Deno.readTextFileSync("./package/package.json"));
+
+const newInfo = {
+  name: "keep-a-changelog",
+  version,
+  description:
+    "Parse and generate changelogs following the [keepachangelog](https://keepachangelog.com/) format.",
+  type: "module",
+  repository: {
+    "type": "git",
+    "url": "git+https://github.com/oscarotero/keep-a-changelog.git",
+  },
+  keywords: [
+    "changelog",
+    "keepachangelog",
+    "parser",
+  ],
+  author: "Oscar Otero <oom@oscarotero.com>",
+  homepage: "https://github.com/oscarotero/keep-a-changelog#readme",
+  license: "MIT",
+  bugs: {
+    url: "https://github.com/oscarotero/keep-a-changelog/issues",
+  },
+  bin: {
+    changelog: "./bin.js",
+  },
+  main: "./mod.js",
+  types: "./mod.d.ts",
+  dependencies: info.dependencies,
+  exports: info.exports,
+};
+
+Deno.writeTextFileSync(
+  "./package/package.json",
+  JSON.stringify(newInfo, null, 2),
+);
+
+function run(cmd: string, ...args: string[]) {
+  const command = new Deno.Command(cmd, {
+    args,
+    stdin: "inherit",
+    stderr: "inherit",
+    stdout: "inherit",
+  });
+  command.outputSync();
+}

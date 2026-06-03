@@ -2,6 +2,10 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.0.5", "2026-06-03")
+      .fixed("Generate the NPM package with 'deno pack' #67"),
+  )
+  .addRelease(
     new Release("3.0.4", "2026-05-22")
       .fixed("Node types (again) #67"),
   )
