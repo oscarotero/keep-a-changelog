@@ -2,6 +2,11 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.0.6", "2026-08-01")
+      .fixed("Fix hashbang for NPM. #70")
+      .fixed("Removed not necessary files from the NPM package"),
+  )
+  .addRelease(
     new Release("3.0.5", "2026-06-03")
       .fixed("Generate the NPM package with 'deno pack' #67"),
   )
