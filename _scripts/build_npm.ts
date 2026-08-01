@@ -84,6 +84,22 @@ Deno.writeTextFileSync(
   JSON.stringify(newInfo, null, 2),
 );
 
+for (const path of ["./package/bin.js", "./package/bin.d.ts"]) {
+  Deno.writeTextFileSync(
+    path,
+    Deno.readTextFileSync(path).replace(
+      "#!/usr/bin/env -S deno run --allow-read --allow-write --allow-env",
+      "#!/usr/bin/env node",
+    ),
+  );
+}
+
+await Deno.remove("./package/deno.json");
+await Deno.remove("./package/_scripts", { recursive: true });
+await Deno.remove("./package/.github", { recursive: true });
+await Deno.remove("./package/.vscode", { recursive: true });
+await Deno.remove("./package/test", { recursive: true });
+
 function run(cmd: string, ...args: string[]) {
   const command = new Deno.Command(cmd, {
     args,
