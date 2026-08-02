@@ -25,6 +25,9 @@ const { values } = parseArgs({
     release: {
       type: "boolean",
     },
+    version: {
+      type: "string",
+    },
     init: {
       type: "boolean",
     },
@@ -75,8 +78,9 @@ try {
   }
 
   if (values.init) {
+    const version = values.version ?? "0.1.0";
     const changelog = new Changelog("Changelog").addRelease(
-      new Release("0.1.0", new Date(), "First version"),
+      new Release(version, new Date(), "First version"),
     );
 
     changelog.format = values.format as "compact" | "markdownlint";
@@ -125,19 +129,23 @@ try {
         return false;
       }
 
-      if (typeof values.release === "string") {
+      if (values.version) {
         return !release.version ||
-          values.release === release.version.toString();
+          values.version === release.version.toString();
       }
 
-      return !!release.version;
+      return !release.version;
     });
 
     if (release) {
       release.date = new Date();
-      if (typeof values.release === "string") {
-        release.setVersion(values.release);
+      let version = values.version;
+
+      if (!version) {
+        version = getResolvedVersion(getNextVersion(release), changelog);
       }
+
+      release.setVersion(version);
     } else {
       console.error("Not found any valid unreleased version");
       exit(1);
@@ -163,29 +171,7 @@ try {
     let version = values.create || undefined;
 
     if (version === "major" || version === "minor" || version === "patch") {
-      const latestRelease = changelog.releases.find((release) =>
-        release.parsedVersion
-      );
-
-      if (!latestRelease) {
-        console.error("No releases found to bump version from.");
-        exit(1);
-      }
-
-      let { major, minor, patch } = latestRelease.parsedVersion!;
-
-      if (version === "major") {
-        major += 1;
-        minor = 0;
-        patch = 0;
-      } else if (version === "minor") {
-        minor += 1;
-        patch = 0;
-      } else if (version === "patch") {
-        patch += 1;
-      }
-
-      version = `${major}.${minor}.${patch}`;
+      version = getResolvedVersion(version, changelog);
     }
 
     const release = changelog.releases.find((release) =>
@@ -283,6 +269,52 @@ function getRemoteUrl(https = true) {
     console.error(red((err as Error).message));
     // Ignore
   }
+}
+
+function getResolvedVersion(
+  version: "major" | "minor" | "patch",
+  changelog: Changelog,
+) {
+  const latestRelease = changelog.releases.find((release) =>
+    release.parsedVersion
+  );
+
+  let major = 0, minor = 0, patch = 0;
+
+  if (latestRelease?.parsedVersion) {
+    major = latestRelease.parsedVersion.major;
+    minor = latestRelease.parsedVersion.minor;
+    patch = latestRelease.parsedVersion.patch;
+  }
+
+  if (version === "major") {
+    major += 1;
+    minor = 0;
+    patch = 0;
+  } else if (version === "minor") {
+    minor += 1;
+    patch = 0;
+  } else if (version === "patch") {
+    patch += 1;
+  }
+
+  return `${major}.${minor}.${patch}`;
+}
+
+function getNextVersion(release: Release) {
+  if (
+    release.changes.get("removed")?.length ||
+    release.changes.get("changed")?.length
+  ) {
+    return "major";
+  }
+  if (
+    release.changes.get("added")?.length ||
+    release.changes.get("deprecated")?.length
+  ) {
+    return "minor";
+  }
+  return "patch";
 }
 
 function showHelp() {
