@@ -78,8 +78,12 @@ try {
   }
 
   if (values.init) {
-    const version = values.version ?? "0.1.0";
-    const changelog = new Changelog("Changelog").addRelease(
+    const changelog = new Changelog("Changelog");
+    const version = isKeywordVersion(values.version)
+      ? getResolvedVersion(values.version, changelog)
+      : values.version || "0.1.0";
+
+    changelog.addRelease(
       new Release(version, new Date(), "First version"),
     );
 
@@ -124,25 +128,33 @@ try {
   }
 
   if (values.release) {
-    const release = changelog.releases.find((release) => {
+    let version = isKeywordVersion(values.version)
+      ? getResolvedVersion(values.version, changelog, false)
+      : values.version;
+
+    const release = [...changelog.releases].reverse().find((release) => {
       if (release.date) {
+        if (release.version?.toString() === version) {
+          console.error(`The version ${version} is already released`);
+          exit(1);
+        }
         return false;
       }
 
-      if (values.version) {
+      if (version) {
         return !release.version ||
-          values.version === release.version.toString();
+          version === release.version.toString();
       }
 
-      return !release.version;
+      return true;
     });
 
     if (release) {
       release.date = new Date();
-      let version = values.version;
 
       if (!version) {
-        version = getResolvedVersion(getNextVersion(release), changelog);
+        version = release.version ??
+          getResolvedVersion(getNextVersion(release), changelog);
       }
 
       release.setVersion(version);
@@ -170,7 +182,7 @@ try {
   if (values.create) {
     let version = values.create || undefined;
 
-    if (version === "major" || version === "minor" || version === "patch") {
+    if (isKeywordVersion(version)) {
       version = getResolvedVersion(version, changelog);
     }
 
@@ -271,12 +283,19 @@ function getRemoteUrl(https = true) {
   }
 }
 
+function isKeywordVersion(
+  version?: string,
+): version is "major" | "minor" | "patch" {
+  return version === "major" || version === "minor" || version === "patch";
+}
+
 function getResolvedVersion(
   version: "major" | "minor" | "patch",
   changelog: Changelog,
+  allVersions = true,
 ) {
   const latestRelease = changelog.releases.find((release) =>
-    release.parsedVersion
+    (allVersions || release.date) && release.parsedVersion
   );
 
   let major = 0, minor = 0, patch = 0;

@@ -40,7 +40,7 @@ export default class Release {
       return -1;
     }
 
-    if (!release.parsedVersion) {
+    if (this.parsedVersion && !release.parsedVersion) {
       return 1;
     }
 
@@ -48,7 +48,7 @@ export default class Release {
       return -1;
     }
 
-    if (!release.date) {
+    if (this.date && !release.date) {
       return 1;
     }
 
