@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [3.1.0] - 2026-08-03
+### Added
+- New --version argument to specify the version to release with --release or the initial version with --init
+- New flag --dry-run to log the result without saving it
+- The --release command can infer the new version if none is defined.
+
+### Changed
+- Passing an invalid version or keyword (major, minor, patch, none) returns an error.
+
+### Fixed
+- Allow to create and release versions at the same time. [#71]
+
 ## [3.0.6] - 2026-08-01
 ### Fixed
 - Fix hashbang for NPM. [#70]
@@ -176,7 +188,9 @@ New version merging Deno and Node code using Deno's `dnt` package.
 [#64]: https://github.com/oscarotero/keep-a-changelog/issues/64
 [#67]: https://github.com/oscarotero/keep-a-changelog/issues/67
 [#70]: https://github.com/oscarotero/keep-a-changelog/issues/70
+[#71]: https://github.com/oscarotero/keep-a-changelog/issues/71
 
+[3.1.0]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.6...v3.1.0
 [3.0.6]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.5...v3.0.6
 [3.0.5]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.4...v3.0.5
 [3.0.4]: https://github.com/oscarotero/keep-a-changelog/compare/v3.0.3...v3.0.4

@@ -2,6 +2,22 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.1.0", "2026-08-03")
+      .fixed("Allow to create and release versions at the same time. #71")
+      .added(
+        "New --version argument to specify the version to release with --release or the initial version with --init",
+      )
+      .added(
+        "New flag --dry-run to log the result without saving it",
+      )
+      .changed(
+        "Passing an invalid version or keyword (major, minor, patch, none) returns an error.",
+      )
+      .added(
+        "The --release command can infer the new version if none is defined.",
+      ),
+  )
+  .addRelease(
     new Release("3.0.6", "2026-08-01")
       .fixed("Fix hashbang for NPM. #70")
       .fixed("Removed not necessary files from the NPM package"),

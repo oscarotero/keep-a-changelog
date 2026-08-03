@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { parse as parseIni } from "npm:ini@6.0.0";
 import { Changelog, parser, Release } from "./mod.ts";
 import getSettingsForURL from "./src/settings.ts";
+import { parse } from "./src/deps.ts";
 
 const { values } = parseArgs({
   options: {
@@ -66,6 +67,9 @@ const { values } = parseArgs({
     "no-sort-releases": {
       type: "boolean",
     },
+    "dry-run": {
+      type: "boolean",
+    },
   },
 });
 
@@ -78,6 +82,7 @@ try {
   }
 
   if (values.init) {
+    assertVersion(values.version);
     const changelog = new Changelog("Changelog");
     const version = isKeywordVersion(values.version)
       ? getResolvedVersion(values.version, changelog)
@@ -90,7 +95,7 @@ try {
     changelog.format = values.format as "compact" | "markdownlint";
     changelog.bulletStyle = values["bullet-style"] as "-" | "*" | "+";
 
-    save(file, changelog, true);
+    save(file, changelog, values["dry-run"] ? "dry-run" : "new");
     exit(0);
   }
 
@@ -128,6 +133,7 @@ try {
   }
 
   if (values.release) {
+    assertVersion(values.version);
     let version = isKeywordVersion(values.version)
       ? getResolvedVersion(values.version, changelog, false)
       : values.version;
@@ -180,6 +186,7 @@ try {
   }
 
   if (values.create) {
+    assertVersion(values.create);
     let version = values.create || undefined;
 
     if (isKeywordVersion(version)) {
@@ -197,7 +204,7 @@ try {
     }
   }
 
-  save(file, changelog);
+  save(file, changelog, values["dry-run"] ? "dry-run" : "edit");
 } catch (err) {
   console.error(red((err as Error).message));
 
@@ -206,7 +213,9 @@ try {
   }
 }
 
-function save(file: string, changelog: Changelog, isNew = false) {
+type Mode = "new" | "edit" | "dry-run";
+
+function save(file: string, changelog: Changelog, mode: Mode) {
   changelog.url = values.url || changelog.url || getRemoteUrl(values.https);
 
   if (!changelog.url) {
@@ -231,12 +240,16 @@ function save(file: string, changelog: Changelog, isNew = false) {
     changelog.head = values.head;
   }
 
-  writeFileSync(file, changelog.toString());
-
-  if (isNew) {
-    console.log(green("Generated new file"), file);
+  if (mode === "dry-run") {
+    console.log(changelog.toString());
   } else {
-    console.log(green("Updated file"), file);
+    writeFileSync(file, changelog.toString());
+
+    if (mode === "new") {
+      console.log(green("Generated new file"), file);
+    } else {
+      console.log(green("Updated file"), file);
+    }
   }
 }
 
@@ -280,6 +293,18 @@ function getRemoteUrl(https = true) {
   } catch (err) {
     console.error(red((err as Error).message));
     // Ignore
+  }
+}
+
+function assertVersion(version?: string) {
+  if (version && version !== "none") {
+    if (!isKeywordVersion(version)) {
+      if (!parse(version)) {
+        throw new Error(
+          `Invalid version (${version}). Use a semver or the keywords "major", "minor", "patch" or "none"`,
+        );
+      }
+    }
   }
 }
 
@@ -355,6 +380,7 @@ Options:
   --combine                 Combine changes from releases with the same version
   --create                  Create a new release. Optionally accepts a version number or 'patch', 'minor' or 'major'
 
+  --dry-run                 Show the result without writing to the file
   --no-v-prefix             Do not add a "v" prefix to the version
   --no-sort-releases        Do not sort releases
   --head                    Set the HEAD link

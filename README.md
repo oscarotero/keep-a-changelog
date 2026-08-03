@@ -1,9 +1,6 @@
 # Changelog
 
-[Keep a Changelog](https://github.com/oscarotero/keep-a-changelog) library for
-Node & Deno
-
-Deno package to parse and generate changelogs following the
+Deno & Node package to parse and generate changelogs following the
 [keepachangelog](https://keepachangelog.com/) format.
 
 ## Usage in Node
@@ -22,7 +19,7 @@ console.log(changelog.toString());
 ## Usage in Deno
 
 ```js
-import { parser } from "https://deno.land/x/changelog@v3.0.0/mod.ts";
+import { parser } from "https://cdn.jsdelivr.net/gh/oscarotero/keep-a-changelog@v3.1.0/mod.ts";
 
 //Parse a changelog file
 const changelog = parser(await Deno.readTextFile("CHANGELOG.md"));
@@ -34,10 +31,7 @@ console.log(changelog.toString());
 ### Create a new changelog
 
 ```js
-import {
-  Changelog,
-  Release,
-} from "https://deno.land/x/changelog@v3.0.0/mod.ts";
+import { Changelog, Release } from "keep-a-changelog/mod.ts";
 
 const changelog = new Changelog("My project")
   .addRelease(
@@ -149,7 +143,7 @@ It reads the CHANGELOG.md file and override it with the new format:
 Deno:
 
 ```sh
-deno install --global --allow-read --allow-write -fr --name changelog https://deno.land/x/changelog/bin.ts
+deno install --global --allow-read --allow-write -fr --name changelog https://cdn.jsdelivr.net/gh/oscarotero/keep-a-changelog/bin.ts
 ```
 
 Node:
@@ -176,10 +170,16 @@ To generate an empty new CHANGELOG.md file:
 changelog --init
 ```
 
+To generate an empty new CHANGELOG.md starting from 1.0.0:
+
+```sh
+changelog --init --version=major
+```
+
 Create a new "Unreleased" version:
 
 ```sh
-changelog --create 1.0.0
+changelog --create none
 ```
 
 Create a new "major", "minor" or "patch" version:
@@ -198,6 +198,12 @@ If your "Unreleased" section has no version, you can specify it as an argument:
 
 ```sh
 changelog --release 2.0.0
+```
+
+Or calculate it automatically:
+
+```sh
+changelog --release minor
 ```
 
 Print the latest released version:
