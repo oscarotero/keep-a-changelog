@@ -69,6 +69,17 @@ export const settings: Settings[] = [
     },
   },
   {
+    pattern: new URLPatternShim("https://codeberg.org/*"),
+    head: "HEAD",
+    tagLink(url, tag, previous) {
+      if (!previous) {
+        return `${url}/src/tag/${tag}`;
+      }
+
+      return `${url}/compare/${previous}...${tag}`;
+    },
+  },
+  {
     pattern: new URLPatternShim("https://dev.azure.com/*"),
     head: "master",
     tagLink(url, tag, previous, head) {

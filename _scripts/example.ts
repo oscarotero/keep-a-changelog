@@ -2,6 +2,10 @@ import { Changelog, Release } from "../mod.ts";
 
 const changelog = new Changelog("Changelog")
   .addRelease(
+    new Release("3.2.0", "2026-09-07")
+    .added("Support for Codeberg."),
+  )
+  .addRelease(
     new Release("3.1.0", "2026-08-03")
       .fixed("Allow to create and release versions at the same time. #71")
       .added(
